@@ -1,0 +1,12 @@
+baseurl = "https://deeplearning.earth/"
+title = "Deep Learning 4 Earth"
+languageCode = "en-us"
+theme = "kraiklyn"
+
+pygmentsCodeFences = true
+pygmentsStyle = "monokailight"
+
+[params]
+externalTitle = ""
+sidebarColor = "blue"
+customCss = []

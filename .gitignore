@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Backup folders
+unsplash/
+**/.DS_Store/
+
 # C extensions
 *.so
 
