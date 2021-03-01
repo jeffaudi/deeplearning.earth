@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Detecting on Deep Learning 4 Earth</title>
+    <link>https://deeplearning.earth/detecting/</link>
+    <description>Recent content in Detecting on Deep Learning 4 Earth</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 05 Nov 2016 21:05:33 +0530</lastBuildDate>
+    
+	<atom:link href="https://deeplearning.earth/detecting/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Ships</title>
+      <link>https://deeplearning.earth/detecting/ships/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://deeplearning.earth/detecting/ships/</guid>
+      <description>Maritime traffic has doubled over the last 15 years. With more ships at sea, there is also more risks for piracy, illegal activities and environmental damages. Being able to monitor ships in high seas, far away from any coast, is a perfect tasks for Earth Observation satellites.  You will find a few datasets with annotated ships in satellite images on Kaggle. It is possible to detect large ships on Sentinel-2 images at 10 m.</description>
+    </item>
+    
+    <item>
+      <title>Solar Panels</title>
+      <link>https://deeplearning.earth/detecting/solar-panels/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://deeplearning.earth/detecting/solar-panels/</guid>
+      <description>Individual Solar Panels Detection solar panels on roofs needs high resolution imagery. Typically aerial or drone imagery. It is very difficult to achieve with 1.5m or even 50 cm imagery.
+Here are a few articles about using machine learning for solar panel detection:
+ https://new.engineering.com/story/how-do-you-count-every-solar-panel-in-the-us-machine-learning-and-a-billion-satellite-images http://web.stanford.edu/group/deepsolar/home https://news.stanford.edu/press-releases/2018/12/19/inventory-indicates-goes-solar/  Solar farms Solar farms may be easier to detect because that are so much larger. They are actually built by commercial companies who resell the produced energy.</description>
+    </item>
+    
+    <item>
+      <title>Wind turbines</title>
+      <link>https://deeplearning.earth/detecting/wind-turbines/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://deeplearning.earth/detecting/wind-turbines/</guid>
+      <description>Wind turbines produce renewable energy but are also major obstacles to air navigation as they often reach more than 100 meters.  Introduction There are a few more use cases for wind turbines detection. A map of wind turbines at country level can be a great indicator of the country independance toward non renewable energy source.
+By associating wind prediction and exact location of wind turbines, it is possible to predict the energy production for upcoming days.</description>
+    </item>
+    
+  </channel>
+</rss>

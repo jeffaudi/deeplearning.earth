@@ -1,10 +1,8 @@
 +++
 draft = false
-
-date = "2016-11-05T19:56:17+05:30"
 title = "Solar Panels"
 anchor = "solar panels"
-weight = 6
+weight = 1
 +++
 
 ![Solar panels](img/portfolio/solar.jpg)

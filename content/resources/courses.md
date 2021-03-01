@@ -1,12 +1,11 @@
 +++
 draft = false
-image = "img/portfolio/books.jpg"
-showonlyimage = false
-date = "2016-11-05T20:22:08+05:30"
 title = "Courses"
-weight = 10
+anchor = "courses"
+weight = 2
 +++
 
+![Books](img/portfolio/tools.jpg)
 ## Mooc and challenges
 
 

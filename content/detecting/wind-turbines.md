@@ -1,7 +1,7 @@
 +++
 draft = false
 title = "Wind turbines"
-weight = 5
+weight = 1
 anchor = "wind-turbines"
 +++
 
@@ -23,7 +23,7 @@ We could also envision to control the correct alignment of the turbines with the
 
 ## Datasets
 
-There does not seem to be a publicly available machine learning dataset for wind turbines. There are nevertheless available databases that can be crossed with available satellite imagery. Here is an extract of the OpenStreetMap database from early 2021 with around 300,000 wind turbines all over the world. 
+It is probable that 2 m. is the minimum resolution to be able to detect wind turbines with a correct accuravy. There does not seem to be a publicly available machine learning dataset for wind turbines. There are nevertheless available databases that can be crossed with available satellite imagery. Here is an extract of the OpenStreetMap database from early 2021 with around 300,000 wind turbines all over the world. 
 
 This [article](usgs) presents an initiative from the USGS to map all windmills in the USA.
 

@@ -20,11 +20,11 @@ If you want to make additions and/or amendments to this website, please contact 
 
 ![](img/portfolio/thanks.jpg)
 
-Thanks to Unsplash for the awesome photographs ;)
+Thanks to [Unsplash](https://unsplash.com/) for the awesome photographs ;)
 
-Thanks to Kraiklyn for the themes and hugo for providing such great tools!
+Thanks to [Kraiklyn](https://themes.gohugo.io/kraiklyn/) for the theme and [Hugo](https://gohugo.io/) for providing such great tools!
 
-And thanks to my company Airbus for making work on these exiting satellites images for the last 30 years.
+And thanks to my company [Airbus](https://intelligence-airbusds.com) for making work on these exciting satellites images for the last 30 years.
 
 
 
