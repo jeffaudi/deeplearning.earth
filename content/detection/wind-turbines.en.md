@@ -7,9 +7,7 @@ anchor = "wind-turbines"
 
 ![Wind turbines](/img/portfolio/windmills.jpg)
 
-{{< block note >}}
-Wind turbines produce renewable energy but are also major obstacles to air navigation as they often reach more than 100 meters.
-{{< /block >}}
+**Wind turbines produce renewable energy but are also major obstacles to air navigation as they often reach more than 100 meters.**
 
 
 ## Introduction

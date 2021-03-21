@@ -8,9 +8,8 @@ draft = false
 
 ![Ship seen from above](/img/portfolio/ships.jpg)
 
-{{< block note >}}
-Maritime traffic has doubled over the last 15 years. With more ships at sea, there is also more risks for piracy, illegal activities and environmental damages. Being able to monitor ships in high seas, far away from any coast, is a perfect tasks for Earth Observation satellites.
-{{< /block >}}
+
+*Maritime traffic has doubled over the last 15 years. With more ships at sea, there is also more risks for piracy, illegal activities and environmental damages. Being able to monitor ships in high seas, far away from any coast, is a perfect tasks for Earth Observation satellites.*
 
 **You will find a few datasets with annotated ships in satellite images on Kaggle.** It is possible to detect large ships on Sentinel-2 images at 10 m. resolution. 
 
