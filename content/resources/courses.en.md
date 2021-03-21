@@ -5,7 +5,7 @@ anchor = "courses"
 weight = 2
 +++
 
-![Books](img/portfolio/tools.jpg)
+![Books](/img/portfolio/tools.jpg)
 ## Mooc and challenges
 
 
