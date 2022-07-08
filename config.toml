@@ -1,0 +1,83 @@
+baseURL = "https://blog.dl4eo.com/"
+languageCode = "en-us"
+title = "DL4EO"
+
+theme = "hugo-coder"
+defaultContentLanguage = "en-us"
+
+paginate = 20
+canonifyUrls = true
+
+[markup]
+	[markup.highlight]
+		codeFences = true
+		style = "bw"
+		guessSyntax = false
+
+[params]
+    author = "Jeff Faudi"
+    info = "A blog about Deep Learning for Earth Observation"
+    description = "A blog about Deep Learning for Earth Observation"
+    keywords = "blog, artificial intelligence, deep learning, earth observation"
+    avatarurl = "images/JEFFAUDI_SQ.jpg"
+    logoURL = "images/logo-black.png"
+
+    favicon_32 = "/images/favicon.png"
+    favicon_16 = "/images/favicon.png"
+
+    footercontent = "DL4EO"
+
+    hidecredits = false
+    hidecopyright = false
+
+    rtl = false
+
+    math = true
+    custom_css = ["css/custom.css"]
+
+# Social links
+[[params.social]]
+    name = "Github"
+    icon = "fa fa-2x fa-github"
+    weight = 1
+    url = "https://github.com/jeffaudi/"
+
+[[params.social]]
+    name = "Twitter"
+    icon = "fa fa-2x fa-twitter"
+    weight = 2
+    url = "https://twitter.com/jeffaudi/"
+
+[[params.social]]
+    name = "LinkedIn"
+    icon = "fa fa-2x fa-linkedin"
+    weight = 3
+    url = "https://www.linkedin.com/in/faudi/"
+
+[[params.social]]
+    name = "Medium"
+    icon = "fa fa-2x fa-medium"
+    weight = 4
+    url = "https://medium.com/@jeffaudi"
+
+# Menu links
+[[menu.main]]
+    name = "Home"
+    weight = 1
+    url  = ""
+[[menu.main]]
+    name = "Mission"
+    weight = 1
+    url  = "https://www.dl4eo.com/#mission"
+[[menu.main]]
+    name = "Products"
+    weight = 1
+    url  = "https://www.dl4eo.com/#products"
+[[menu.main]]
+    name = "Services"
+    weight = 1
+    url  = "https://www.dl4eo.com/#services"
+[[menu.main]]
+    name = "Blog"
+    weight = 2
+    url = "/posts/"
