@@ -9,8 +9,6 @@ description: ""
 subtitle: ""
 
 ---
-# How to choose a deep learning architecture to detect aircrafts in satellite imagery?
-
 # Context
 
 In recent years,  **artificial intelligence has made great strides in the field of computer vision**. One area that has seen particularly impressive progress is object detection, with a variety of deep learning models achieving high levels of accuracy. However, this abundance of choice can be overwhelming for practitioners who are looking to implement an object detection system.

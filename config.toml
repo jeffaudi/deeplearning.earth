@@ -11,7 +11,7 @@ canonifyUrls = true
 [markup]
 	[markup.highlight]
 		codeFences = true
-		style = "bw"
+		style = "monokai"
 		guessSyntax = false
 
 [params]

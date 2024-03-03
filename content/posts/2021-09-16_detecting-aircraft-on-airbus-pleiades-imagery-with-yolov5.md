@@ -103,8 +103,6 @@ You can also learn how to publish your inference code as a Docker container and 
 
 Ready to take off and improve your skills?
 
-![](/posts/img/2021-09-16_detecting-aircraft-on-airbus-pleiades-imagery-with-yolov5_6.jpg#layoutTextWidth)[Sign up to Artificialis weekly](https://sendfox.com/artificialis "https://sendfox.com/artificialis")
-
 * * *
 Written on September 16, 2021 by Jeff Faudi.
 

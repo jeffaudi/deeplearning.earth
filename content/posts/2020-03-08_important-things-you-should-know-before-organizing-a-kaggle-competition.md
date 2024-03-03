@@ -100,12 +100,6 @@ We are working hard to launch a new Kaggle competition in the coming months, mak
 
 What about you? Do you plan to organize your own competition and see for yourself how openness and sharing can deliver more value to your company than working behind closed doors? And if you have already organized such a competition, what are your experiences?
 
-📝 Save this story in [Journal](https://usejournal.com/?utm_source=medium.com&utm_medium=noteworthy_blog&utm_campaign=tech&utm_content=guest_post_read_later_text).
-
-👩‍💻 Wake up every Sunday morning to the week’s most noteworthy stories in Tech waiting in your inbox. [Read the Noteworthy in Tech newsletter](https://usejournal.com/newsletter/noteworthy-in-tech/?utm_source=medium.com&utm_medium=noteworthy_blog&utm_campaign=tech&utm_content=guest_post_text).
-
-[Sign up to Artificialis weekly](https://sendfox.com/artificialis "https://sendfox.com/artificialis")
-
 * * *
 Written on March 8, 2020 by Jeff Faudi.
 
