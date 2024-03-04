@@ -2,6 +2,7 @@
 resources/_gen
 .vscode
 .DS_Store
+**/*.lock
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

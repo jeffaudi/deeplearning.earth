@@ -1,2 +1,3 @@
-# blog.dl4eo.com
-Blog for DL4EO.COM website
+# DeepLearning.Earth
+
+[Visit my blog about Deep Learning for Earth Observation](https://deeplearning.earth)

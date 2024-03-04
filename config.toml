@@ -1,6 +1,6 @@
-baseURL = "https://blog.dl4eo.com/"
+baseURL = "https://deeplearning.earth/"
 languageCode = "en-us"
-title = "DL4EO"
+title = "DeepLearning.Earth"
 
 theme = "hugo-coder"
 defaultContentLanguage = "en-us"
@@ -20,7 +20,7 @@ canonifyUrls = true
     description = "A blog about Deep Learning for Earth Observation"
     keywords = "blog, artificial intelligence, deep learning, earth observation"
     avatarurl = "images/JEFFAUDI_SQ.jpg"
-    logoURL = "images/logo-black.png"
+    #logoURL = "images/logo-black.png"
 
     favicon_32 = "/images/favicon.png"
     favicon_16 = "/images/favicon.png"
@@ -62,22 +62,14 @@ canonifyUrls = true
 
 # Menu links
 [[menu.main]]
-    name = "Home"
+    name = "My company"
     weight = 1
-    url  = ""
+    url  = "https://www.dl4eo.com/"
 [[menu.main]]
-    name = "Mission"
-    weight = 1
-    url  = "https://www.dl4eo.com/#mission"
-[[menu.main]]
-    name = "Products"
-    weight = 1
-    url  = "https://www.dl4eo.com/#products"
-[[menu.main]]
-    name = "Services"
-    weight = 1
-    url  = "https://www.dl4eo.com/#services"
-[[menu.main]]
-    name = "Blog"
+    name = "All demos"
     weight = 2
+    url  = "https://huggingface.co/dl4eo"
+[[menu.main]]
+    name = "All articles"
+    weight = 3
     url = "/posts/"
