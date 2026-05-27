@@ -33,7 +33,7 @@ canonifyUrls = true
     rtl = false
 
     math = true
-    custom_css = ["css/custom.css"]
+    # customCSS = ["css/custom.css"]  # add assets/css/custom.css and uncomment
 
 # Social links
 [[params.social]]

@@ -1,4 +1,5 @@
 # Hugo
+public/
 resources/_gen
 .vscode
 .DS_Store
