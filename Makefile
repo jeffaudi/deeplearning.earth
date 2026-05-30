@@ -31,8 +31,8 @@ submodules: ## Update theme submodule
 build: submodules ## Build static site into $(DEST)
 	$(HUGO) $(HUGO_FLAGS)
 
-serve: submodules ## Run local dev server with drafts
-	$(HUGO) server -D --bind 0.0.0.0 --port $(PORT) --disableFastRender
+serve: submodules ## Run local dev server with drafts and future-dated posts
+	$(HUGO) server -D --buildFuture --bind 0.0.0.0 --port $(PORT) --disableFastRender
 
 dev: serve ## Alias for serve
 
