@@ -4,7 +4,7 @@ author: "Jeff Faudi"
 date: 2026-05-28T09:00:00+07:00
 lastmod: 2026-05-28T09:00:00+07:00
 
-description: "A sovereign, LGPL-licensed oriented detection stack for EO, targeting an official release in June 2026."
+description: "A sovereign, Apache-licensed oriented detection stack for EO, targeting an official release in June 2026."
 
 subtitle: ""
 ---
@@ -21,7 +21,7 @@ I’m planning an official release for **June 2026**.
   - Designed to run where you need it: **on‑prem, private cloud, regulated environments**
   - No “hosted inference” requirement and no platform lock‑in assumptions
 
-- **Open-source with a pragmatic license (LGPL)**
+- **Open-source with a pragmatic license (Apache 2.0)**
   - License intended for real‑world adoption while keeping the stack **auditable** and **maintainable**
 
 - **Oriented detection, made operational**
@@ -77,7 +77,7 @@ MMRotate is the right tool when the job is **research and literature parity**. I
 Oriented-det is not “yet another research codebase”. It is meant to sit in the gap between Ultralytics and MMRotate:
 
 - **Oriented and EO-minded** like MMRotate, but without the full OpenMMLab dependency burden.
-- **Practical and fast to iterate** like Ultralytics, but with **OBB as the default** and **LGPL** clarity for adoption.
+- **Practical and fast to iterate** like Ultralytics, but with **OBB as the default** and **Apache 2.0** clarity for adoption.
 - **Sovereign by design**: you own the stack, the data path, and the deployment surface.
 
 That is the rationale for building it — and for targeting a disciplined **June 2026** release once DOTA baselines prove the approach.
