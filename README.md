@@ -1,6 +1,9 @@
 # DeepLearning.Earth
 
-Blog about Deep Learning for Earth Observation: [https://deeplearning.earth](https://deeplearning.earth)
+Technical blog on oriented object detection for Earth Observation and the [oriented-det](https://github.com/DL4EO/oriented-det) package: [https://deeplearning.earth](https://deeplearning.earth)
+
+- **Home (`/`)** — recent posts (blog index)
+- **About (`/about/`)** — author bio, photo, company, and social links
 
 Built with [Hugo](https://gohugo.io/) and the [hugo-coder](https://github.com/luizdepra/hugo-coder) theme (git submodule at `themes/hugo-coder`).
 
@@ -27,8 +30,10 @@ After pushing to `main`, Netlify installs Hugo, initializes the theme submodule,
 
 ## Content
 
-Posts live under `content/posts/`. Static assets (images, favicon) are under `static/`.
+Posts live under `content/posts/`. The about page is `content/about.md` (layout: `layouts/_default/about.html`). Static assets (images, favicon) are under `static/`.
 
-## Theme override
+## Layout overrides
 
-`layouts/partials/header.html` overrides the theme header: the upstream merge in `hugo-coder` uses `.Site` inside `{{ with .Site }}`, which breaks the build. Consider fixing the same file in [jeffaudi/hugo-coder](https://github.com/jeffaudi/hugo-coder) and removing this override once the fork is updated.
+- `layouts/index.html` — blog home (post list) instead of the theme’s avatar landing page
+- `layouts/_default/about.html` — about page with avatar and social links
+- `layouts/partials/header.html` — fixes theme header build issue: upstream `hugo-coder` uses `.Site` inside `{{ with .Site }}`, which breaks the build. Consider fixing the same file in [jeffaudi/hugo-coder](https://github.com/jeffaudi/hugo-coder) and removing this override once the fork is updated.

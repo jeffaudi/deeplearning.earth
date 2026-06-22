@@ -14,11 +14,13 @@ canonifyUrls = true
 		style = "monokai"
 		guessSyntax = false
 
+mainSections = ["posts"]
+
 [params]
     author = "Jeff Faudi"
-    info = "A blog about Deep Learning for Earth Observation"
-    description = "A blog about Deep Learning for Earth Observation"
-    keywords = "blog, artificial intelligence, deep learning, earth observation"
+    info = "Oriented object detection for Earth Observation — notes on the **oriented-det** package and related work."
+    description = "Technical blog on oriented object detection for Earth Observation and the oriented-det package."
+    keywords = "oriented detection, earth observation, satellite imagery, oriented-det, deep learning, object detection"
     avatarurl = "images/JEFFAUDI_SQ.jpg"
     #logoURL = "images/logo-black.png"
 
@@ -62,14 +64,17 @@ canonifyUrls = true
 
 # Menu links
 [[menu.main]]
-    name = "My company"
+    name = "Blog"
     weight = 1
-    url  = "https://www.dl4eo.com/"
+    url  = "/"
 [[menu.main]]
-    name = "All demos"
+    name = "About"
     weight = 2
-    url  = "https://huggingface.co/dl4eo"
+    url  = "/about/"
 [[menu.main]]
-    name = "All articles"
+    name = "Demos"
     weight = 3
-    url = "/posts/"
+    url  = "https://huggingface.co/dl4eo"
+    [menu.main.params]
+        target = "_blank"
+        rel = "noopener"

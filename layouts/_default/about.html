@@ -1,0 +1,17 @@
+{{ define "title" }}
+  {{ .Title }} · {{ .Site.Title }}
+{{ end }}
+{{ define "content" }}
+  <section class="container centered">
+    <div class="about">
+      {{ partialCached "home/avatar.html" . }}
+      {{ partialCached "home/author.html" . }}
+      {{ partialCached "home/social.html" . }}
+    </div>
+  </section>
+  <section class="container page">
+    <article>
+      {{ .Content }}
+    </article>
+  </section>
+{{ end }}
