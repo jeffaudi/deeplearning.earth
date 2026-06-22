@@ -1,0 +1,7 @@
+<li class="post-list-entry">
+  <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format (.Site.Params.dateFormat | default "January 2, 2006") }}</time>
+  <a class="post-title" href="{{ .Params.externalLink | default .RelPermalink }}">{{ .Title }}</a>
+  {{ with .Description }}
+    <p class="post-description">{{ . }}</p>
+  {{ end }}
+</li>

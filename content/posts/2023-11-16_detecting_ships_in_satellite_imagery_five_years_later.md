@@ -4,7 +4,10 @@ author: "Jeff Faudi"
 date: 2023-11-16T15:11:48.457Z
 lastmod: 2023-11-16T15:11:48.457Z
 
-description: ""
+description: "Revisiting ship detection in SPOT imagery — from Kaggle to MMRotate."
+
+categories: ["archive"]
+tags: ["ships", "mmrotate", "object detection"]
 
 subtitle: ""
 

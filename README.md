@@ -32,8 +32,16 @@ After pushing to `main`, Netlify installs Hugo, initializes the theme submodule,
 
 Posts live under `content/posts/`. The about page is `content/about.md` (layout: `layouts/_default/about.html`). Static assets (images, favicon) are under `static/`.
 
+**Taxonomies:** `tags`, `categories`, and `series` (see `config.toml`). The oriented-det series hub is at `/series/oriented-det/` (`content/series/oriented-det/_index.md`). Legacy YOLO/Kaggle posts use `categories: ["archive"]`.
+
+**URLs:** Blog home is `/`. `/posts/` redirects to `/` on Netlify (individual posts stay at `/posts/<slug>/`).
+
 ## Layout overrides
 
 - `layouts/index.html` — blog home (post list) instead of the theme’s avatar landing page
+- `layouts/posts/li.html` — post title plus `description` on list pages
 - `layouts/_default/about.html` — about page with avatar and social links
-- `layouts/partials/header.html` — fixes theme header build issue: upstream `hugo-coder` uses `.Site` inside `{{ with .Site }}`, which breaks the build. Consider fixing the same file in [jeffaudi/hugo-coder](https://github.com/jeffaudi/hugo-coder) and removing this override once the fork is updated.
+- `layouts/partials/header.html` — menu `target`/`rel` support and theme header build fix
+- `layouts/partials/list.html` — taxonomy/series list pages use the same post list markup
+- `layouts/posts/list.html` — `/posts/` section list (redirects to `/` on Netlify)
+- `assets/css/custom.css` — single-column blog layout (post list, about page, post meta)

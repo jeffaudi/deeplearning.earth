@@ -4,7 +4,10 @@ author: "Jeff Faudi"
 date: 2023-01-02T15:11:48.457Z
 lastmod: 2023-01-02T15:11:48.457Z
 
-description: ""
+description: "Comparing deep learning architectures for aircraft detection in satellite imagery."
+
+categories: ["archive"]
+tags: ["object detection", "aircraft", "architecture"]
 
 subtitle: ""
 

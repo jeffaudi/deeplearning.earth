@@ -1,0 +1,199 @@
+/* --------------------------------------------------------------------------
+   Single-column blog layout overrides for hugo-coder
+   -------------------------------------------------------------------------- */
+
+/* Narrower readable column site-wide */
+.container {
+  max-width: 72rem;
+}
+
+.content header {
+  margin-top: 2.4rem;
+  margin-bottom: 1.6rem;
+}
+
+.content header h1 {
+  font-size: 3.2rem;
+  line-height: 1.15;
+}
+
+/* --------------------------------------------------------------------------
+   Blog home
+   -------------------------------------------------------------------------- */
+
+.blog-home .blog-header {
+  margin-bottom: 2.4rem;
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid var(--border-color, rgba(0, 0, 0, 0.08));
+}
+
+.blog-home .blog-tagline {
+  margin: 0.8rem 0 0;
+  font-size: 1.7rem;
+  line-height: 1.5;
+  color: var(--content-secondary, #555);
+  text-align: left;
+}
+
+.colorscheme-dark .blog-home .blog-tagline {
+  color: var(--content-secondary, #aaa);
+}
+
+/* --------------------------------------------------------------------------
+   Post list — single column (override theme flex + fixed date column)
+   -------------------------------------------------------------------------- */
+
+.list ul.post-list,
+.list .post-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list ul.post-list > li.post-list-entry,
+.list .post-list > li.post-list-entry {
+  display: block;
+  margin: 0;
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--border-color, rgba(0, 0, 0, 0.08));
+}
+
+.list ul.post-list > li.post-list-entry:first-child,
+.list .post-list > li.post-list-entry:first-child {
+  padding-top: 0;
+}
+
+.list ul.post-list > li.post-list-entry:last-child,
+.list .post-list > li.post-list-entry:last-child {
+  border-bottom: none;
+}
+
+.post-date {
+  display: block;
+  width: auto;
+  margin: 0 0 0.4rem;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  font-weight: 400;
+  text-align: left;
+  color: var(--content-secondary, #666);
+}
+
+.colorscheme-dark .post-date {
+  color: var(--content-secondary, #999);
+}
+
+.post-title {
+  display: block;
+  width: 100%;
+  margin: 0;
+  font-size: 1.9rem;
+  line-height: 1.35;
+  font-weight: 700;
+  color: inherit;
+  text-decoration: none;
+}
+
+.post-title:hover,
+.post-title:focus {
+  color: var(--link-color, #1565c0);
+}
+
+.post-description {
+  display: block;
+  width: 100%;
+  margin: 0.5rem 0 0;
+  font-size: 1.55rem;
+  line-height: 1.5;
+  color: var(--content-secondary, #555);
+}
+
+.colorscheme-dark .post-description {
+  color: var(--content-secondary, #aaa);
+}
+
+/* Taxonomy / series list pages still using default theme markup */
+.list ul:not(.pagination):not(.post-list) > li {
+  display: block;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid var(--border-color, rgba(0, 0, 0, 0.08));
+}
+
+.list ul:not(.pagination):not(.post-list) > li .date {
+  display: block;
+  width: auto;
+  margin: 0 0 0.35rem;
+  text-align: left;
+  font-size: 1.4rem;
+  color: var(--content-secondary, #666);
+}
+
+.list ul:not(.pagination):not(.post-list) > li .title {
+  display: block;
+  width: 100%;
+  font-size: 1.9rem;
+  line-height: 1.35;
+}
+
+/* --------------------------------------------------------------------------
+   About page — stack avatar block then prose in one column
+   -------------------------------------------------------------------------- */
+
+.about-page .about-hero {
+  margin-bottom: 2.4rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color, rgba(0, 0, 0, 0.08));
+}
+
+.about-page .about-body {
+  max-width: 100%;
+}
+
+.about-page .about-body p {
+  text-align: left;
+}
+
+/* --------------------------------------------------------------------------
+   Post pages — keep meta and tags in one column
+   -------------------------------------------------------------------------- */
+
+.content .post .post-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+
+.content .post .post-meta .date,
+.content .post .post-meta .tags,
+.content .post .post-meta .categories,
+.content .post .post-meta .authors {
+  width: 100%;
+}
+
+.content .post .post-meta .tags .tag,
+.content .post .post-meta .categories .category {
+  margin-bottom: 0.4rem;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media only screen and (max-width: 768px) {
+  .content header h1 {
+    font-size: 2.6rem;
+  }
+
+  .blog-home .blog-tagline {
+    font-size: 1.55rem;
+  }
+
+  .post-title {
+    font-size: 1.75rem;
+  }
+
+  .post-description {
+    font-size: 1.45rem;
+  }
+}

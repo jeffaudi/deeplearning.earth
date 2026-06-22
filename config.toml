@@ -16,6 +16,11 @@ canonifyUrls = true
 
 mainSections = ["posts"]
 
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+  series = "series"
+
 [params]
     author = "Jeff Faudi"
     info = "Oriented object detection for Earth Observation — notes on the **oriented-det** package and related work."
@@ -35,7 +40,7 @@ mainSections = ["posts"]
     rtl = false
 
     math = true
-    # customCSS = ["css/custom.css"]  # add assets/css/custom.css and uncomment
+    customCSS = ["css/custom.css"]
 
 # Social links
 [[params.social]]

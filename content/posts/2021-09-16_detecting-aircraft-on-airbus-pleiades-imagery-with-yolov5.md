@@ -4,7 +4,10 @@ author: "Jeff Faudi"
 date: 2021-09-16T15:11:48.457Z
 lastmod: 2022-07-07T11:26:25+02:00
 
-description: ""
+description: "Training YOLOv5 on Airbus Pleiades imagery for aircraft detection."
+
+categories: ["archive"]
+tags: ["yolo", "aircraft", "object detection"]
 
 subtitle: ""
 

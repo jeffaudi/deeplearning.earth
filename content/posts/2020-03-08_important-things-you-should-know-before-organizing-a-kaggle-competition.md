@@ -4,7 +4,10 @@ author: "Jeff Faudi"
 date: 2020-03-08T20:45:30.589Z
 lastmod: 2022-07-07T11:26:11+02:00
 
-description: ""
+description: "Lessons from organizing the Airbus ship detection competition on Kaggle."
+
+categories: ["archive"]
+tags: ["kaggle", "ships", "earth observation"]
 
 subtitle: ""
 

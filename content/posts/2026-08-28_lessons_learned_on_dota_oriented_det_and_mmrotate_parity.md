@@ -6,6 +6,9 @@ lastmod: 2026-08-28T14:00:00+07:00
 
 description: "Four months chasing MMRotate parity on DOTA—tiling, naming traps, mAP pitfalls, and why KFIoU in the loss is the last mile for ships and harbors."
 
+series: ["oriented-det"]
+tags: ["oriented-det", "dota", "mmrotate"]
+
 subtitle: "From ~75% to ~80% tiled val—and why the remaining gap is rotated IoU, not architecture"
 
 draft: true

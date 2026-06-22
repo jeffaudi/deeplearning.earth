@@ -6,6 +6,9 @@ lastmod: 2026-05-28T09:00:00+07:00
 
 description: "A sovereign, Apache-licensed oriented detection stack for EO, targeting an official release in June 2026."
 
+series: ["oriented-det"]
+tags: ["oriented-det", "announcement"]
+
 subtitle: ""
 ---
 

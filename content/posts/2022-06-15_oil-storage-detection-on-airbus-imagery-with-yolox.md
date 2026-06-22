@@ -4,7 +4,10 @@ author: "Jeff Faudi"
 date: 2022-06-15T19:17:31.965Z
 lastmod: 2022-07-07T11:27:21+02:00
 
-description: ""
+description: "Detecting oil storage tanks on Airbus imagery with YOLOX."
+
+categories: ["archive"]
+tags: ["yolo", "oil storage", "object detection"]
 
 subtitle: ""
 

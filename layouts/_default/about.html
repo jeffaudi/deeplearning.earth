@@ -2,15 +2,15 @@
   {{ .Title }} · {{ .Site.Title }}
 {{ end }}
 {{ define "content" }}
-  <section class="container centered">
-    <div class="about">
-      {{ partialCached "home/avatar.html" . }}
-      {{ partialCached "home/author.html" . }}
-      {{ partialCached "home/social.html" . }}
+  <section class="container about-page">
+    <div class="about-hero centered">
+      <div class="about">
+        {{ partialCached "home/avatar.html" . }}
+        {{ partialCached "home/author.html" . }}
+        {{ partialCached "home/social.html" . }}
+      </div>
     </div>
-  </section>
-  <section class="container page">
-    <article>
+    <article class="about-body">
       {{ .Content }}
     </article>
   </section>

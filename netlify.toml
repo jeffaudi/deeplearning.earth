@@ -5,3 +5,19 @@
 [build.environment]
   HUGO_VERSION = "0.123.7"
   GIT_SUBMODULE_STRATEGY = "recursive"
+
+# Blog home is /. Keep individual posts at /posts/<slug>/.
+[[redirects]]
+  from = "/posts"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/posts/"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/posts/page/*"
+  to = "/page/:splat"
+  status = 301

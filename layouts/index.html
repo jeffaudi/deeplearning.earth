@@ -2,24 +2,24 @@
   {{ .Site.Title }}
 {{ end }}
 {{ define "content" }}
-  <section class="container list">
-    <header>
+  <section class="container list blog-home">
+    <header class="blog-header">
       <h1 class="title">
         <a class="title-link" href="{{ .Permalink | safeURL }}">{{ .Site.Title }}</a>
       </h1>
       {{ with .Site.Params.info }}
-        <p>{{ . | markdownify }}</p>
+        <p class="blog-tagline">{{ . | markdownify }}</p>
       {{ end }}
     </header>
-  </section>
-  <section class="container list">
-    <ul>
+
+    <ul class="post-list">
       {{- $pages := where .Site.RegularPages "Section" "eq" "posts" -}}
       {{- $paginator := .Paginate ($pages.ByDate.Reverse) -}}
       {{- range $paginator.Pages -}}
         {{- .Render "li" -}}
       {{- end -}}
     </ul>
+
     {{ partial "pagination.html" . }}
   </section>
 {{ end }}

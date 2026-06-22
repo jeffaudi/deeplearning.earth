@@ -4,7 +4,10 @@ author: "Jeff Faudi"
 date: 2023-02-08T15:11:48.457Z
 lastmod: 2023-02-08T15:11:48.457Z
 
-description: ""
+description: "Tuning YOLOv8 for satellite imagery — what works and what to change."
+
+categories: ["archive"]
+tags: ["yolo", "object detection", "satellite imagery"]
 
 subtitle: ""
 

@@ -6,6 +6,9 @@ lastmod: 2026-06-22T09:00:00+07:00
 
 description: "Oriented-det v0.1.0 is on PyPI under Apache 2.0 — a lightweight PyTorch library for rotated object detection in aerial and satellite imagery, with DOTA baselines and pretrained weights."
 
+series: ["oriented-det"]
+tags: ["oriented-det", "release"]
+
 subtitle: ""
 ---
 

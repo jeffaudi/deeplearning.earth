@@ -1,0 +1,26 @@
+<section class="container list">
+  <header>
+    <h1 class="title">
+      <a class="title-link" href="{{ .Permalink | safeURL }}">
+        {{- if eq .Kind "term" -}}
+          {{- i18n .Data.Plural 1 | title -}}
+          {{- print ": " -}}
+        {{- end -}}
+        {{- i18n (lower .Title) | default .Title | title -}}
+      </a>
+    </h1>
+  </header>
+  {{ .Content }}
+  <ul class="post-list">
+    {{- range .Paginator.Pages -}}
+      {{- if eq .Section "posts" -}}
+        {{- .Render "li" -}}
+      {{- else -}}
+        <li class="post-list-entry">
+          <a class="post-title" href="{{ .Params.externalLink | default .RelPermalink }}">{{ .Title }}</a>
+        </li>
+      {{- end -}}
+    {{- end -}}
+  </ul>
+  {{ partial "pagination.html" . }}
+</section>
