@@ -89,7 +89,7 @@ The full workflow — tiling, training, prediction, evaluation — is covered in
 
 ## What's next
 
-The next post will be a hands-on walkthrough: **ship detection in a harbor using the pretrained Oriented R-CNN**, from a raw satellite tile to oriented box overlays with heading angles. Ships are a good first showcase — elongated, densely packed, oriented at arbitrary angles, and a clear failure case for axis-aligned detectors.
+The next post is a hands-on walkthrough — **[oriented object detection on macOS, in pure Python](/posts/2026-06-29_oriented_object_detection_on_macos_in_pure_python/)** — bus detection on the bundled DOTA demo image using the pretrained Oriented R-CNN, from `uv pip install` to `result.jpg` on Apple Silicon (`--device mps`). It will publish with the upcoming 3× Oriented R-CNN checkpoint patch, once that training run completes.
 
 Beyond that, the series will cover:
 

@@ -50,12 +50,6 @@ mainSections = ["posts"]
     url = "https://github.com/jeffaudi/"
 
 [[params.social]]
-    name = "Twitter"
-    icon = "fa fa-2x fa-twitter"
-    weight = 2
-    url = "https://twitter.com/jeffaudi/"
-
-[[params.social]]
     name = "LinkedIn"
     icon = "fa fa-2x fa-linkedin"
     weight = 3
