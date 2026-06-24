@@ -1,8 +1,8 @@
 ---
 title: "Oriented object detection on macOS, in pure Python"
 author: "Jeff Faudi"
-date: 2026-06-25T09:00:00+07:00
-lastmod: 2026-06-25T09:00:00+07:00
+date: 2026-06-24T09:00:00+07:00
+lastmod: 2026-06-24T09:00:00+07:00
 
 description: "Run Oriented R-CNN on Apple Silicon with pip, uv, and the odet CLI — no CUDA toolchain, from demo.jpg to result.jpg in minutes."
 
@@ -48,7 +48,7 @@ Oriented-det ships three DOTA baselines — Oriented R-CNN, Rotated Faster R-CNN
 
 ```bash
 # 1. Create the project venv
-uv venv --prompt odet-snippets
+uv venv --prompt odet-tutorials
 source .venv/bin/activate
 
 # Optional, if you already have an .envrc for this folder
@@ -63,7 +63,7 @@ pip install -e .
 
 # 4. Run inference on the Mac GPU and save the visualization
 odet image-demo demo/demo.jpg \
-  configs/oriented_rcnn_dota_le90.py hf://oriented_rcnn_dota_le90_1x \
+  hf://oriented_rcnn_dota_le90_1x \
   --out-file result.jpg \
   --device mps \
   --score-thr 0.7 \
@@ -93,64 +93,44 @@ pip install -e .
 
 The editable install pulls in PyTorch, torchvision, albumentations, and the `odet` CLI from your local clone. No separate compiler step, no MMDetection config maze — and local code changes are immediately visible in the environment.
 
-### Grab a test image
+### Use the demo image
 
-```bash
-cp demo/demo.jpg ../demo.jpg
-cd ..
-```
-
-Same demo image shipped with the oriented-det repo: a bus parking lot where vehicles sit at diagonal angles — exactly the kind of scene where axis-aligned boxes waste pixels.
-
-### Find the config
-
-Model configs live **inside the editable install**, not in this blog repo:
-
-```bash
-python -c "
-import oriented_det
-from pathlib import Path
-p = Path(oriented_det.__file__).parent / 'configs/oriented_rcnn/dota_le90_1x.json'
-print(p, p.exists())
-"
-```
-
-A relative path like `configs/oriented_rcnn/dota_le90_1x.json` will fail with `Config not found` — the CLI needs the real path from the package.
+The oriented-det repo ships `demo/demo.jpg`: a bus parking lot where vehicles sit at diagonal angles — exactly the kind of scene where axis-aligned boxes waste pixels.
 
 ### Run inference on macOS
 
 ```bash
-CONFIG=$(python -c "
-import oriented_det
-from pathlib import Path
-print(Path(oriented_det.__file__).parent / 'configs/oriented_rcnn/dota_le90_1x.json')
-")
-
-odet image-demo demo.jpg "$CONFIG" hf://oriented_rcnn_dota_le90_1x \
+odet image-demo demo/demo.jpg \
+  hf://oriented_rcnn_dota_le90_1x \
   --out-file result.jpg \
   --device mps \
   --score-thr 0.7 \
   --nms-thr 0.1
 ```
 
+The `hf://oriented_rcnn_dota_le90_1x` checkpoint resolves its sidecar config automatically, so you do not need to find or pass a separate config file.
+
 `--device mps` sends inference to Apple's Metal GPU. On Linux or Windows, use `cuda` or `cpu` instead — same command, different backend.
 
 Typical output:
 
 ```
-Loading config: .../oriented_det/configs/oriented_rcnn/dota_le90_1x.json
-Loading checkpoint: .../oriented_rcnn_r50_fpn_dota_le90_1x-5b128e72.pth
+Loading config: .../oriented-det/pretrained/oriented_rcnn_r50_fpn_dota_le90_1x-5b128e72.json
+Loading checkpoint: .../oriented-det/pretrained/oriented_rcnn_r50_fpn_dota_le90_1x-5b128e72.pth
+Loaded model from .../oriented-det/pretrained/oriented_rcnn_r50_fpn_dota_le90_1x-5b128e72.pth
 Model type: oriented_rcnn
 Number of classes: 15
-Preprocessing: resize_mode=fixed, target_size=(1024, 1024)
-Inference: demo.jpg
+Class names: ['baseball-diamond', 'basketball-court', 'bridge', 'ground-track-field', 'harbor', 'helicopter', 'large-vehicle', 'plane', 'roundabout', 'ship', 'small-vehicle', 'soccer-ball-field', 'storage-tank', 'swimming-pool', 'tennis-court']
+Preprocessing: resize_mode=fixed, target_size=(1024, 1024) (model canvas 1024×1024)
+Inference thresholds: score>=0.7, merge NMS IoU<=0.1, overlap_pixels=200, ignore_margin_pixels=0.0
+Inference: demo/demo.jpg
   -> single forward (image 1024×1024 matches model canvas)
   -> 94 detections (score >= 0.7, NMS <= 0.1)
 Saved visualization to result.jpg
 Done.
 ```
 
-The model knows 15 DOTA classes (planes, ships, harbors, storage tanks, …). This checkpoint doesn't ship class name labels, so boxes appear with generic names — the geometry is the interesting part.
+The model knows the 15 DOTA classes (planes, ships, harbors, storage tanks, …), and the checkpoint metadata resolves readable class names automatically in the visualization.
 
 ---
 
@@ -158,9 +138,8 @@ The model knows 15 DOTA classes (planes, ships, harbors, storage tanks, …). Th
 
 | Flag | Value | Role |
 |---|---|---|
-| `demo.jpg` | input | Image to detect on |
-| `"$CONFIG"` | `dota_le90_1x.json` | Architecture and preprocessing |
-| `hf://oriented_rcnn_dota_le90_1x` | weights | Oriented R-CNN checkpoint on Hugging Face |
+| `demo/demo.jpg` | input | Image to detect on |
+| `hf://oriented_rcnn_dota_le90_1x` | checkpoint | Oriented R-CNN weights plus sidecar config |
 | `--out-file result.jpg` | output | Where to write the visualization |
 | `--device mps` | Apple GPU | Metal acceleration on macOS |
 | `--score-thr 0.7` | confidence | Keep boxes with score ≥ 0.7 |
@@ -183,4 +162,4 @@ The oriented-det series continues with a technical deep-dive on fine-tuning mode
 - **Previous post**: [Oriented-Det v0.1.0 is out](/posts/2026-06-22_oriented-det_v0_1_0_sovereign_oriented_object_detection_for_eo/)
 
 * * *
-#### Written on June 25, 2026 by Jeff Faudi.
+#### Written on June 24, 2026 by Jeff Faudi.
