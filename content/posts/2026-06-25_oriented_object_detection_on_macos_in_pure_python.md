@@ -36,7 +36,7 @@ We feed a DOTA-style aerial scene through **Oriented R-CNN** (ResNet-50 + FPN), 
 
 ![Input: demo.jpg — DOTA aerial tile](/posts/img/2026-06-29_oriented_object_detection_on_macos_in_pure_python_2.png#layoutTextWidth)
 
-![Output: result.jpg — Oriented R-CNN detections on macOS (`--device mps`, score ≥ 0.7)](/posts/img/2026-06-29_oriented_object_detection_on_macos_in_pure_python_1.png#layoutTextWidth)
+![Output: result.jpg — Oriented R-CNN detections on macOS](/posts/img/2026-06-29_oriented_object_detection_on_macos_in_pure_python_1.png#layoutTextWidth)
 
 ### Why Oriented R-CNN?
 

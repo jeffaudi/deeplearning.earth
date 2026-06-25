@@ -1,5 +1,5 @@
 ---
-title: "Zero-shot ship detection on a Copernicus Sentinel-2 tile with Oriented R-CNN"
+title: "Zero-shot Ship detection on a Copernicus Sentinel-2 tile with Oriented R-CNN"
 author: "Jeff Faudi"
 date: 2026-06-25T09:00:00+07:00
 lastmod: 2026-06-25T09:00:00+07:00
@@ -30,7 +30,7 @@ Ships appear as small elongated blobs: white hulls, orange decks, dark wakes, an
 
 ![Input Sentinel-2 true-colour crop with ships at arbitrary headings](/posts/img/2026-06-25_zero-shot_ship_detection_on_a_copernicus_sentinel-2_tile_with_oriented_rcnn_0.png#layoutTextWidth)
 
-DOTA's **ship** class is a reasonable semantic match, but the domain gap is large. DOTA training images are mostly aerial imagery with different resolution, colour response, viewing conditions, and object scale. Sentinel-2 TCI ships are often only a handful of pixels wide.
+DOTA's **ship** class is a reasonable semantic match, but the domain gap is large. DOTA training images are mostly aerial imagery with different resolution, colour response, viewing conditions, and object scale. Ships on Sentinel-2 images are often only a handful of pixels wide.
 
 ---
 
@@ -40,15 +40,9 @@ The Oriented R-CNN DOTA recipe uses a **1024×1024** model canvas. Since the til
 
 We used the published `oriented_rcnn_dota_le90_1x` checkpoint, which reaches roughly 75% mAP50 on DOTA validation tiles. The sidecar config resolves class names correctly, so the output says `ship` rather than `Class 10`.
 
-At a permissive score threshold of `0.05` and merge NMS IoU of `0.2`, the model produced roughly **20 detections**. Some were genuine ships with boxes aligned to vessel heading. Many visible ships were missed. A few false positives appeared as `harbor` or other DOTA classes, which is understandable around bright linear structures and pier-like features on water.
+At a permissive score threshold of `0.05` and merge NMS IoU of `0.2`, the model produced roughly **20 detections**. Some were genuine ships with boxes aligned to vessel heading. Many visible ships were missed. A few false positives appeared as `swimming pool` or other DOTA classes, which is understandable around bright linear structures and pier-like features on water.
 
 The takeaway is simple: the model knows the category in principle, but native 10 m resolution leaves many targets near or below the effective scale it saw during training.
-
-Output file:
-
-```text
-T30NZM_20260616T101021_TCI_10m_2976_7936_detections.png
-```
 
 ---
 
@@ -73,13 +67,6 @@ Runtime grows with the number of windows. On CPU, the 4× tile took about two mi
 ![2× zoomed sliding-window ship detections](/posts/img/2026-06-25_zero-shot_ship_detection_on_a_copernicus_sentinel-2_tile_with_oriented_rcnn_1.png#layoutTextWidth)
 
 ![4× zoomed sliding-window ship detections](/posts/img/2026-06-25_zero-shot_ship_detection_on_a_copernicus_sentinel-2_tile_with_oriented_rcnn_2.png#layoutTextWidth)
-
-Output files:
-
-```text
-T30NZM_20260616T101021_TCI_10m_2976_7936_2x_detections.png
-T30NZM_20260616T101021_TCI_10m_2976_7936_4x_detections.png
-```
 
 ---
 
@@ -154,7 +141,7 @@ The output is written at the original image size, even though inference runs on 
 
 ## Next steps
 
-- Fine-tune on labelled maritime tiles from Sentinel-2, Airbus SPOT, or DOTA ship subsets.
+- Fine-tune on labelled maritime tiles from Sentinel-2, Airbus SPOT, or synthetic imagery ship datasets.
 - Evaluate on a held-out tile set with manual ship counts; visual inspection suggests recall around **30–50%** here, but that is not a measured metric.
 - Run larger Copernicus scenes through the same sliding-window path and export georeferenced detections.
 

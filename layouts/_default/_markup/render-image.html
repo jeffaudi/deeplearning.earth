@@ -1,0 +1,12 @@
+{{- $dest := .Destination -}}
+{{- $src := $dest -}}
+{{- if strings.Contains $dest "#" -}}
+  {{- $src = index (split $dest "#") 0 -}}
+{{- end -}}
+<img src="{{ $src | safeURL }}" class="post-image-zoom" width="100%"
+{{- with .Text }} alt="{{ . }}"{{ end -}}
+{{- with .Title }} title="{{ . }}"{{ end -}}
+><div style="text-align: center;"><span style="font-size: 16px; color:grey;">
+{{- with .Text }}{{ . }}{{ end -}}
+{{- with .Title }}{{ . }}{{ end -}}
+</span></div>

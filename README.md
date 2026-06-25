@@ -45,3 +45,6 @@ Posts live under `content/posts/`. The about page is `content/about.md` (layout:
 - `layouts/partials/list.html` — taxonomy/series list pages use the same post list markup
 - `layouts/posts/list.html` — `/posts/` section list (redirects to `/` on Netlify)
 - `assets/css/custom.css` — single-column blog layout (post list, about page, post meta)
+- `assets/css/medium-zoom.css` — overlay styles for click-to-zoom images ([medium-zoom](https://github.com/francoischalifour/medium-zoom))
+- `assets/js/medium-zoom.min.js` + `assets/js/image-zoom.js` — click-to-zoom on post images
+- `layouts/_default/_markup/render-image.html` — markdown images get class `post-image-zoom` (strips `#layoutTextWidth` from URLs)

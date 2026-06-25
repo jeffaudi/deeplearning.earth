@@ -40,7 +40,8 @@ mainSections = ["posts"]
     rtl = false
 
     math = true
-    customCSS = ["css/custom.css"]
+    customCSS = ["css/custom.css", "css/medium-zoom.css"]
+    customJS = ["js/medium-zoom.min.js", "js/image-zoom.js"]
 
 # Social links
 [[params.social]]
