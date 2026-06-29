@@ -89,7 +89,7 @@ The full workflow — tiling, training, prediction, evaluation — is covered in
 
 ## What's next
 
-The next post is a hands-on walkthrough — **[oriented object detection on macOS, in pure Python](/posts/2026-06-29_oriented_object_detection_on_macos_in_pure_python/)** — bus detection on the bundled DOTA demo image using the pretrained Oriented R-CNN, from `uv pip install` to `result.jpg` on Apple Silicon (`--device mps`). It will publish with the upcoming 3× Oriented R-CNN checkpoint patch, once that training run completes.
+The next post in the series is a hands-on walkthrough — **[oriented object detection on macOS, in pure Python](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/)** — bus detection on the bundled DOTA demo image using the pretrained Oriented R-CNN, from `uv pip install` to `result.jpg` on Apple Silicon (`--device mps`). The [Oriented R-CNN 3× checkpoint announcement](/posts/2026-06-29_announcing_the_final_oriented_det_pretrained_model/) covers the final DOTA le90 pretrained model and eval-val results.
 
 Beyond that, the series will cover:
 
