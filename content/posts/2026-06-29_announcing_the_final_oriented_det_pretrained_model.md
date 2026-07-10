@@ -2,9 +2,9 @@
 title: "Announcing the Oriented R-CNN 3× pretrained model"
 author: "Jeff Faudi"
 date: 2026-06-29T09:00:00+07:00
-lastmod: 2026-06-29T09:00:00+07:00
+lastmod: 2026-07-10T09:00:00+07:00
 
-description: "The OrientedDet DOTA le90 pretrained zoo is complete. Oriented R-CNN 3× reaches 79.4% eval-val mAP50 — our best two-stage detector and the recommended default."
+description: "The OrientedDet DOTA le90 pretrained zoo is complete. Oriented R-CNN 3× reaches 79.4% eval-val mAP50; Rotated Faster R-CNN 3× with ProbIoU now leads the zoo at 83.4%."
 
 image: "/posts/img/2026-06-29_announcing_the_final_oriented_det_pretrained_model.png"
 
@@ -46,11 +46,13 @@ All models: ResNet50-FPN, 1024×1024 tiles, DOTA **train+val** pretrain, **val-o
 |---|---|---:|---|
 | **Oriented R-CNN** | 1× | 74.79% | `oriented_rcnn_dota_le90_1x` |
 | **Oriented R-CNN** | **3×** | **79.40%** | **`oriented_rcnn_dota_le90_3x`** |
-| Rotated Faster R-CNN | 3× (+ ProbIoU aux) | 76.41% | `rotated_faster_rcnn_dota_le90_3x` |
+| **Rotated Faster R-CNN** | **3× (ProbIoU)** | **83.42%** | **`rotated_faster_rcnn_dota_le90_3x`** |
 | Rotated RetinaNet | 1× | 64.14% | `rotated_retinanet_dota_le90_1x` |
 | Rotated RetinaNet | 3× | 71.52% | `rotated_retinanet_dota_le90_3x` |
 
-**Recommendation:** use **`oriented_rcnn_dota_le90_3x`** for best accuracy on DOTA-style oriented detection. Keep 1× for faster iteration or when GPU time is limited.
+> **Update (July 10, 2026):** The `rotated_faster_rcnn_dota_le90_3x` slug originally shipped at **76.41%** with Smooth L1 regression. The published checkpoint now uses **ProbIoU** as the main ROI loss and reaches **83.42%** eval-val mAP50. See [Rotated Faster R-CNN on DOTA without custom CUDA](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/) for the full story. A CE baseline at 75.58% remains as `rotated_faster_rcnn_dota_le90_3x_ce`.
+
+**Recommendation:** use **`rotated_faster_rcnn_dota_le90_3x`** for best accuracy on DOTA-style oriented detection (**83.42%**). **`oriented_rcnn_dota_le90_3x`** remains a strong alternative (**79.40%**) when rotated RoIAlign behaviour matters for your domain. Keep 1× checkpoints for faster iteration or when GPU time is limited.
 
 Per-class reports: [`docs/eval-reports/`](https://github.com/DL4EO/oriented-det/tree/main/docs/eval-reports) in the repo (markdown + analysis JSON; raw `predictions.json` stays local for the Gradio viewer).
 
@@ -181,6 +183,7 @@ Production NMS for Oriented R-CNN uses **`production.final_nms_iou_threshold: 0.
 - [OrientedDet on GitHub](https://github.com/DL4EO/oriented-det)
 - [Pretrained weights README](https://github.com/DL4EO/oriented-det/blob/main/pretrained/README.md)
 - [Oriented R-CNN config guide](https://github.com/DL4EO/oriented-det/blob/main/configs/oriented_rcnn/README.md)
+- Later in this series: [Rotated Faster R-CNN with ProbIoU — 83.4% checkpoint](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/)
 - Earlier posts in this series: [macOS pure-Python inference](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/), [v0.1.0 release](/posts/2026-06-22_oriented-det_v0_1_0_sovereign_oriented_object_detection_for_eo/)
 
 * * *
