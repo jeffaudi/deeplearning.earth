@@ -2,9 +2,9 @@
 title: "Oriented-Det v0.1.1 — ProbIoU, MMRotate parity, and the updated zoo"
 author: "Jeff Faudi"
 date: 2026-07-11T09:00:00+07:00
-lastmod: 2026-07-11T10:00:00+07:00
+lastmod: 2026-07-11T11:00:00+07:00
 
-description: "Oriented-det v0.1.1 is on PyPI — ProbIoU ROI regression, MMRotate-aligned training fixes, published eval reports, a refreshed DOTA le90 zoo led by Rotated Faster R-CNN 3× at 83.42% eval-val mAP50, and a hands-on harbor-scene inference demo."
+description: "Oriented-det v0.1.1 is on PyPI — ProbIoU ROI regression, MMRotate-aligned training fixes, published eval reports, a refreshed DOTA le90 zoo led by Rotated Faster R-CNN 3× at 83.42% eval-val mAP50 (~7× faster inference than Oriented R-CNN 3×), and a hands-on harbor-scene demo."
 
 image: "/posts/img/2026-07-11_rotated_faster_rcnn_large_scene_detections.png"
 
@@ -48,7 +48,28 @@ v0.1.1 ships **ProbIoU ROI regression** for Rotated Faster R-CNN (`roi_box_reg_m
 
 The CE Smooth L1 baseline that shipped briefly at 76.41% remains available as `rotated_faster_rcnn_dota_le90_3x_ce` for ablations. For the sampled-rIoU vs ProbIoU trade-offs, per-class deltas, and training recipe, see the [ProbIoU deep dive](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/).
 
-In [June we recommended Oriented R-CNN](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/) for quick macOS demos because it behaved well without CUDA rotated-IoU kernels. v0.1.1 changes the default pick: **`rotated_faster_rcnn_dota_le90_3x`** for best DOTA-style accuracy out of the box; Oriented R-CNN 3× remains strong when rotated RoIAlign behaviour matters for your domain.
+In [June we recommended Oriented R-CNN](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/) for quick macOS demos because it behaved well without CUDA rotated-IoU kernels. v0.1.1 changes the default pick: **`rotated_faster_rcnn_dota_le90_3x`** for best DOTA-style accuracy *and* throughput out of the box; Oriented R-CNN 3× remains strong when rotated RoIAlign behaviour matters for your domain.
+
+## Accuracy and speed vs Oriented R-CNN
+
+The zoo leader is not only more accurate — it is **much faster** at inference and training. Timings below use the same eval-val pipeline as the zoo: one 1024×1024 forward per DOTA val tile, `production.*` decode, exact CPU polygon NMS when configured. Figures come from `predictions.json` metadata on **7,669 val images** (CUDA); see the [ProbIoU deep dive](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/) for methodology and per-class breakdowns.
+
+| Model | eval-val mAP50 | Throughput | ms / tile |
+|---|---:|---:|---:|
+| **Rotated Faster R-CNN 3× (ProbIoU)** | **83.42%** | **6.32 img/s** | **158** |
+| Rotated Faster R-CNN 1× (ProbIoU) | 77.57% | 6.25 img/s | 160 |
+| Oriented R-CNN 3× | 79.40% | 0.91 img/s | 1,105 |
+| Oriented R-CNN 1× | 74.79% | 0.91 img/s | 1,100 |
+
+**Rotated Faster R-CNN is ~6.9× faster** on tiled val inference than Oriented R-CNN at comparable accuracy tiers — and emits fewer raw detections (≈14 vs ≈25 boxes per image at score ≥ 0.05), which also keeps CPU NMS cheaper.
+
+Why the gap?
+
+1. **RoIAlign geometry** — Rotated Faster R-CNN uses horizontal RoIAlign on horizontal RPN proposals; Oriented R-CNN uses rotated RoIAlign on oriented proposals (heavier per-RoI sampling).
+2. **Proposal volume** — Oriented R-CNN's midpoint-offset RPN tends to produce more candidates before NMS, increasing head and NMS work.
+3. **Same honest NMS** — both runs use CPU polygon final NMS when configured; the speedup is architectural, not a metric shortcut.
+
+Training shows the same pattern on the same tile recipe: **~58 min/epoch** (Rotated Faster R-CNN 1×) vs **~4 h 4 min/epoch** (Oriented R-CNN 1×). At 1× schedule, Rotated Faster R-CNN already beats Oriented R-CNN on eval-val mAP50 (**77.57%** vs **74.79%**) while finishing a full 12-epoch run in roughly **one fifth** the wall time.
 
 ## Try it: inference on a complex harbor scene
 
