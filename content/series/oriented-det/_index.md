@@ -11,6 +11,7 @@ Technical notes on [**oriented-det**](https://github.com/DL4EO/oriented-det): an
 2. [Oriented-Det v0.1.0 is out](/posts/2026-06-22_oriented-det_v0_1_0_sovereign_oriented_object_detection_for_eo/) — install, docs, and getting started
 3. [Oriented object detection on macOS, in pure Python](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/) — hands-on inference with `odet image-demo` on Apple Silicon
 4. [Announcing the Oriented R-CNN 3× pretrained model](/posts/2026-06-29_announcing_the_final_oriented_det_pretrained_model/) — final DOTA le90 checkpoint, eval-val results, and usage
+5. [Oriented-Det v0.1.1](/posts/2026-07-11_oriented-det_v0_1_1_prob_iou_mmrotate_parity_and_the_updated_zoo/) — ProbIoU, MMRotate parity, eval reports, updated zoo, and harbor-scene inference demo
 
 **Links**
 

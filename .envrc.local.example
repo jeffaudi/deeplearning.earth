@@ -1,0 +1,2 @@
+# Copy to .envrc.local if oriented-det is not at ~/Projects/oriented-det
+export ORIENTED_DET_ROOT="/Users/jeffaudi/Projects/oriented-det"

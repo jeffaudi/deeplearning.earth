@@ -18,6 +18,33 @@ Open [http://localhost:1313/](http://localhost:1313/).
 
 Requires Hugo **Extended** (for SCSS). The Netlify config pins `HUGO_VERSION` in `netlify.toml`.
 
+### oriented-det venv (inference / `odet` CLI)
+
+Posts that run [oriented-det](https://github.com/DL4EO/oriented-det) inference expect the package’s **uv** venv. This repo does not vendor Python deps; [direnv](https://direnv.net/) activates the sibling install when you `cd` here.
+
+Default path: `~/Projects/oriented-det/.venv`. One-time:
+
+```bash
+direnv allow
+```
+
+If the repo lives elsewhere, copy `.envrc.local.example` to `.envrc.local` and set `ORIENTED_DET_ROOT`. Verify:
+
+```bash
+which odet
+odet --version   # or: python -c "import oriented_det; print(oriented_det.__file__)"
+```
+
+Create the venv in the oriented-det repo (see its [installation docs](https://github.com/DL4EO/oriented-det/blob/main/docs/getting-started/installation.md)):
+
+```bash
+cd ~/Projects/oriented-det
+uv venv --python 3.12
+uv pip install torch torchvision
+uv pip install -r requirements.txt
+uv pip install -e .
+```
+
 ## Deploy (Netlify)
 
 Settings are defined in `netlify.toml`:
