@@ -16,13 +16,13 @@ draft: true
 
 # One-line story
 
-I built [OrientedDet](https://github.com/jeffaudi/oriented-det) as a lightweight PyTorch alternative to [MMRotate](https://github.com/open-mmlab/mmrotate): weeks closing naming, architecture, data, and metric gaps; ~80% mAP on tiled validation with an MMRotate-aligned recipe; and a final chase for **elongated-object alignment** (ships, harbors, large vehicles) where MMRotate’s CUDA **rotated IoU** in the loss still wins—and where **KFIoU** in OrientedDet is the practical way to close that gap without writing custom kernels.
+I built [OrientedDet](https://github.com/DL4EO/oriented-det) as a lightweight PyTorch alternative to [MMRotate](https://github.com/open-mmlab/mmrotate): weeks closing naming, architecture, data, and metric gaps; ~80% mAP on tiled validation with an MMRotate-aligned recipe; and a final chase for **elongated-object alignment** (ships, harbors, large vehicles) where MMRotate’s CUDA **rotated IoU** in the loss still wins—and where **KFIoU** in OrientedDet is the practical way to close that gap without writing custom kernels.
 
 This post is the DOTA chapter I promised in [Introducing oriented-det]({{< relref "2026-05-28_introducing_oriented-det_sovereign_oriented_object_detection_for_eo.md" >}}). It is written for anyone reproducing aerial OBB baselines or wondering why “we matched the config” still leaves ships a few degrees off.
 
 # Why bother with a small framework?
 
-MMRotate is excellent for research. For a product-minded EO stack, I wanted something closer to Ultralytics in spirit: explicit configs, owned runs, LGPL, no MMCV version roulette. DOTA v1.0 is the honest benchmark: huge images, le90 boxes, a zoo of elongated classes, and published numbers everyone cites.
+MMRotate is excellent for research. For a product-minded EO stack, I wanted something closer to Ultralytics in spirit: explicit configs, owned runs, Apache 2.0, no MMCV version roulette. DOTA v1.0 is the honest benchmark: huge images, le90 boxes, a zoo of elongated classes, and published numbers everyone cites.
 
 The goal was not to beat papers with a new architecture. It was **parity**: same tiling, same trainval merge, same Rotated Faster R-CNN recipe—then understand every point of mAP we still gave up.
 
@@ -37,7 +37,7 @@ DOTA images are thousands of pixels wide. Everyone trains on **tiles**.
 | Out-of-image windows | Drop or shift windows with too much padding (`img_rate_thr` behavior) | Official tiler semantics |
 | Empty tiles | `filter_empty_gt: true` (default in MMRotate) | Drops tiles with no objects after filters |
 
-Re-tiling from `/home/jeffaudi/data/DOTA-v1.0` was a full reset. With empty-tile filtering, typical counts were:
+Re-tiling from `/path/to/data/DOTA-v1.0` was a full reset. With empty-tile filtering, typical counts were:
 
 - **Train:** 33,155 windows → **13,691** kept (~59% dropped)
 - **Val (tiled):** 7,669 → **3,121** kept
@@ -186,7 +186,7 @@ Mitigations we stack with KFIoU:
 - More RPN proposals where recall on thin objects lags  
 - `roi_inference_top_class_only` and NMS parity checks (inference-side, not a substitute for loss)
 
-OrientedDet still will not ship MMRotate’s exact CUDA kernel in v1. **KFIoU is the deliberate trade:** most of the gradient benefit for elongated boxes, LGPL-friendly PyTorch, reproducible on consumer GPUs.
+OrientedDet still will not ship MMRotate’s exact CUDA kernel in v1. **KFIoU is the deliberate trade:** most of the gradient benefit for elongated boxes, Apache-licensed PyTorch, reproducible on consumer GPUs.
 
 # Engineering stories worth stealing
 
