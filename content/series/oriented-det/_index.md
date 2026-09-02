@@ -16,6 +16,7 @@ Technical notes on [**oriented-det**](https://github.com/DL4EO/oriented-det): an
 7. [Rotated Faster R-CNN on DOTA without custom CUDA](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/) — ProbIoU, sampled rIoU, 83.42% eval-val
 8. [Oriented-Det v0.1.1](/posts/2026-07-11_oriented-det_v0_1_1_prob_iou_mmrotate_parity_and_the_updated_zoo/) — ProbIoU packaged, MMRotate parity, harbor-scene demo
 9. [Oriented-Det v0.2.0](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/) — Rotated FCOS, decoded rIoU, four-family zoo
+10. [Rotated FCOS vs Oriented R-CNN on macOS](/posts/2026-09-02_rotated_fcos_vs_oriented_rcnn_on_macos/) — Apple Silicon MPS latency and side-by-side demos
 
 **Links**
 
