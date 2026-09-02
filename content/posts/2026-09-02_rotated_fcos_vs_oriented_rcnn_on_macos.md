@@ -2,9 +2,9 @@
 title: "Rotated FCOS vs Oriented R-CNN on macOS"
 author: "Jeff Faudi"
 date: 2026-09-02T15:00:00+07:00
-lastmod: 2026-09-02T15:00:00+07:00
+lastmod: 2026-09-02T15:45:00+07:00
 
-description: "Hands-on Apple Silicon comparison of Hub 3× DOTA checkpoints — Rotated FCOS (82.32% eval-val) vs Oriented R-CNN (79.40%) — latency, score thresholds, and side-by-side detections with odet image-demo on MPS."
+description: "Hands-on Apple Silicon comparison of Hub 3× DOTA checkpoints — Rotated FCOS (82.32% eval-val) vs Oriented R-CNN (79.40%) — MPS latency, training wall on NVIDIA L4 (~5.7× faster for FCOS), score thresholds, and side-by-side detections."
 
 image: "/posts/img/2026-09-02_rotated_fcos_vs_oriented_rcnn_macos_demo_fcos.png"
 
@@ -16,9 +16,9 @@ subtitle: "odet image-demo … --device mps"
 
 In [June](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/) we ran **Oriented R-CNN** on a MacBook with `--device mps` — no CUDA toolchain, one CLI command, rotated boxes on a real aerial tile. [v0.2.0](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/) added a fourth detector family: **Rotated FCOS**, an anchor-free single-stage model with a decoded-rIoU 3× Hub checkpoint.
 
-This post puts both on the same Mac and the same images. Same canvas, same NMS, same score floor — Apple M1 Max, PyTorch MPS, Hub 3× weights. The question is practical: does the new one-stage model feel good enough on a laptop to replace the two-stage demo default?
+This post puts both on the same Mac and the same images. Same canvas, same NMS, same score floor — Apple M1 Max, PyTorch MPS, Hub 3× weights. We also pull the **training wall times** from the published Hub runs (same NVIDIA L4 recipe). The question is practical: does the new one-stage model feel good enough on a laptop to replace the two-stage demo default?
 
-**Short answer:** yes for most scenes, with one caveat about score thresholds. FCOS is faster, slightly more accurate on the published DOTA eval-val protocol, and visually competitive — but its scores are less peaked, so the old `--score-thr 0.7` from the Oriented R-CNN walkthrough will silently drop half the boxes.
+**Short answer:** yes for most scenes, with one caveat about score thresholds. FCOS is faster at inference **and** about **5.7× faster to train**, slightly more accurate on the published DOTA eval-val protocol, and visually competitive — but its scores are less peaked, so the old `--score-thr 0.7` from the Oriented R-CNN walkthrough will silently drop half the boxes.
 
 ---
 
@@ -31,10 +31,12 @@ This post puts both on the same Mac and the same images. Same canvas, same NMS, 
 | Architecture | two-stage (RPN + oriented RoIAlign) | one-stage, anchor-free |
 | Parameters | 41.3M | 36.2M |
 | Checkpoint size | 315 MB | 276 MB |
+| 3× train wall (NVIDIA L4) | **5d 10h 56m** | **23h 4m** (~5.7× faster) |
+| Mean epoch (incl. periodic mAP) | 3h 38m | 37m 54s |
 
 Both are ResNet-50 + FPN, DOTA le90, train+val pretrain / val eval. The current Hub asset is the refreshed decoded-rIoU run at **82.32%**.
 
-Hardware for the numbers below: **Apple M1 Max**, 64 GB unified memory, PyTorch **2.13.0**, `oriented-det` **0.2.0**, `--device mps`. Protocol: `score ≥ 0.3`, merge NMS IoU `≤ 0.1` (FCOS eval NMS; same floor for both).
+**Inference** numbers below: **Apple M1 Max**, 64 GB unified memory, PyTorch **2.13.0**, `oriented-det` **0.2.0**, `--device mps`. Protocol: `score ≥ 0.3`, merge NMS IoU `≤ 0.1` (FCOS eval NMS; same floor for both). **Training** wall times come from the Hub run logs on a single **NVIDIA L4** (see below).
 
 ---
 
@@ -103,6 +105,23 @@ Neither model needs custom CUDA kernels. MPS just works.
 
 ---
 
+## Training wall time (same L4 recipe)
+
+The Hub 3× checkpoints were trained on the same DOTA tile recipe: **13,691** train+val tiles, **batch size 2**, **36 epochs**, milestones at 24 / 33, single **NVIDIA L4**. Timings are from the published sidecar logs (`oriented_rcnn_r50_fpn_dota_le90_3x-68957f98.log`, `rotated_fcos_r50_fpn_dota_le90_3x-6e383331.log`).
+
+| Model | Started → finished | Total wall | Mean epoch | Min / max epoch |
+|---|---|---:|---:|---:|
+| Oriented R-CNN 3× | 2026-06-21 → 2026-06-26 | **5d 10h 56m** | 3h 38m | 2h 37m / 4h 46m |
+| Rotated FCOS 3× | 2026-08-31 → 2026-09-01 | **23h 4m** | **37m 54s** | 31m 11s / 57m 30s |
+
+**Rotated FCOS finishes the 3× schedule in under a day** — about **5.7× less wall clock** than Oriented R-CNN on the same GPU and data. Train-only epochs (no periodic mAP) sit around **31–33 minutes** for FCOS versus a few hours for Oriented R-CNN; mAP-every-4 epochs stretch both (FCOS peaks near 57 minutes when GPU-sampled val mAP runs).
+
+That gap is architectural: Oriented R-CNN pays for an RPN plus **oriented RoIAlign** on every proposal every step. FCOS is a single dense head over P3–P7. The [July ProbIoU post](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/) already showed Rotated Faster R-CNN (~58 min/epoch) beating Oriented R-CNN on training cost; FCOS lands in a similar per-epoch band while staying one-stage and anchor-free.
+
+If you are iterating recipes on a single L4, that is the difference between **waiting overnight** and **waiting almost a week** for a 3× run.
+
+---
+
 ## Harbor: sliding-window ships
 
 Same `large.jpg` as the [v0.1.1 harbor demo](/posts/2026-07-11_oriented-det_v0_1_1_prob_iou_mmrotate_parity_and_the_updated_zoo/) (1299×1904). The DOTA recipe tiles oversized rasters; here that is **six** 1024 windows with 200 px overlap.
@@ -148,11 +167,12 @@ Compact circular tanks are a published FCOS strength on eval-val (ahead of Faste
 | Goal | Pick |
 |---|---|
 | Fast macOS / MPS demo, one-stage stack | **`rotated_fcos_dota_le90_3x`** |
+| Fast 3× training iteration on a single L4 | **`rotated_fcos_dota_le90_3x`** (~23 h vs ~5.5 days) |
 | Highest DOTA-style accuracy (Linux/CUDA zoo) | `rotated_faster_rcnn_dota_le90_3x` (83.42%) |
 | Rotated RoIAlign behaviour / continuity with June tutorials | `oriented_rcnn_dota_le90_3x` |
 | Ships / elongated classes as the product | Prefer Faster R-CNN ProbIoU or Oriented R-CNN; FCOS trails on ship/bridge/GTF in the published per-class tables |
 
-For laptop demos after v0.2, **Rotated FCOS 3×** is the better default than Oriented R-CNN 1×/3×: higher published mAP50, fewer parameters, faster MPS inference, and no RPN. Keep score thresholds in the **0.25–0.30** band and NMS at **0.1**.
+For laptop demos after v0.2, **Rotated FCOS 3×** is the better default than Oriented R-CNN 1×/3×: higher published mAP50, fewer parameters, faster MPS inference, **much cheaper 3× training**, and no RPN. Keep score thresholds in the **0.25–0.30** band and NMS at **0.1**.
 
 ---
 
@@ -181,9 +201,9 @@ odet image-demo demo/large.jpg hf://rotated_fcos_dota_le90_3x \
 ## References
 
 - [oriented-det on GitHub](https://github.com/DL4EO/oriented-det)
-- [Pretrained zoo](https://huggingface.co/dl4eo/oriented-det-pretrained) — `rotated_fcos_dota_le90_3x`, `oriented_rcnn_dota_le90_3x`
+- [Pretrained zoo](https://huggingface.co/dl4eo/oriented-det-pretrained) — `rotated_fcos_dota_le90_3x`, `oriented_rcnn_dota_le90_3x` (sidecar `.log` files hold the train timing summaries)
 - [Rotated FCOS recipes](https://github.com/DL4EO/oriented-det/tree/main/configs/rotated_fcos)
-- **Previous:** [Oriented-Det v0.2.0](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/) · [macOS Oriented R-CNN walkthrough](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/)
+- **Previous:** [Oriented-Det v0.2.0](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/) · [macOS Oriented R-CNN walkthrough](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/) · [Faster R-CNN training-cost context](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/)
 
 * * *
 #### Written on September 2, 2026 by Jeff Faudi.
