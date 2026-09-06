@@ -204,6 +204,7 @@ odet image-demo demo/large.jpg hf://rotated_fcos_dota_le90_3x \
 - [Pretrained zoo](https://huggingface.co/dl4eo/oriented-det-pretrained) — `rotated_fcos_dota_le90_3x`, `oriented_rcnn_dota_le90_3x` (sidecar `.log` files hold the train timing summaries)
 - [Rotated FCOS recipes](https://github.com/DL4EO/oriented-det/tree/main/configs/rotated_fcos)
 - **Previous:** [Oriented-Det v0.2.0](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/) · [macOS Oriented R-CNN walkthrough](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/) · [Faster R-CNN training-cost context](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/)
+- **Next:** [A static demo of three oriented detectors](/posts/2026-09-06_oriented_det_optical_satellite_demo/)
 
 * * *
 #### Written on September 2, 2026 by Jeff Faudi.
