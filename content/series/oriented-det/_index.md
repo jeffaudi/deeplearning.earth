@@ -18,6 +18,7 @@ Technical notes on [**oriented-det**](https://github.com/DL4EO/oriented-det): an
 9. [Oriented-Det v0.2.0](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/) — Rotated FCOS, decoded rIoU, four-family zoo
 10. [Rotated FCOS vs Oriented R-CNN on macOS](/posts/2026-09-02_rotated_fcos_vs_oriented_rcnn_on_macos/) — Apple Silicon MPS latency, L4 training wall (~5.7×), side-by-side demos
 11. [A static demo of three oriented detectors](/posts/2026-09-06_oriented_det_optical_satellite_demo/) — Rotated Faster R-CNN, FCOS, and Oriented R-CNN on seven optical scenes, in parity with MMRotate
+12. [Apache 2.0 covers oriented-det. It does not cover DOTA or HRSC.](/posts/2026-09-10_oriented_det_apache_license_versus_dota/) — sovereignty of the stack versus research datasets; train on your own licensed imagery
 
 **Links**
 
