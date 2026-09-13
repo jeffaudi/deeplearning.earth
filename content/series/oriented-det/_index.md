@@ -19,6 +19,7 @@ Technical notes on [**oriented-det**](https://github.com/DL4EO/oriented-det): an
 10. [Rotated FCOS vs Oriented R-CNN on macOS](/posts/2026-09-02_rotated_fcos_vs_oriented_rcnn_on_macos/) — Apple Silicon MPS latency, 1× L4 training wall, side-by-side demos
 11. [A static demo of three oriented detectors](/posts/2026-09-06_oriented_det_optical_satellite_demo/) — Rotated Faster R-CNN, FCOS, and Oriented R-CNN on seven optical scenes, in parity with MMRotate
 12. [Apache 2.0 covers oriented-det. It does not cover DOTA or HRSC.](/posts/2026-09-10_oriented_det_apache_license_versus_dota/) — sovereignty of the stack versus research datasets; train on your own licensed imagery
+13. [HRSC2016 recipes, trains, and results](/posts/2026-09-13_hrsc2016_recipes_trains_and_results/) — native ship loader, three 3× Hub weights, held-out test 90.41% / 88.77% / 88.34%
 
 **Links**
 
