@@ -38,7 +38,7 @@ DOTA's **ship** class is a reasonable semantic match, but the domain gap is larg
 
 The Oriented R-CNN DOTA recipe uses a **1024×1024** model canvas. Since the tile is already 1024×1024, the first baseline is a single forward pass: no tiling, no resize stretch.
 
-We used the published `oriented_rcnn_dota_le90_1x` checkpoint, which reaches roughly 75% mAP50 on DOTA validation tiles. The sidecar config resolves class names correctly, so the output says `ship` rather than `Class 10`.
+We used the published `oriented_rcnn_dota_le90_1x` checkpoint, which reaches **76.73%** official DOTA v1.0 Task 1. The sidecar config resolves class names correctly, so the output says `ship` rather than `Class 10`.
 
 At a permissive score threshold of `0.05` and merge NMS IoU of `0.2`, the model produced roughly **20 detections**. Some were genuine ships with boxes aligned to vessel heading. Many visible ships were missed. A few false positives appeared as `swimming pool` or other DOTA classes, which is understandable around bright linear structures and pier-like features on water.
 
@@ -57,12 +57,12 @@ The `image_demo.py --zoom` path does this in memory, runs inference on the zoome
 | Variant | Image size | Inference mode | Windows | Typical detections |
 |---|---:|---|---:|---:|
 | 1× | 1024×1024 | Single forward | 1 | ~21 at score ≥ 0.05 |
-| 2× | 2048×2048 | Sliding window | 16 | 24 ships at score ≥ 0.15 |
-| 4× | 4096×4096 | Sliding window | 64 | 28 ships at score ≥ 0.15 |
+| 2× | 2048×2048 | Sliding window | 9 | 21 ships at score ≥ 0.15 |
+| 4× | 4096×4096 | Sliding window | 49 | 28 ships at score ≥ 0.15 |
 
 Recall improved with zoom. Several high-confidence boxes, around `0.8` to `0.97`, appeared in the 2× and 4× runs where the 1× baseline had missed the same vessels entirely.
 
-Runtime grows with the number of windows. On CPU, the 4× tile took about two minutes because it requires 64 model windows.
+Runtime grows with the number of windows. On CPU, the 4× tile took about two minutes because it requires 49 model windows.
 
 ![2× zoomed sliding-window ship detections](/posts/img/2026-06-25_zero-shot_ship_detection_on_a_copernicus_sentinel-2_tile_with_oriented_rcnn_1.png#layoutTextWidth)
 

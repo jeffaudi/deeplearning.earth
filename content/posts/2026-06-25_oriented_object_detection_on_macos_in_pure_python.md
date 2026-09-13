@@ -32,7 +32,7 @@ We feed a DOTA-style aerial scene through **Oriented R-CNN** (ResNet-50 + FPN), 
 |---|---|
 | **Input** | `demo.jpg` — a DOTA aerial tile with buses parked at diagonal angles |
 | **Output** | `result.jpg` — the same image with rotated bounding boxes drawn on it |
-| **Sweet spot** | `--score-thr 0.7 --nms-thr 0.1` (~94 detections on the demo image) |
+| **Sweet spot** | `--score-thr 0.55 --nms-thr 0.1` (deploy floor for `oriented_rcnn_dota_le90_1x`) |
 
 ![Input: demo.jpg — DOTA aerial tile](/posts/img/2026-06-29_oriented_object_detection_on_macos_in_pure_python_2.png#layoutTextWidth)
 
@@ -40,7 +40,7 @@ We feed a DOTA-style aerial scene through **Oriented R-CNN** (ResNet-50 + FPN), 
 
 ### Why Oriented R-CNN?
 
-Oriented-det ships three DOTA baselines — Oriented R-CNN, Rotated Faster R-CNN, and Rotated RetinaNet. Rotated Faster R-CNN and Rotated RetinaNet are solid starting points for fine-tuning, but they do not produce clean oriented boxes in a pure-Python workflow: without a CUDA kernel for rotated IoU (rIoU), their training and inference pipeline is penalized. Oriented R-CNN behaves well without that kernel, so it is the architecture we favor for now — and the one this walkthrough uses.
+Oriented-det ships three DOTA baselines — Oriented R-CNN, Rotated Faster R-CNN, and Rotated RetinaNet. This walkthrough uses **Oriented R-CNN**, the accuracy default on the Hub and a clean macOS demo: no CUDA toolchain, one CLI command. Rotated Faster R-CNN is the faster two-stage option (see the [July ProbIoU post](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/)); Rotated RetinaNet is the one-stage legacy baseline.
 
 ---
 
@@ -66,7 +66,7 @@ odet image-demo demo/demo.jpg \
   hf://oriented_rcnn_dota_le90_1x \
   --out-file result.jpg \
   --device mps \
-  --score-thr 0.7 \
+  --score-thr 0.55 \
   --nms-thr 0.1
 ```
 
@@ -104,7 +104,7 @@ odet image-demo demo/demo.jpg \
   hf://oriented_rcnn_dota_le90_1x \
   --out-file result.jpg \
   --device mps \
-  --score-thr 0.7 \
+  --score-thr 0.55 \
   --nms-thr 0.1
 ```
 
@@ -115,17 +115,17 @@ The `hf://oriented_rcnn_dota_le90_1x` checkpoint resolves its sidecar config aut
 Typical output:
 
 ```
-Loading config: .../oriented-det/pretrained/oriented_rcnn_r50_fpn_dota_le90_1x-5b128e72.json
-Loading checkpoint: .../oriented-det/pretrained/oriented_rcnn_r50_fpn_dota_le90_1x-5b128e72.pth
-Loaded model from .../oriented-det/pretrained/oriented_rcnn_r50_fpn_dota_le90_1x-5b128e72.pth
+Loading config: .../oriented-det/pretrained/oriented_rcnn_r50_fpn_dota_le90_1x-725c244f.json
+Loading checkpoint: .../oriented-det/pretrained/oriented_rcnn_r50_fpn_dota_le90_1x-725c244f.pth
+Loaded model from .../oriented-det/pretrained/oriented_rcnn_r50_fpn_dota_le90_1x-725c244f.pth
 Model type: oriented_rcnn
 Number of classes: 15
 Class names: ['baseball-diamond', 'basketball-court', 'bridge', 'ground-track-field', 'harbor', 'helicopter', 'large-vehicle', 'plane', 'roundabout', 'ship', 'small-vehicle', 'soccer-ball-field', 'storage-tank', 'swimming-pool', 'tennis-court']
 Preprocessing: resize_mode=fixed, target_size=(1024, 1024) (model canvas 1024×1024)
-Inference thresholds: score>=0.7, merge NMS IoU<=0.1, overlap_pixels=200, ignore_margin_pixels=0.0
+Inference thresholds: score>=0.55, merge NMS IoU<=0.1, overlap_pixels=200, ignore_margin_pixels=0.0
 Inference: demo/demo.jpg
   -> single forward (image 1024×1024 matches model canvas)
-  -> 94 detections (score >= 0.7, NMS <= 0.1)
+  -> 100 detections (score >= 0.55, NMS <= 0.1)
 Saved visualization to result.jpg
 Done.
 ```
@@ -142,14 +142,14 @@ The model knows the 15 DOTA classes (planes, ships, harbors, storage tanks, …)
 | `hf://oriented_rcnn_dota_le90_1x` | checkpoint | Oriented R-CNN weights plus sidecar config |
 | `--out-file result.jpg` | output | Where to write the visualization |
 | `--device mps` | Apple GPU | Metal acceleration on macOS |
-| `--score-thr 0.7` | confidence | Keep boxes with score ≥ 0.7 |
+| `--score-thr 0.55` | confidence | Keep boxes with score ≥ 0.55 |
 | `--nms-thr 0.1` | NMS IoU | Suppress overlaps (lower = stricter) |
 
 ---
 
 ## What's next
 
-The oriented-det series continues with a technical deep-dive on fine-tuning models on Airbus datasets, then lessons learned chasing MMRotate parity on tiled validation.
+The oriented-det series continues with a technical deep-dive on fine-tuning models on Airbus datasets, then lessons learned chasing MMRotate parity (official Task 1, not a leaky DOTA val monitor).
 
 ---
 

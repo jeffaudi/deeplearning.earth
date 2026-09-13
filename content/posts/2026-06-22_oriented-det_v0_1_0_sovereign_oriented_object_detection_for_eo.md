@@ -52,9 +52,9 @@ The framework is released under **Apache 2.0**. For teams building commercial or
 
 Oriented-det v0.1.0 ships three detectors, all trained on DOTA:
 
-**Oriented R-CNN** — horizontal RPN with midpoint-offset proposals routed to an oriented ROI head. The current recommended baseline.
+**Oriented R-CNN** — oriented RPN with midpoint-offset proposals and an oriented ROI head. The current recommended baseline.
 
-**Rotated Faster R-CNN** — oriented RPN with oriented ROI head, a two-stage detector that is more expensive but useful for dense scenes.
+**Rotated Faster R-CNN** — horizontal RPN with an oriented ROI head: a cheaper two-stage detector when throughput matters.
 
 **Rotated RetinaNet** — single-stage detector with oriented anchors and focal loss, useful as a fast baseline.
 
@@ -82,14 +82,14 @@ Training from scratch or fine-tuning on your own data follows the same pattern �
 
 ```bash
 odet tile-dota /path/to/your/dataset/train
-odet train --config configs/oriented_rcnn/dota_le90_3x.json
+odet train --config configs/oriented_rcnn/dota_le90_1x.json
 ```
 
 The full workflow — tiling, training, prediction, evaluation — is covered in the [Getting Started guide](https://dl4eo.github.io/oriented-det/getting-started/quickstart/).
 
 ## What's next
 
-The next post in the series is a hands-on walkthrough — **[oriented object detection on macOS, in pure Python](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/)** — bus detection on the bundled DOTA demo image using the pretrained Oriented R-CNN, from `uv pip install` to `result.jpg` on Apple Silicon (`--device mps`). The [Oriented R-CNN 3× checkpoint announcement](/posts/2026-06-29_announcing_the_final_oriented_det_pretrained_model/) covers the final DOTA le90 pretrained model and eval-val results.
+The next post in the series is a hands-on walkthrough — **[oriented object detection on macOS, in pure Python](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/)** — bus detection on the bundled DOTA demo image using the pretrained Oriented R-CNN, from `uv pip install` to `result.jpg` on Apple Silicon (`--device mps`). The [sliding-window inference note](/posts/2026-06-29_announcing_the_final_oriented_det_pretrained_model/) covers running the Oriented R-CNN 1× Hub weight on images larger than the 1024×1024 canvas.
 
 Beyond that, the series will cover:
 

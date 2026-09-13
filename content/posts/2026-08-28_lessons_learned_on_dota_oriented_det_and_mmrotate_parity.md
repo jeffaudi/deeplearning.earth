@@ -9,14 +9,14 @@ description: "Four months chasing MMRotate parity on DOTA—tiling, naming traps
 series: ["oriented-det"]
 tags: ["oriented-det", "dota", "mmrotate"]
 
-subtitle: "From ~75% to ~80% tiled val—and why the remaining gap is rotated IoU, not architecture"
+subtitle: "Parity on a trainval monitor, then official Task 1—and why the remaining gap is rotated IoU, not architecture"
 
 draft: true
 ---
 
 # One-line story
 
-I built [OrientedDet](https://github.com/DL4EO/oriented-det) as a lightweight PyTorch alternative to [MMRotate](https://github.com/open-mmlab/mmrotate): weeks closing naming, architecture, data, and metric gaps; ~80% mAP on tiled validation with an MMRotate-aligned recipe; and a final chase for **elongated-object alignment** (ships, harbors, large vehicles) where MMRotate’s CUDA **rotated IoU** in the loss still wins—and where **KFIoU** in OrientedDet is the practical way to close that gap without writing custom kernels.
+I built [OrientedDet](https://github.com/DL4EO/oriented-det) as a lightweight PyTorch alternative to [MMRotate](https://github.com/open-mmlab/mmrotate): weeks closing naming, architecture, data, and metric gaps; a trainval **parity monitor** on tiled val with an MMRotate-aligned recipe (not the public number — that is official Task 1); and a final chase for **elongated-object alignment** (ships, harbors, large vehicles) where MMRotate’s CUDA **rotated IoU** in the loss still wins—and where **KFIoU** in OrientedDet is the practical way to close that gap without writing custom kernels.
 
 This post is the DOTA chapter I promised in [Introducing oriented-det]({{< relref "2026-05-28_introducing_oriented-det_sovereign_oriented_object_detection_for_eo.md" >}}). It is written for anyone reproducing aerial OBB baselines or wondering why “we matched the config” still leaves ships a few degrees off.
 
@@ -42,7 +42,7 @@ Re-tiling from `/path/to/data/DOTA-v1.0` was a full reset. With empty-tile filte
 - **Train:** 33,155 windows → **13,691** kept (~59% dropped)
 - **Val (tiled):** 7,669 → **3,121** kept
 
-Training uses **train + val tiles** merged (trainval style); validation mAP uses **val tiles only**. That mirrors how MMRotate builds `trainval` while still reporting on held-out val patches.
+Training uses **train + val tiles** merged (trainval style); local validation mAP uses **val tiles only**. That mirrors how MMRotate builds `trainval`. It is a **DOTA parity monitor**, not a held-out score: val entered training. The public number is **official Task 1**. Do not generalize this to datasets where val never enters train.
 
 Worth one honest paragraph: MMRotate’s own logs mention on the order of **~21,046** training images after their pipeline. We kept **13,691**. The gap is not a bug in counting—it is **different empty filtering and discovery**. Always state tile counts when you compare mAP.
 

@@ -4,7 +4,7 @@ author: "Jeff Faudi"
 date: 2026-07-11T09:00:00+07:00
 lastmod: 2026-07-11T11:00:00+07:00
 
-description: "Oriented-det v0.1.1 is on PyPI — ProbIoU ROI regression, MMRotate-aligned training fixes, published eval reports, a refreshed DOTA le90 zoo led by Rotated Faster R-CNN 3× at 83.42% eval-val mAP50 (~7× faster inference than Oriented R-CNN 3×), and a hands-on harbor-scene demo."
+description: "Oriented-det v0.1.1 is on PyPI — ProbIoU ROI regression, MMRotate-aligned training fixes, a DOTA le90 zoo on official Task 1 led by Oriented R-CNN 1× at 76.73%, and a hands-on harbor-scene demo of the Faster R-CNN throughput pick."
 
 image: "/posts/img/2026-07-11_rotated_faster_rcnn_large_scene_detections.png"
 
@@ -14,9 +14,9 @@ tags: ["oriented-det", "release", "rotated-faster-rcnn", "inference"]
 subtitle: "pip install oriented-det==0.1.1"
 ---
 
-Six weeks after [v0.1.0](/posts/2026-06-22_oriented-det_v0_1_0_sovereign_oriented_object_detection_for_eo/), [**Oriented-Det v0.1.1**](https://github.com/DL4EO/oriented-det/releases/tag/v0.1.1) is on [PyPI](https://pypi.org/project/oriented-det/0.1.1/) and tagged on GitHub. This is the release that packages the ProbIoU work, closes several MMRotate parity gaps in the training stack, and publishes the full eval-val protocol we have been using internally.
+Three weeks after [v0.1.0](/posts/2026-06-22_oriented-det_v0_1_0_sovereign_oriented_object_detection_for_eo/), [**Oriented-Det v0.1.1**](https://github.com/DL4EO/oriented-det/releases/tag/v0.1.1) is on [PyPI](https://pypi.org/project/oriented-det/0.1.1/) and tagged on GitHub. This is the release that packages the ProbIoU work, closes several MMRotate parity gaps in the training stack, and publishes the eval reports we have been using internally.
 
-If you already read [Rotated Faster R-CNN on DOTA without custom CUDA](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/), you have seen the technical story behind the headline number. This post is the release note: what changed, how to upgrade, and what to watch for.
+If you already read [Rotated Faster R-CNN on DOTA without custom CUDA](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/), you have seen the technical story behind the Faster R-CNN Task 1 number. This post is the release note: what changed, how to upgrade, and what to watch for.
 
 ## Upgrade
 
@@ -26,42 +26,39 @@ pip install -U oriented-det
 pip install oriented-det==0.1.1
 ```
 
-PyTorch is still installed separately for your platform ([pytorch.org](https://pytorch.org/get-started/locally/)). Pretrained weights are unchanged in location — `dl4eo/oriented-det-pretrained` on Hugging Face — but two Rotated Faster R-CNN slugs are now first-class in the CLI:
+PyTorch is still installed separately for your platform ([pytorch.org](https://pytorch.org/get-started/locally/)). Pretrained weights are unchanged in location — `dl4eo/oriented-det-pretrained` on Hugging Face — but the 1× slugs are first-class in the CLI:
 
 ```bash
-odet pretrained download rotated_faster_rcnn_dota_le90_3x
+odet pretrained download oriented_rcnn_dota_le90_1x
 odet pretrained download rotated_faster_rcnn_dota_le90_1x
 ```
 
 ## Headline: ProbIoU and the updated zoo
 
-v0.1.1 ships **ProbIoU ROI regression** for Rotated Faster R-CNN (`roi_box_reg_main_loss_type: probiou` with a small Smooth L1 auxiliary). The published **`rotated_faster_rcnn_dota_le90_3x`** checkpoint reaches **83.42%** eval-val mAP50 — the highest-accuracy model in the zoo, ahead of Oriented R-CNN 3× at 79.40%. A new **`rotated_faster_rcnn_dota_le90_1x`** slug lands at **77.57%**.
+v0.1.1 ships **ProbIoU ROI regression** for Rotated Faster R-CNN (`roi_box_reg_main_loss_type: probiou` with a small Smooth L1 auxiliary). Published DOTA numbers are **official Task 1** (hidden test). DOTA recipes train on **trainval**, so local val mAP is a training monitor, not the zoo headline.
 
-| Model | Schedule | eval-val mAP50 | Hub slug |
-|---|---|---:|---|
-| **Rotated Faster R-CNN** | **3× (ProbIoU)** | **83.42%** | **`rotated_faster_rcnn_dota_le90_3x`** |
-| Oriented R-CNN | 3× | 79.40% | `oriented_rcnn_dota_le90_3x` |
-| Rotated Faster R-CNN | 1× (ProbIoU) | 77.57% | `rotated_faster_rcnn_dota_le90_1x` |
-| Oriented R-CNN | 1× | 74.79% | `oriented_rcnn_dota_le90_1x` |
-| Rotated RetinaNet | 3× | 71.52% | `rotated_retinanet_dota_le90_3x` |
-| Rotated RetinaNet | 1× | 64.14% | `rotated_retinanet_dota_le90_1x` |
+| Model | Schedule | Official Task 1 AP50 | vs MMRotate 1× | Hub slug |
+|---|---|---:|---|---|
+| **Oriented R-CNN** | **1×** | **76.73%** | +1.04 vs 75.69 | **`oriented_rcnn_dota_le90_1x`** |
+| Rotated Faster R-CNN | 1× (ProbIoU) | **74.42%** | +1.02 vs 73.40 | `rotated_faster_rcnn_dota_le90_1x` |
+| Rotated RetinaNet | 1× (circum-HBB) | **67.87%** | +3.32 vs HBB 64.55 | `rotated_retinanet_dota_le90_1x` |
 
-The CE Smooth L1 baseline that shipped briefly at 76.41% remains available as `rotated_faster_rcnn_dota_le90_3x_ce` for ablations. For the sampled-rIoU vs ProbIoU trade-offs, per-class deltas, and training recipe, see the [ProbIoU deep dive](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/).
+**Accuracy pick:** **`oriented_rcnn_dota_le90_1x`**. **Throughput / finetune pick:** **`rotated_faster_rcnn_dota_le90_1x`**. For the sampled-rIoU vs ProbIoU trade-offs and why Faster R-CNN beats MMRotate’s Rotated Faster R-CNN on Task 1, see the [ProbIoU deep dive](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/).
 
-In [June we recommended Oriented R-CNN](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/) for quick macOS demos because it behaved well without CUDA rotated-IoU kernels. v0.1.1 changes the default pick: **`rotated_faster_rcnn_dota_le90_3x`** for best DOTA-style accuracy *and* throughput out of the box; Oriented R-CNN 3× remains strong when rotated RoIAlign behaviour matters for your domain.
+A 36-epoch Faster R-CNN run exists. Task 1 AP50 is a wash (74.48% vs 74.42%); use `rotated_faster_rcnn_dota_le90_3x` only if **box tightness** matters (AP75 45.39 vs 41.90). Do not finetune from 3×.
+
+In [June we recommended Oriented R-CNN](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/) for quick macOS demos because it behaved well without CUDA rotated-IoU kernels. That remains the **accuracy** default. Use Faster R-CNN 1× when you want the throughput story from July without giving up a competitive Task 1 score.
 
 ## Accuracy and speed vs Oriented R-CNN
 
-The zoo leader is not only more accurate — it is **much faster** at inference and training. Timings below use the same eval-val pipeline as the zoo: one 1024×1024 forward per DOTA val tile, `production.*` decode, exact CPU polygon NMS when configured. Figures come from `predictions.json` metadata on **7,669 val images** (CUDA); see the [ProbIoU deep dive](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/) for methodology and per-class breakdowns.
+Oriented R-CNN leads Task 1. Rotated Faster R-CNN is **much faster** at inference and training. Timings below use one 1024×1024 forward per DOTA val tile, `production.*` decode, exact CPU polygon NMS when configured. Figures come from `predictions.json` metadata on **7,669** tiles (CUDA); see the [ProbIoU deep dive](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/) for methodology.
 
-| Model | eval-val mAP50 | Throughput | ms / tile |
+| Model | Task 1 AP50 | Throughput | ms / tile |
 |---|---:|---:|---:|
-| **Rotated Faster R-CNN 3× (ProbIoU)** | **83.42%** | **6.32 img/s** | **158** |
-| Rotated Faster R-CNN 1× (ProbIoU) | 77.57% | 6.25 img/s | 160 |
-| Oriented R-CNN 3× | 79.40% | 0.91 img/s | 1,105 |
-| Oriented R-CNN 1× | 74.79% | 0.91 img/s | 1,100 |
+| Rotated Faster R-CNN 1× (ProbIoU) | 74.42% | **6.25 img/s** | **160** |
+| Oriented R-CNN 1× | **76.73%** | 0.91 img/s | 1,100 |
 
-**Rotated Faster R-CNN is ~6.9× faster** on tiled val inference than Oriented R-CNN at comparable accuracy tiers — and emits fewer raw detections (≈14 vs ≈25 boxes per image at score ≥ 0.05), which also keeps CPU NMS cheaper.
+**Rotated Faster R-CNN is ~6.9× faster** on tiled inference than Oriented R-CNN — and emits fewer raw detections (≈14 vs ≈25 boxes per image at score ≥ 0.05), which also keeps CPU NMS cheaper.
 
 Why the gap?
 
@@ -69,11 +66,11 @@ Why the gap?
 2. **Proposal volume** — Oriented R-CNN's midpoint-offset RPN tends to produce more candidates before NMS, increasing head and NMS work.
 3. **Same honest NMS** — both runs use CPU polygon final NMS when configured; the speedup is architectural, not a metric shortcut.
 
-Training shows the same pattern on the same tile recipe: **~58 min/epoch** (Rotated Faster R-CNN 1×) vs **~4 h 4 min/epoch** (Oriented R-CNN 1×). At 1× schedule, Rotated Faster R-CNN already beats Oriented R-CNN on eval-val mAP50 (**77.57%** vs **74.79%**) while finishing a full 12-epoch run in roughly **one fifth** the wall time.
+Training shows the same pattern on the same tile recipe: **~58 min/epoch** (Rotated Faster R-CNN 1×, **11h 30m** wall) vs **~3 h 1 min/epoch** (Oriented R-CNN 1×, **1d 12h 22m** wall).
 
 ## Try it: inference on a complex harbor scene
 
-To show the zoo leader running end-to-end — no MMRotate stack, no fine-tuning — we ran **`rotated_faster_rcnn_dota_le90_3x`** on `large.jpg` from the [oriented-det demo folder](https://github.com/DL4EO/oriented-det/tree/main/demo): a **1299×1904** RGB aerial tile with a busy **harbor** — moored ships at arbitrary headings, pier structures, and scattered vehicles.
+To show the **throughput pick** running end-to-end — no MMRotate stack, no fine-tuning — we ran **`rotated_faster_rcnn_dota_le90_1x`** on `large.jpg` from the [oriented-det demo folder](https://github.com/DL4EO/oriented-det/tree/main/demo): a **1299×1904** RGB aerial tile with a busy **harbor** — moored ships at arbitrary headings, pier structures, and scattered vehicles.
 
 The DOTA le90 recipe uses a **1024×1024** model canvas. Anything larger triggers **padded sliding-window inference**: overlapping crops, detections merged back into full-image coordinates, then merge NMS.
 
@@ -82,16 +79,16 @@ The DOTA le90 recipe uses a **1024×1024** model canvas. Anything larger trigger
 From the oriented-det repository root:
 
 ```bash
-odet pretrained download rotated_faster_rcnn_dota_le90_3x
+odet pretrained download rotated_faster_rcnn_dota_le90_1x
 
-odet image-demo demo/large.jpg hf://rotated_faster_rcnn_dota_le90_3x \
+odet image-demo demo/large.jpg hf://rotated_faster_rcnn_dota_le90_1x \
   --out-file large_detections.png \
   --device mps \
-  --score-thr 0.25 \
-  --nms-thr 0.3
+  --score-thr 0.60 \
+  --nms-thr 0.1
 ```
 
-On Apple Silicon use `--device mps`; on Linux with CUDA, `--device cuda:0`. The `hf://` slug resolves config and weights from the pretrained manifest — no separate JSON path needed.
+On Apple Silicon use `--device mps`; on Linux with CUDA, `--device cuda:0`. The `hf://` slug resolves config and weights from the pretrained manifest — no separate JSON path needed. **`--score-thr 0.60`** is this checkpoint’s deploy floor (`production.score_threshold`); **`--nms-thr 0.1`** is the merge NMS used in the rest of the series.
 
 | Step | Detail |
 |---|---|
@@ -101,20 +98,11 @@ On Apple Silicon use `--device mps`; on Linux with CUDA, `--device cuda:0`. The 
 | Decode | Production thresholds from config, overridden by `--score-thr` / `--nms-thr` |
 | Backend | MPS on Apple Silicon; window micro-batch auto-tuned to **32** |
 
-At **score ≥ 0.25** and merge NMS **IoU ≤ 0.3**, the run produced **330 detections**:
-
-| Class | Count |
-|---|---:|
-| ship | 289 |
-| small-vehicle | 28 |
-| harbor | 12 |
-| large-vehicle | 1 |
-
 Most boxes sit on vessel hulls with headings that match the pier layout. A few `harbor` labels appear on pier-like structures — expected category overlap on dense waterfront scenes.
 
-![Rotated Faster R-CNN 3× detections on the harbor scene](/posts/img/2026-07-11_rotated_faster_rcnn_large_scene_detections.png#layoutTextWidth)
+![Rotated Faster R-CNN 1× detections on the harbor scene](/posts/img/2026-07-11_rotated_faster_rcnn_large_scene_detections.png#layoutTextWidth)
 
-Useful inference knobs: **`--score-thr`** balances recall vs clutter on dense scenes; **`--nms-thr`** merges duplicate boxes from overlapping windows (around `0.3` matches this checkpoint's production config); **`--overlap-pixels`** defaults to `200` — increase it when targets are large relative to the canvas so nothing is split across windows without a full view in any crop. For smaller targets on satellite tiles, see the [Sentinel-2 ship demo](/posts/2026-06-25_zero-shot_ship_detection_on_a_copernicus_sentinel-2_tile_with_oriented_rcnn/) (`--zoom 4`).
+Useful inference knobs: **`--score-thr`** balances recall vs clutter on dense scenes; **`--nms-thr`** merges duplicate boxes from overlapping windows; **`--overlap-pixels`** defaults to `200` — increase it when targets are large relative to the canvas so nothing is split across windows without a full view in any crop. For smaller targets on satellite tiles, see the [Sentinel-2 ship demo](/posts/2026-06-25_zero-shot_ship_detection_on_a_copernicus_sentinel-2_tile_with_oriented_rcnn/) (`--zoom 4`).
 
 ## MMRotate parity fixes
 
@@ -132,7 +120,7 @@ These changes improve reproducibility against MMRotate baselines and tighten ang
 
 Two operational additions matter if you are running your own training runs rather than downloading Hub weights.
 
-**Published eval reports** under [`docs/eval-reports/`](https://github.com/DL4EO/oriented-det/tree/main/docs/eval-reports) — per-class AP, confusion matrices, GT-alignment stats, PR curves. The full-tile protocol is documented and wired to `make eval-val`: all 7,669 DOTA val tiles, `filter_empty_gt=false`, rotated IoU ≥ 0.50, production decode settings from the experiment config.
+**Published eval reports** under [`docs/eval-reports/`](https://github.com/DL4EO/oriented-det/tree/main/docs/eval-reports) — per-class AP, confusion matrices, GT-alignment stats, PR curves. For **DOTA**, the number on the Hub is **official Task 1**. `make eval-val` on DOTA val tiles is a **training monitor** (trainval recipes). On datasets where val never enters train — HRSC test, for example — `eval-val` **is** the published metric.
 
 **Source provenance metadata** in training runs: `git_commit`, package version, and config hash are recorded alongside checkpoints so you can trace a weight file back to the exact code and config that produced it.
 
@@ -140,7 +128,7 @@ Two operational additions matter if you are running your own training runs rathe
 
 ## What did not change
 
-The core design from v0.1.0 is intact: pure Python / PyTorch, no MMCV runtime dependency, no custom CUDA kernels for oriented geometry. Sampled GPU rIoU still handles anchor matching; Shapely polygon IoU still drives published mAP. Apache 2.0, sovereign deployment, `odet` CLI workflow — all unchanged.
+The core design from v0.1.0 is intact: pure Python / PyTorch, no MMCV runtime dependency, no custom CUDA kernels for oriented geometry. Sampled GPU rIoU still handles anchor matching; Shapely polygon IoU still drives local mAP reports. Apache 2.0, sovereign deployment, `odet` CLI workflow — all unchanged.
 
 ## Links
 

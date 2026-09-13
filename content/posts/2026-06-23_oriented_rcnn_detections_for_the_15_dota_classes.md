@@ -66,7 +66,7 @@ DOTA v1.0 defines the following original classes:
 
 The detections below are produced with **Oriented R-CNN**, using the DOTA-style oriented bounding box setup from [oriented-det](https://github.com/DL4EO/oriented-det). The ground truth provided by DOTA is displayed in green ; predictions by Oriented-Det are displayed in red (all classes).
 
-Oriented R-CNN is a good baseline for this visual tour because it combines a strong two-stage detector with oriented region prediction. Instead of returning horizontal boxes that include too much background, it predicts rotated boxes aligned with the object footprint. For EO imagery, that difference is not cosmetic: it affects duplicate suppression, dense-scene readability, footprint estimation, and downstream workflows where orientation is part of the information. These illustration have been created with the 1x pre-trained version.
+Oriented R-CNN is a good baseline for this visual tour because it combines a strong two-stage detector with oriented region prediction. Instead of returning horizontal boxes that include too much background, it predicts rotated boxes aligned with the object footprint. For EO imagery, that difference is not cosmetic: it affects duplicate suppression, dense-scene readability, footprint estimation, and downstream workflows where orientation is part of the information. These illustrations were created with the published `oriented_rcnn_dota_le90_1x` checkpoint (`--score-thr 0.55 --nms-thr 0.1`).
 
 Each illustration highlights one DOTA class. The goal is not to claim perfect production performance from a benchmark checkpoint. The goal is simpler: show what oriented detections look like across the full original DOTA label set. 
 

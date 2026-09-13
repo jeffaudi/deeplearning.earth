@@ -81,7 +81,7 @@ If your counsel reaches a different conclusion on HRSC than on DOTA, that is the
 
 The [pretrained zoo](https://huggingface.co/dl4eo/oriented-det-pretrained) exists so you can:
 
-- reproduce our eval-val numbers,
+- reproduce published zoo numbers (DOTA: official Task 1; other datasets: held-out val when train does not include it),
 - try `odet image-demo` on a laptop,
 - compare Rotated Faster R-CNN, Oriented R-CNN, FCOS, and RetinaNet,
 - start **academic** fine-tuning experiments.
