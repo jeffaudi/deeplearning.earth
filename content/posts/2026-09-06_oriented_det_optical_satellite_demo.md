@@ -2,7 +2,7 @@
 title: "A static demo of three oriented detectors on optical satellite imagery"
 author: "Jeff Faudi"
 date: 2026-09-06T15:00:00+07:00
-lastmod: 2026-09-13T20:05:00+07:00
+lastmod: 2026-09-14T23:00:00+07:00
 
 description: "A browser demo of Oriented-Det’s three 3× DOTA checkpoints — Oriented R-CNN, Rotated Faster R-CNN, and Rotated FCOS — on seven optical satellite scenes, with a side by side comparison that lands in parity with state of the art frameworks."
 
@@ -14,7 +14,7 @@ tags: ["oriented-det", "object-detection", "satellite-imagery", "mmrotate", "inf
 subtitle: "Pick a detector. Move the slider."
 ---
 
-The [oriented-det](https://github.com/DL4EO/oriented-det) zoo now has four detector families. Three of them are worth putting on the same canvas: **Oriented R-CNN 3×**, **Rotated Faster R-CNN 3×**, and **Rotated FCOS 3×** — the Hub weights served by the [optical demo](https://dl4eo.com/object-detection-optical-satellite/).
+The [oriented-det](https://github.com/DL4EO/oriented-det) zoo now has four detector families. Three of them are worth putting on the same canvas: **Oriented R-CNN 3×**, **Rotated Faster R-CNN 3×**, and **Rotated FCOS 3×** — the Hub weights served by the [optical demo](https://dl4eo.com/object-detection-optical-satellite/). The fourth, **Rotated RetinaNet 3×**, now has official Task 1 **70.70%** (circum-HBB, +2.83 versus 1×); it is not on this page.
 
 They are on a static page you can open in a browser. No Python, no GPU, no upload:
 

@@ -15,7 +15,7 @@ Technical notes on [**oriented-det**](https://github.com/DL4EO/oriented-det): an
 6. [Sliding-window inference on large aerial tiles](/posts/2026-06-29_announcing_the_final_oriented_det_pretrained_model/) — pad, tile, merge NMS with the Oriented R-CNN 1× Hub weight
 7. [Rotated Faster R-CNN on DOTA without custom CUDA](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/) — ProbIoU, sampled rIoU, 74.42% official Task 1 vs MMRotate 73.40
 8. [Oriented-Det v0.1.1](/posts/2026-07-11_oriented-det_v0_1_1_prob_iou_mmrotate_parity_and_the_updated_zoo/) — ProbIoU packaged, MMRotate parity, harbor-scene demo
-9. [Oriented-Det v0.2.0](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/) — Rotated FCOS, decoded rIoU, four-family 1× Task 1 zoo
+9. [Oriented-Det v0.2.0](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/) — Rotated FCOS, decoded rIoU, four-family Task 1 zoo
 10. [Rotated FCOS vs Oriented R-CNN on macOS](/posts/2026-09-02_rotated_fcos_vs_oriented_rcnn_on_macos/) — Apple Silicon MPS latency, 1× L4 training wall, side-by-side demos
 11. [A static demo of three oriented detectors](/posts/2026-09-06_oriented_det_optical_satellite_demo/) — Oriented R-CNN 3×, Rotated Faster R-CNN 3×, and FCOS 3× on seven optical scenes, in parity with MMRotate
 12. [Apache 2.0 covers oriented-det. It does not cover DOTA or HRSC.](/posts/2026-09-10_oriented_det_apache_license_versus_dota/) — sovereignty of the stack versus research datasets; train on your own licensed imagery

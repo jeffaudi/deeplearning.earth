@@ -2,7 +2,7 @@
 title: "Oriented-Det v0.1.1 — ProbIoU, MMRotate parity, and the updated zoo"
 author: "Jeff Faudi"
 date: 2026-07-11T09:00:00+07:00
-lastmod: 2026-07-11T11:00:00+07:00
+lastmod: 2026-09-14T23:00:00+07:00
 
 description: "Oriented-det v0.1.1 is on PyPI — ProbIoU ROI regression, MMRotate-aligned training fixes, a DOTA le90 zoo on official Task 1 led by Oriented R-CNN 1× at 76.73%, and a hands-on harbor-scene demo of the Faster R-CNN throughput pick."
 
@@ -46,6 +46,8 @@ v0.1.1 ships **ProbIoU ROI regression** for Rotated Faster R-CNN (`roi_box_reg_m
 **Accuracy pick:** **`oriented_rcnn_dota_le90_1x`**. **Throughput / finetune pick:** **`rotated_faster_rcnn_dota_le90_1x`**. For the sampled-rIoU vs ProbIoU trade-offs and why Faster R-CNN beats MMRotate’s Rotated Faster R-CNN on Task 1, see the [ProbIoU deep dive](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/).
 
 A 36-epoch Faster R-CNN run exists. Task 1 AP50 is a wash (74.48% vs 74.42%); use `rotated_faster_rcnn_dota_le90_3x` only if **box tightness** matters (AP75 45.39 vs 41.90). Do not finetune from 3×.
+
+**Rotated RetinaNet 3×** goes the other way: official Task 1 **70.70%** (AP75 43.34, COCO mAP 41.59) versus Hub 1× **67.87%** / 40.08, still circum-HBB. Leaky eval-val is 76.51% (gap 5.81 versus 0.33 on 1×) — it memorizes train+val more, but unlike Faster R-CNN 3× it still wins the hidden test. Slug `rotated_retinanet_dota_le90_3x`, deploy floor **0.35**.
 
 In [June we recommended Oriented R-CNN](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/) for quick macOS demos because it behaved well without CUDA rotated-IoU kernels. That remains the **accuracy** default. Use Faster R-CNN 1× when you want the throughput story from July without giving up a competitive Task 1 score.
 

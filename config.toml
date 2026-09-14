@@ -72,9 +72,9 @@ mainSections = ["posts"]
     weight = 2
     url  = "/about/"
 [[menu.main]]
-    name = "Demos"
+    name = "Demo"
     weight = 3
-    url  = "https://huggingface.co/dl4eo"
+    url  = "https://dl4eo.com/object-detection-optical-satellite/"
     [menu.main.params]
         target = "_blank"
         rel = "noopener"

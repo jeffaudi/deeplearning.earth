@@ -2,7 +2,7 @@
 title: "Oriented-Det v0.2.0 — Rotated FCOS, decoded rIoU, and a four-family zoo"
 author: "Jeff Faudi"
 date: 2026-08-28T09:00:00+07:00
-lastmod: 2026-08-28T09:00:00+07:00
+lastmod: 2026-09-14T23:00:00+07:00
 
 description: "Oriented-det v0.2.0 is on PyPI — Rotated FCOS joins the zoo as the balanced one-stage detector, with a decoded rIoU 1× Hub checkpoint at 73.07% official DOTA Task 1, and the same Apache 2.0 stack."
 
@@ -55,7 +55,9 @@ One **1×** slug per architecture. Published DOTA numbers are **official Task 1*
 
 **Default pick.** Use **`oriented_rcnn_dota_le90_1x`** when you want the highest official Task 1 accuracy. Use **`rotated_faster_rcnn_dota_le90_1x`** when you want the throughput / finetune story from [July](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/). Use **`rotated_fcos_dota_le90_1x`** when you want a one-stage, anchor-free detector in the same Apache 2.0 stack — the roadmap’s **balanced** tier. RetinaNet stays as the MMRotate-parity legacy baseline.
 
-A 36-epoch FCOS run exists. Task 1 AP50 is **worse** than 1× (72.91% vs 73.07%). The 3× gain, when it exists, is **AP75** (45.39 vs 40.40). Same pattern as Faster R-CNN (AP50 wash 74.48 vs 74.42; AP75 45.39 vs 41.90). Finetune from 1×. Do not recommend Oriented R-CNN or RetinaNet 3× until those Task 1 scores exist.
+A 36-epoch FCOS run exists. Task 1 AP50 is **worse** than 1× (72.91% vs 73.07%); the 3× gain is AP75 (45.39 vs 40.40). Faster R-CNN 3× is an AP50 wash (74.48 vs 74.42; AP75 45.39 vs 41.90). Finetune those two from 1×.
+
+**Rotated RetinaNet 3×** is the exception. Official Task 1 is **70.70%** (AP75 43.34, COCO mAP 41.59) versus Hub 1× **67.87%** / 40.08 — still circum-HBB, slug `rotated_retinanet_dota_le90_3x`. That is **+2.83** Task 1 and **+3.26** AP75. Leaky eval-val is 76.51% (gap 5.81 versus 0.33 on 1×): 3× memorizes train+val tiles more, but unlike Faster R-CNN 3× it still wins the hidden test. Deploy floor **0.35** (eval-val F1 0.40 − 0.05). Oriented R-CNN 3× still has no Task 1 dump.
 
 ## Why decoded rIoU, not another L1 run
 

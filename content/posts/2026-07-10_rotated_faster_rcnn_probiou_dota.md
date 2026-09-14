@@ -2,7 +2,7 @@
 title: "Rotated Faster R-CNN on DOTA without custom CUDA: sampled rIoU, ProbIoU, and a 74.42% Task 1 checkpoint"
 author: "Jeff Faudi"
 date: 2026-07-10T09:00:00+07:00
-lastmod: 2026-07-10T09:00:00+07:00
+lastmod: 2026-09-14T23:00:00+07:00
 
 description: "Why OrientedDet avoids MMRotate's exact CUDA IoU kernels, how ProbIoU trains oriented boxes in pure PyTorch, and why the 1× Rotated Faster R-CNN Hub weight beats MMRotate on official DOTA Task 1."
 
@@ -160,6 +160,8 @@ Oriented R-CNN still leads on **large-vehicle** (82.54 vs 75.25) and **harbor** 
 ### When 3× is worth it
 
 A 36-epoch ProbIoU run exists. Official Task 1 **AP50 is a wash** (74.48% vs 74.42%). The 3× gain is **box tightness**: AP75 **45.39** vs **41.90**. Finetune from **`rotated_faster_rcnn_dota_le90_1x`**. Reach for `rotated_faster_rcnn_dota_le90_3x` only if you need tighter boxes.
+
+**Rotated RetinaNet 3×** is the other pattern: official Task 1 **70.70%** versus Hub 1× **67.87%** (AP75 43.34 vs 40.08), still circum-HBB. It memorizes train+val more (eval-val − Task 1 is 5.81 vs 0.33 on 1×) but still wins the hidden test. Slug `rotated_retinanet_dota_le90_3x`.
 
 ---
 

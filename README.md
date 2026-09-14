@@ -4,6 +4,7 @@ Technical blog on oriented object detection for Earth Observation and the [orien
 
 - **Home (`/`)** — recent posts (blog index)
 - **About (`/about/`)** — author bio, photo, company, and social links
+- **Demo** — [optical satellite demo](https://dl4eo.com/object-detection-optical-satellite/) on dl4eo.com (opens in a new tab)
 
 Built with [Hugo](https://gohugo.io/) and the [hugo-coder](https://github.com/luizdepra/hugo-coder) theme (git submodule at `themes/hugo-coder`).
 
