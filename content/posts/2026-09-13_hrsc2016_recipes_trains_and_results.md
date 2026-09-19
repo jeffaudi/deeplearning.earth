@@ -2,7 +2,7 @@
 title: "HRSC2016 in oriented-det — recipes, trains, and a held-out 90.41%"
 author: "Jeff Faudi"
 date: 2026-09-13T16:00:00+07:00
-lastmod: 2026-09-13T16:00:00+07:00
+lastmod: 2026-09-21T12:00:00+07:00
 
 description: "Native HRSC2016 ship detection in oriented-det: ImageSets trainval in, held-out test out, three 3× Hub weights. Oriented R-CNN 90.41%, Faster R-CNN 88.77%, FCOS 88.34% mAP50 on NVIDIA L4."
 
@@ -56,7 +56,13 @@ XML `mbox_cx/cy/w/h/ang` is a rotated box with **angle in radians**. The loader 
 
 Unlike DOTA, these images fit a **whole-image** canvas. No `odet tile-dota` for the Hub recipes. Optional export exists (`odet hrsc-to-dota`) if you want DOTA folders anyway.
 
-I am not republishing the Google Earth pixels here. Run `odet image-demo` on a test BMP if you want to see boxes.
+Research illustration only — these are not a dataset mirror. Oriented R-CNN **3×** Hub on held-out-style chips (score ≥ 0.85, NMS 0.1):
+
+![HRSC2016 — Oriented R-CNN 3× Hub, harbour / pier ships](/posts/img/2026-09-13_hrsc2016_harbour_orcnn.png#layoutTextWidth)
+
+![HRSC2016 — Oriented R-CNN 3× Hub, open-water ships](/posts/img/2026-09-13_hrsc2016_open_orcnn.png#layoutTextWidth)
+
+![HRSC2016 — Oriented R-CNN 3× Hub, multi-ship scene (score ≥ 0.70)](/posts/img/2026-09-13_hrsc2016_fleet_orcnn.png#layoutTextWidth)
 
 ---
 
@@ -183,6 +189,7 @@ If you need ships in production, train on imagery you have licensed for that use
 - [Pretrained zoo](https://huggingface.co/dl4eo/oriented-det-pretrained)
 - [HRSC2016 paper (ICPRAM 2017)](https://www.scitepress.org/Papers/2017/61206/)
 - **Previous:** [Apache 2.0 covers oriented-det. It does not cover DOTA or HRSC.](/posts/2026-09-10_oriented_det_apache_license_versus_dota/) · [Oriented-Det v0.2.0](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/)
+- **Next:** [Lessons learned on DOTA](/posts/2026-09-17_lessons_learned_on_dota_oriented_det_and_mmrotate_parity/) · [Oriented-Det v0.3.0](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/)
 
 * * *
 #### Written on September 13, 2026 by Jeff Faudi.

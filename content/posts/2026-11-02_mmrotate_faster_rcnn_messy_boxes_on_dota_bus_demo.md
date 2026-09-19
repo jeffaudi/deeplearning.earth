@@ -4,12 +4,12 @@ author: "Jeff Faudi"
 date: 2026-11-02T09:00:00+07:00
 lastmod: 2026-11-02T09:00:00+07:00
 
-description: "Official MMRotate Rotated Faster R-CNN 1× is as messy as OrientedDet Faster R-CNN on the DOTA bus-lot demo tile. Oriented R-CNN is clean. This is a horizontal-RPN failure mode, not an OrientedDet bug."
+description: "Official MMRotate Rotated Faster R-CNN 1× is as messy as OrientedDet Faster R-CNN on the DOTA bus-lot demo tile. The failure is architectural and rare (dense ~45° objects). Oriented R-CNN is clean but heavy to finetune; that pushes toward FCOS."
 
 image: "/posts/img/2026-11-02_mmrotate_frcnn_score0.6.jpg"
 
 series: ["oriented-det"]
-tags: ["oriented-det", "mmrotate", "rotated-faster-rcnn", "oriented-rcnn", "dota"]
+tags: ["oriented-det", "mmrotate", "rotated-faster-rcnn", "oriented-rcnn", "rotated-fcos", "dota"]
 
 subtitle: "Same 1024 tile, same knobs, official zoo weights."
 ---
@@ -18,7 +18,7 @@ The [oriented-det](https://github.com/DL4EO/oriented-det) README hero uses **Ori
 
 We ran the official MMRotate **v0.3.4** 1× zoo checkpoint (`rotated_faster_rcnn_r50_fpn_1x_dota_le90-0393aa5c.pth`, published **73.40%** mAP on DOTA 1×) against OrientedDet’s Hub 1× Faster R-CNN and Oriented R-CNN. Same image, same score floors, same rotated NMS, one GPU forward. The file is the one MMRotate ships: 1024×1024, same MD5 as OrientedDet `demo/demo.jpg`.
 
-**Verdict:** official MMRotate is **also messy** on the diagonal rows. OrientedDet Faster R-CNN has the same character. Oriented R-CNN is clean. This is a **horizontal-RPN Faster R-CNN** failure mode on this scene, not an OrientedDet-only bug.
+**Verdict:** official MMRotate is **also messy** on the diagonal rows. OrientedDet Faster R-CNN has the same character. Oriented R-CNN is clean. This is a **horizontal-RPN Faster R-CNN** failure mode, not an OrientedDet-only bug — and it is **rare**: dense objects parked near 45°. The vertical edge rows on the same tile are fine.
 
 The oriented-det code is Apache 2.0. The tile is DOTA imagery — academic / non-commercial; see [Apache 2.0 vs DOTA](/posts/2026-09-10_oriented_det_apache_license_versus_dota/). Consulting and custom work live at [dl4eo.com](https://dl4eo.com).
 
@@ -67,7 +67,7 @@ Counts line up. Box **sizes** line up too: a bus on this tile is ~90–100 px lo
 
 ## Why Faster R-CNN struggles here
 
-Rotated Faster R-CNN proposes with a **horizontal RPN** and pools with **horizontal RoIAlign**, then regresses a rotated box from that axis-aligned crop. On isolated objects that is often enough, which is why the architecture still posts **73.40%** (MMRotate) / **74.42%** (OrientedDet ProbIoU) on official DOTA Task 1 — see the [ProbIoU write-up](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/) and the [v0.1.1 zoo / parity note](/posts/2026-07-11_oriented-det_v0_1_1_prob_iou_mmrotate_parity_and_the_updated_zoo/). On a packed diagonal lot, the RoI is a horizontal window over several neighbours; the head has to invent orientation from a crop that was never aligned to the vehicle. Oriented R-CNN uses **oriented proposals and oriented RoIAlign**, so the second stage sees a box already rotated with the bus. That is the whole visual difference on this tile.
+Rotated Faster R-CNN proposes with a **horizontal RPN** and pools with **horizontal RoIAlign**, then regresses a rotated box from that axis-aligned crop. On isolated objects that is often enough, which is why the architecture still posts **73.40%** (MMRotate) / **74.42%** (OrientedDet ProbIoU) on official DOTA Task 1 — see the [ProbIoU write-up](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/) and the [v0.1.1 zoo / parity note](/posts/2026-07-11_oriented-det_v0_1_1_prob_iou_mmrotate_parity_and_the_updated_zoo/). The mess appears when many elongated boxes sit at ~45° in a tight pack: the RoI is a horizontal window over several neighbours, and the head has to invent orientation from a crop that was never aligned to the vehicle. Oriented R-CNN uses **oriented proposals and oriented RoIAlign**, so the second stage sees a box already rotated with the bus. That is the whole visual difference on this tile.
 
 A zoo mAP does not mean tidy boxes on every hard tile. The [optical demo](/posts/2026-09-06_oriented_det_optical_satellite_demo/) used **3×** Faster R-CNN on a related vehicle scene; this check is the **1×** zoo — official MMRotate and the OrientedDet Hub slug — on the classic `demo.jpg`.
 
@@ -108,7 +108,11 @@ python demo/image_demo.py \
 
 ## Takeaway
 
-Prefer **Oriented R-CNN** (or another oriented two-stage) when the scene looks like this: dense, elongated, off-axis. Keep Rotated Faster R-CNN for the throughput / finetune story — it is still the faster two-stage head, and it still beats MMRotate on Task 1 with ProbIoU. Just do not treat a 73–74% zoo number as a guarantee that the bus lot will look like the README hero.
+Do not throw out Rotated Faster R-CNN because of one bus lot. The failure is **rare** — dense objects at ~45° — and it is the **architecture**, not OrientedDet’s decode. The same mess is in the official MMRotate 1× zoo.
+
+When the scene *does* look like this, **Oriented R-CNN** is the two-stage that stays clean. The cost is real: oriented RoIAlign is slower to train and hungrier on GPU (about **1 d 12 h** for 1× on an L4 versus ~11.5 h for Faster R-CNN). That is why the README hero uses it, and why we do not default every finetune to it.
+
+**Rotated FCOS** is the practical middle: one-stage, no RPN, about **8 h** 1× on the same L4, and boxes that follow heading on this tile — see the [macOS FCOS walkthrough](/posts/2026-09-02_rotated_fcos_vs_oriented_rcnn_on_macos/). Official Task 1 is a bit lower (**73.07%** vs Oriented R-CNN **76.73%** and Faster R-CNN **74.42%**). If you are choosing a head to finetune on your own imagery, that paper gap is usually the wrong number to optimize; training wall and box tightness on hard headings matter more.
 
 ---
 

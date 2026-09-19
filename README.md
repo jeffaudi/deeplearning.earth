@@ -17,6 +17,14 @@ hugo server -D
 
 Open [http://localhost:1313/](http://localhost:1313/).
 
+Posts dated in the future (the v0.3 Mon/Thu series) are omitted from a default `hugo` / Netlify build until that calendar day. Preview them locally with:
+
+```bash
+hugo server -D -F
+```
+
+On each publish day, push to `main` (or trigger a Netlify deploy) so the dated post is included. LinkedIn teasers and the partner email live under [`drafts/v0.3/`](drafts/v0.3/) (not Hugo content).
+
 Requires Hugo **Extended** (for SCSS). The Netlify config pins `HUGO_VERSION` in `netlify.toml`.
 
 ### oriented-det venv (inference / `odet` CLI)

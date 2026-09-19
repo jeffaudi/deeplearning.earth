@@ -1,0 +1,108 @@
+{
+  "protocol": {
+    "image": "demo/demo.jpg",
+    "size": [
+      1024,
+      1024
+    ],
+    "nms_iou": 0.1,
+    "score_thresholds": [
+      0.3,
+      0.6
+    ],
+    "mmrotate": {
+      "version": "0.3.4",
+      "config": "configs/rotated_faster_rcnn/rotated_faster_rcnn_r50_fpn_1x_dota_le90.py",
+      "checkpoint": "rotated_faster_rcnn_r50_fpn_1x_dota_le90-0393aa5c.pth",
+      "env": "mmrotate034"
+    },
+    "oriented_det_frcnn": {
+      "config": "configs/rotated_faster_rcnn/dota_le90_1x.json",
+      "checkpoint": "pretrained/rotated_faster_rcnn_r50_fpn_dota_le90_1x-1e3dabeb.pth"
+    },
+    "oriented_det_orcnn": {
+      "config": "configs/oriented_rcnn/dota_le90_1x.json",
+      "checkpoint": "pretrained/oriented_rcnn_r50_fpn_dota_le90_1x-725c244f.pth"
+    }
+  },
+  "metrics": [
+    {
+      "model": "MMRotate FRCNN 0.3",
+      "n": 100,
+      "area_median": 1949.7937609487562,
+      "area_max": 2462.960495060077,
+      "max_wh_max": 102.04804229736328,
+      "n_gt_2x_median_area": 0,
+      "n_max_wh_gt_150": 0,
+      "per_class": {
+        "large-vehicle": 95,
+        "small-vehicle": 5
+      }
+    },
+    {
+      "model": "MMRotate FRCNN 0.6",
+      "n": 100,
+      "area_median": 1949.7937609487562,
+      "area_max": 2462.960495060077,
+      "max_wh_max": 102.04804229736328,
+      "n_gt_2x_median_area": 0,
+      "n_max_wh_gt_150": 0,
+      "per_class": {
+        "large-vehicle": 95,
+        "small-vehicle": 5
+      }
+    },
+    {
+      "model": "odet_frcnn 0.3",
+      "n": 102,
+      "area_median": 1739.9991622042362,
+      "area_max": 2532.315535973059,
+      "max_wh_max": 103.62891387939453,
+      "n_gt_2x_median_area": 0,
+      "n_max_wh_gt_150": 0,
+      "per_class": {
+        "large-vehicle": 97,
+        "small-vehicle": 5
+      }
+    },
+    {
+      "model": "odet_frcnn 0.6",
+      "n": 101,
+      "area_median": 1746.0438271821477,
+      "area_max": 2532.315535973059,
+      "max_wh_max": 103.62891387939453,
+      "n_gt_2x_median_area": 0,
+      "n_max_wh_gt_150": 0,
+      "per_class": {
+        "large-vehicle": 96,
+        "small-vehicle": 5
+      }
+    },
+    {
+      "model": "odet_orcnn 0.3",
+      "n": 100,
+      "area_median": 2096.8424919031604,
+      "area_max": 2481.888972383924,
+      "max_wh_max": 103.1912612915039,
+      "n_gt_2x_median_area": 0,
+      "n_max_wh_gt_150": 0,
+      "per_class": {
+        "large-vehicle": 95,
+        "small-vehicle": 5
+      }
+    },
+    {
+      "model": "odet_orcnn 0.6",
+      "n": 100,
+      "area_median": 2096.8424919031604,
+      "area_max": 2481.888972383924,
+      "max_wh_max": 103.1912612915039,
+      "n_gt_2x_median_area": 0,
+      "n_max_wh_gt_150": 0,
+      "per_class": {
+        "large-vehicle": 95,
+        "small-vehicle": 5
+      }
+    }
+  ]
+}

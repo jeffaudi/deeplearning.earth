@@ -149,7 +149,7 @@ The model knows the 15 DOTA classes (planes, ships, harbors, storage tanks, …)
 
 ## What's next
 
-The oriented-det series continues with a technical deep-dive on fine-tuning models on Airbus datasets, then lessons learned chasing MMRotate parity (official Task 1, not a leaky DOTA val monitor).
+The oriented-det series continues with a technical deep-dive on fine-tuning models on Airbus datasets, then [lessons learned on DOTA](/posts/2026-09-17_lessons_learned_on_dota_oriented_det_and_mmrotate_parity/) (official Task 1, not a leaky DOTA val monitor).
 
 ---
 

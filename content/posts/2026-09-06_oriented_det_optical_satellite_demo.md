@@ -2,9 +2,9 @@
 title: "A static demo of three oriented detectors on optical satellite imagery"
 author: "Jeff Faudi"
 date: 2026-09-06T15:00:00+07:00
-lastmod: 2026-09-14T23:00:00+07:00
+lastmod: 2026-09-19T22:40:00+07:00
 
-description: "A browser demo of Oriented-Det’s three 3× DOTA checkpoints — Oriented R-CNN, Rotated Faster R-CNN, and Rotated FCOS — on seven optical satellite scenes, with a side by side comparison that lands in parity with state of the art frameworks."
+description: "A browser demo of Oriented-Det’s three 3× DOTA checkpoints — Oriented R-CNN, Rotated Faster R-CNN, and Rotated FCOS — on six optical satellite scenes, with a side by side comparison that lands in parity with state of the art frameworks."
 
 image: "/posts/img/2026-09-06_oriented_det_optical_demo_airport_rfrcnn.jpg"
 
@@ -14,7 +14,7 @@ tags: ["oriented-det", "object-detection", "satellite-imagery", "mmrotate", "inf
 subtitle: "Pick a detector. Move the slider."
 ---
 
-The [oriented-det](https://github.com/DL4EO/oriented-det) zoo now has four detector families. Three of them are worth putting on the same canvas: **Oriented R-CNN 3×**, **Rotated Faster R-CNN 3×**, and **Rotated FCOS 3×** — the Hub weights served by the [optical demo](https://dl4eo.com/object-detection-optical-satellite/). The fourth, **Rotated RetinaNet 3×**, now has official Task 1 **70.70%** (circum-HBB, +2.83 versus 1×); it is not on this page.
+The [oriented-det](https://github.com/DL4EO/oriented-det) zoo now has four detector families. Three of them are on the same canvas: **Oriented R-CNN 3×**, **Rotated Faster R-CNN 3×**, and **Rotated FCOS 3×** — the Hub weights served by the [optical demo](https://dl4eo.com/object-detection-optical-satellite/). All **eight** DOTA slugs (1× and 3×) now quote **official Task 1**. The fourth family, **Rotated RetinaNet 3×**, is **70.70%** Task 1 (circum-HBB); it is not on this page. The accuracy pick remains Oriented R-CNN **1× at 76.73%** — this page serves 3× weights for tighter boxes.
 
 They are on a static page you can open in a browser. No Python, no GPU, no upload:
 
@@ -24,30 +24,29 @@ Pick a detector, pick a scene, then move the confidence slider. The boxes are pr
 
 ![Pleiades airport — Rotated Faster R-CNN 3× at score ≥ 0.60, 27 aircraft](/posts/img/2026-09-06_oriented_det_optical_demo_airport_rfrcnn.jpg#layoutTextWidth)
 
-The checkpoints were trained on [DOTA](https://captain-whu.github.io/DOTA/dataset.html) (academic-use). The seven scenes are a mix of DOTA tiles and commercial optical rasters used as research illustration — not a commercial product. For production detectors on your own imagery, [contact DL4EO](mailto:contact@dl4eo.com).
+The checkpoints were trained on [DOTA](https://captain-whu.github.io/DOTA/dataset.html) (academic-use). The six scenes are a mix of DOTA tiles and commercial optical rasters used as research illustration — not a commercial product. For production detectors on your own imagery, [contact DL4EO](mailto:contact@dl4eo.com).
 
 ---
 
 ## What is on the page
 
-Three Hub **3×** slugs, ResNet-50 + FPN, DOTA le90. Predictions were inferred at `--score-thr 0.05 --nms-thr 0.1`. Slider defaults are each checkpoint’s **deploy floor** (`production.score_threshold` = local F1 minus 0.05) — not the zoo metric.
+Three Hub **3×** slugs, ResNet-50 + FPN, DOTA le90. Predictions were inferred at `--score-thr 0.05 --nms-thr 0.1`. Slider defaults are the page operating points — not the zoo metric. Published AP50 below is **official Task 1** (hidden test), not leaky eval-val.
 
-Official Task 1 is published for Faster R-CNN and FCOS. Oriented R-CNN 3× still quotes leaky **eval-val** until that dump lands.
-
-| Model | Architecture | Published AP50 | Demo threshold | Hub slug |
+| Model | Architecture | Official Task 1 AP50 | Demo threshold | Hub slug |
 |---|---|---:|---:|---|
-| **Oriented R-CNN** | two-stage, oriented RPN | 79.40% eval-val | **0.70** | `oriented_rcnn_dota_le90_3x` |
-| Rotated Faster R-CNN | two-stage, horizontal RPN | **74.48%** Task 1 | **0.60** | `rotated_faster_rcnn_dota_le90_3x` |
-| Rotated FCOS | one-stage, anchor-free | **72.91%** Task 1 | **0.20** | `rotated_fcos_dota_le90_3x` |
+| **Oriented R-CNN** | two-stage, oriented RPN | **74.88%** | **0.70** | `oriented_rcnn_dota_le90_3x` |
+| Rotated Faster R-CNN | two-stage, horizontal RPN | **74.48%** | **0.60** | `rotated_faster_rcnn_dota_le90_3x` |
+| Rotated FCOS | one-stage, anchor-free | **72.91%** | **0.20** | `rotated_fcos_dota_le90_3x` |
+
+1× Task 1 for the same three families is **76.73% / 74.42% / 73.07%**. Finetune from 1×; 3× AP50 is a drop or a wash. The 3× gain is AP75 (51.23 / 45.39 / 45.39). RetinaNet is **67.87% → 70.70%**. Full table: [v0.2.0 zoo](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/).
 
 The page default is Oriented R-CNN. Switching models also resets the slider to that checkpoint’s deploy floor. That is the same trick as the [macOS FCOS walkthrough](/posts/2026-09-02_rotated_fcos_vs_oriented_rcnn_on_macos/): do not copy `0.70` onto FCOS, or you will drop half the boxes.
 
-Seven scenes:
+Six scenes:
 
 | Scene | Sensor / source | What it stresses |
 |---|---|---|
-| DOTA vehicles 1024 | DOTA tile | dense diagonal buses and trucks |
-| DOTA vehicles large | DOTA tile | same class mix, larger canvas |
+| DOTA vehicles large | DOTA tile | packed buses and cars |
 | Pleiades Airport | Pleiades | aircraft at mixed headings |
 | Pleiades HD15 Miami Marina | Pleiades | packed ships, harbors, a few vehicles |
 | Pleiades Neo Tucson | Pleiades Neo | dense aircraft storage |
@@ -58,13 +57,13 @@ Seven scenes:
 
 ## Vehicles: the two-stage models agree, FCOS agrees on geometry
 
-The 1024 DOTA bus lot is the same family of scene as `demo.jpg` from the [June macOS post](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/). At each model’s operating point the counts sit on top of each other: **98** (Oriented R-CNN) / **100** (Faster R-CNN) / **102** (FCOS). Headings follow the chevron parking. The visible difference is score calibration, not box shape — FCOS spreads confidence across a wider band; the two-stage heads pile many boxes near `1.00`.
+The large DOTA bus depot is a packed lot of school buses and cars. At each model’s operating point the counts sit on top of each other: **113** (Oriented R-CNN) / **115** (Faster R-CNN) / **117** (FCOS). Headings follow the parking rows. The visible difference is score calibration, not box shape — FCOS spreads confidence across a wider band; the two-stage heads pile many boxes near `1.00`.
 
-![DOTA vehicles 1024 — Rotated Faster R-CNN 3×, 100 boxes at score ≥ 0.60](/posts/img/2026-09-06_oriented_det_optical_demo_vehicles_rfrcnn.jpg#layoutTextWidth)
+![DOTA vehicles large — Rotated Faster R-CNN 3×, 115 boxes at score ≥ 0.60](/posts/img/2026-09-06_oriented_det_optical_demo_vehicles_rfrcnn.jpg#layoutTextWidth)
 
-![DOTA vehicles 1024 — Rotated FCOS 3×, 102 boxes at score ≥ 0.20](/posts/img/2026-09-06_oriented_det_optical_demo_vehicles_fcos.jpg#layoutTextWidth)
+![DOTA vehicles large — Rotated FCOS 3×, 117 boxes at score ≥ 0.20](/posts/img/2026-09-06_oriented_det_optical_demo_vehicles_fcos.jpg#layoutTextWidth)
 
-On the large DOTA vehicle tile the same pattern holds (113 / 115 / 117). If you only look at those two scenes, you could believe the three detectors are interchangeable. The other five images are there to stop that.
+If you only look at that DOTA-like tile, you could believe the three detectors are interchangeable. The other five images are there to stop that.
 
 ---
 
@@ -92,35 +91,35 @@ On the large DOTA vehicle tile the same pattern holds (113 / 115 / 117). If you 
 
 ## How the three Oriented-Det models compare to each other
 
-I matched boxes 1-to-1 at oriented IoU ≥ 0.5 with the same class, after each model’s deploy threshold, on all seven images together.
+I matched boxes 1-to-1 at oriented IoU ≥ 0.5 with the same class, after each model’s deploy threshold, on all six images together.
 
 | Pair | Matched | F1 | Median IoU |
 |---|---:|---:|---:|
-| FCOS vs Faster R-CNN | 1,104 | **0.91** | **0.86** |
-| FCOS vs Oriented R-CNN | 1,010 | 0.88 | 0.85 |
-| Faster R-CNN vs Oriented R-CNN | 1,005 | 0.88 | 0.84 |
+| FCOS vs Faster R-CNN | 1,010 | **0.91** | **0.86** |
+| FCOS vs Oriented R-CNN | 912 | 0.87 | 0.85 |
+| Faster R-CNN vs Oriented R-CNN | 914 | 0.87 | 0.84 |
 
-FCOS vs Faster R-CNN is the closest pair. Oriented R-CNN at 0.70 is the leaner two-stage head — same objects on the DOTA-like tiles, fewer harbors and helicopters once the slider sits on its deploy floor. The residual is elongated classes (ships, harbors) and dense marinas, not a different geometry.
+FCOS vs Faster R-CNN is the closest pair. Oriented R-CNN at 0.70 is the leaner two-stage head — same objects on the DOTA-like tile, fewer harbors and helicopters once the slider sits on its deploy floor. The residual is elongated classes (ships, harbors) and dense marinas, not a different geometry.
 
-Totals at operating points, all seven images:
+Totals at operating points, all six images:
 
 | Class | Oriented R-CNN | Faster R-CNN | FCOS |
 |---|---:|---:|---:|
 | ship | 545 | 593 | 617 |
-| large-vehicle | 162 | 163 | 169 |
 | plane | 144 | 152 | 145 |
-| small-vehicle | 114 | 120 | 122 |
+| small-vehicle | 109 | 115 | 117 |
 | storage-tank | 88 | 92 | 96 |
+| large-vehicle | 69 | 68 | 72 |
 | harbor | 10 | 46 | 31 |
-| **kept (all classes)** | **1,090** | **1,202** | **1,212** |
+| **kept (all classes)** | **992** | **1,102** | **1,110** |
 
 ---
 
 ## In parity with MMRotate
 
-[MMRotate](https://github.com/open-mmlab/mmrotate) is the research reference — see the [v0.1.1 parity notes](/posts/2026-07-11_oriented-det_v0_1_1_prob_iou_mmrotate_parity_and_the_updated_zoo/) and the [ProbIoU post](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/). I did run a reference MMRotate Rotated Faster R-CNN on the same seven images, same matching rule.
+[MMRotate](https://github.com/open-mmlab/mmrotate) is the research reference — see the [v0.1.1 parity notes](/posts/2026-07-11_oriented-det_v0_1_1_prob_iou_mmrotate_parity_and_the_updated_zoo/) and the [ProbIoU post](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/). I did run a reference MMRotate Rotated Faster R-CNN on the same six images, same matching rule.
 
-The short version: the three Oriented-Det 3× checkpoints are **comparable to** that MMRotate run. They do not look like a different product category. Pairwise F1 against MMRotate stays in the high 0.8s; the residual is concentrated on a few dense, out-of-DOTA rasters rather than on the DOTA-like tiles.
+The short version: the three Oriented-Det 3× checkpoints are **comparable to** that MMRotate run. They do not look like a different product category. Pairwise F1 against MMRotate stays in the high 0.8s; the residual is concentrated on a few dense, out-of-DOTA rasters rather than on the DOTA-like tile.
 
 ---
 
