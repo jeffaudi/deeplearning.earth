@@ -87,7 +87,7 @@ The usual Kaggle dump is **CC BY-NC-SA**. The official test is closed. oriented-
 
 - [oriented-det docs — FAIR1M](https://dl4eo.github.io/oriented-det/user-guide/data/#fair1m) · [v0.3 release note](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/)
 - [FAIR1M paper (arXiv)](https://arxiv.org/abs/2103.05569)
-- **Previous:** [Oriented-Det v0.3.0](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/) · [HRSC2016](/posts/2026-09-13_hrsc2016_recipes_trains_and_results/)
+- **Previous:** [Oriented-Det v0.3.1](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/) · [HRSC2016](/posts/2026-09-13_hrsc2016_recipes_trains_and_results/)
 - **Next:** SSDD (28 Sep)
 
 * * *

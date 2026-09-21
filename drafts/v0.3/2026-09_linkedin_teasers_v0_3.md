@@ -13,15 +13,15 @@ Technical → Jeff personal feed. Business → DL4EO company page.
 
 ### Technical (personal)
 
-Oriented-det **v0.3.0** is on PyPI.
+Oriented-det **v0.3.1** is on PyPI.
 
 This is the dataset + deploy release, not a new detector family. Native loaders for **HRSC2016** and **FAIR1M** (optical) and **SSDD** / **HRSID** (SAR). HRSC has three 3× Hub weights with a real holdout (Oriented R-CNN **90.41%** mAP50). FAIR1M / SSDD / HRSID are train-locally: finetune DOTA 1×, no extra zoo.
 
-DOTA Hub is advertised from **1×**. 3× Task 1 AP50 is a wash or a drop; the 3× gain is AP75. `make eval-val` on DOTA is still leaky. It is not leaky on HRSC / FAIR1M / SSDD / HRSID.
+DOTA Hub is advertised from **1×**. 3× Task 1 AP50 is a wash or a drop; the 3× gain is AP75. Rotated RetinaNet Hub is now **OBB** (Task 1 **71.72%** / **73.89%** vs MMRotate OBB 68.42). Circum-HBB is `*_hbb`. `make eval-val` on DOTA is still leaky. It is not leaky on HRSC / FAIR1M / SSDD / HRSID.
 
-ONNX export (`python -m export`). Consumers need numpy, Pillow, and ONNX Runtime. Deep dives: FAIR1M 24 Sep, SSDD 28 Sep, HRSID 1 Oct, Docker 5 Oct, ONNX 8 Oct. HRSC write-up is already up.
+ONNX export (`odet export`). Consumers need numpy, Pillow, and ONNX Runtime. Deep dives: FAIR1M 24 Sep, SSDD 28 Sep, HRSID 1 Oct, Docker 5 Oct, ONNX 8 Oct. HRSC write-up is already up.
 
-`pip install oriented-det==0.3.0`
+`pip install oriented-det==0.3.1`
 
 https://deeplearning.earth/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/
 
@@ -158,7 +158,7 @@ https://deeplearning.earth/posts/2026-10-05_deploy_oriented_det_in_docker/
 
 oriented-det 0.3 exports to ONNX.
 
-`python -m export` (not `odet`) writes a **pre-NMS** graph plus Python preprocess and rotated NMS. Decode lives in ONNX. NMS stays numpy. Consumers: `pip install -r export/requirements-runtime.txt` then `detect_image(...)`. No PyTorch, no oriented-det.
+`odet export` writes a **pre-NMS** graph plus Python preprocess and rotated NMS (`python -m export` is the same CLI). Decode lives in ONNX. NMS stays numpy. Consumers: `pip install -r export/requirements-runtime.txt` then `detect_image(...)`. No PyTorch, no oriented-det.
 
 Supported: Rotated FCOS, Oriented R-CNN, Rotated Faster R-CNN on a **fixed 1024×1024** canvas (DOTA tiles). Out of graph in this release: `keep_ratio` (HRSC / SSDD / HRSID), sliding-window tiling, RetinaNet detect. I exported the FCOS 1× Hub slug and compared boxes to `odet image-demo` on the same tile.
 

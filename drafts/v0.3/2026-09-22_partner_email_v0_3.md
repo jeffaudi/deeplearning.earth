@@ -10,7 +10,7 @@ Hi [Name],
 
 A short note from me, not a company blast.
 
-I tagged **oriented-det 0.3** yesterday. The detectors are the same four ResNet-FPN families you already know. What changed is the data plane, and the DOTA zoo numbers we quote in front of customers.
+I tagged **oriented-det 0.3.1** yesterday. The detectors are the same four ResNet-FPN families you already know. What changed is the data plane, the DOTA zoo numbers we quote in front of customers, and RetinaNet Hub matching **OBB** (exact convex IoU).
 
 **Four native loaders** (optical pair, radar pair):
 
@@ -26,15 +26,15 @@ FAIR1M / SSDD / HRSID are recipes, not extra Hub downloads. Production still nee
 - Oriented R-CNN **76.73%** vs MMRotate **75.69%** (**+1.04**)
 - Rotated Faster R-CNN **74.42%** vs MMRotate **73.40%** (**+1.02**)
 - Rotated FCOS **73.07%** vs MMRotate **71.28%** (**+1.79**)
-- Rotated RetinaNet (circum-HBB) **67.87%** vs MMRotate HBB **64.55%** (**+3.32**)
+- Rotated RetinaNet (OBB) **71.72%** vs MMRotate OBB **68.42%** (**+3.30**)
 
-Advertise and finetune from **1×**. 3× is on Hub for AP75 / tighter boxes; Task 1 AP50 is a wash or a drop except RetinaNet.
+Advertise and finetune from **1×**. 3× is on Hub for AP75 / tighter boxes; Task 1 AP50 is a wash or a drop except RetinaNet. Circum-HBB RetinaNet from 0.3.0 is `*_hbb`.
 
-ONNX export (`python -m export`): FCOS, Oriented R-CNN, Faster R-CNN, numpy + Pillow + ONNX Runtime on the infer box. Docker Tile Geo Process walkthrough 5 Oct; ONNX walkthrough 8 Oct.
+ONNX export (`odet export`): FCOS, Oriented R-CNN, Faster R-CNN, numpy + Pillow + ONNX Runtime on the infer box. Docker Tile Geo Process walkthrough 5 Oct; ONNX walkthrough 8 Oct.
 
 Release note: https://deeplearning.earth/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/  
 Docs: https://dl4eo.github.io/oriented-det/  
-PyPI: `pip install oriented-det==0.3.0`
+PyPI: `pip install oriented-det==0.3.1`
 
 If a partner programme needs a workshop, an on-prem package, or a finetune on licensed optical / SAR, reply to me on this thread.
 

@@ -11,7 +11,7 @@ image: "/posts/img/2026-10-05_onnx_ort_planes_overlay.jpg"
 series: ["oriented-det"]
 tags: ["oriented-det", "onnx", "export", "deployment", "rotated-fcos"]
 
-subtitle: "python -m export. No odet. No PyTorch on the infer box."
+subtitle: "odet export. No PyTorch on the infer box."
 ---
 
 Training can stay on a GPU box. Inference does not have to. The [Docker Tile Geo Process example](/posts/2026-10-05_deploy_oriented_det_in_docker/) still runs PyTorch in NVIDIA CUDA. This post is the graph you ship when that stack is not allowed on the infer box.
@@ -31,13 +31,13 @@ uv pip install -e ".[export]"
 odet pretrained download rotated_fcos_dota_le90_1x
 make export-onnx
 # or:
-python -m export onnx \
+odet export onnx \
   --config runs/rotated_fcos/<ts>/config.json \
   --checkpoint runs/rotated_fcos/<ts>/checkpoints/checkpoint_best.pth \
   --output ./onnx_export/model.onnx
 ```
 
-This is **`python -m export`**, not an `odet` subcommand.
+This is **`odet export`** (same CLI as `python -m export`).
 
 **Modes:** `rotated_fcos_pre_nms` (default), `oriented_rcnn_pre_nms`, `faster_rcnn_pre_nms`.
 
@@ -71,7 +71,7 @@ Input is the fixed **1024×1024** export demo tile (already matches the DOTA can
 
 ![PyTorch — odet image-demo with hf://rotated_fcos_dota_le90_1x (score ≥ 0.20, NMS 0.1)](/posts/img/2026-10-05_onnx_pytorch_planes_fcos.png#layoutTextWidth)
 
-![ONNX Runtime — python -m export demo on the same checkpoint graph](/posts/img/2026-10-05_onnx_ort_planes_overlay.jpg#layoutTextWidth)
+![ONNX Runtime — odet export demo on the same checkpoint graph](/posts/img/2026-10-05_onnx_ort_planes_overlay.jpg#layoutTextWidth)
 
 On this run both paths kept **6** boxes after NMS (4 plane, 2 helicopter) at score ≥ 0.20 / NMS IoU 0.1. See [`export/PARITY.md`](https://github.com/DL4EO/oriented-det/blob/main/export/PARITY.md) for the parity protocol.
 

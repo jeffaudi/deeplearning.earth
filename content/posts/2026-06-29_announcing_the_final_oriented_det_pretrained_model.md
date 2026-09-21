@@ -2,7 +2,7 @@
 title: "Sliding-window inference on images larger than the DOTA canvas"
 author: "Jeff Faudi"
 date: 2026-06-29T09:00:00+07:00
-lastmod: 2026-06-29T09:00:00+07:00
+lastmod: 2026-09-21T22:30:00+07:00
 
 description: "How odet image-demo tiles images larger than 1024×1024, merges overlapping windows, and filters classes — using the Oriented R-CNN 1× Hub checkpoint retrained after a diagonal-flip bug."
 
@@ -83,7 +83,7 @@ For a zero-shot maritime experiment on a Copernicus Sentinel-2 tile — zoom, ov
 
 ## Demo thresholds (short note)
 
-`--score-thr` and `--nms-thr` on `odet image-demo` are **post-decode** filters. Values tuned on one architecture **do not transfer** to the others. Hub 1× deploy floors: Oriented R-CNN **0.55**, Rotated Faster R-CNN **0.60**, FCOS **0.20**, RetinaNet **0.35**. Copying `0.70` onto FCOS will hide most of the scene.
+`--score-thr` and `--nms-thr` on `odet image-demo` are **post-decode** filters. Values tuned on one architecture **do not transfer** to the others. Hub 1× deploy floors: Oriented R-CNN **0.55**, Rotated Faster R-CNN **0.60**, FCOS **0.20**, RetinaNet OBB **0.25** (HBB **0.35**). Copying `0.70` onto FCOS will hide most of the scene.
 
 **0.5** is the **mAP matching** IoU on DOTA Task 1, not detection NMS. Recipes use **`production.final_nms_iou_threshold: 0.1`**.
 

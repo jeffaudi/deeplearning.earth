@@ -2,7 +2,7 @@
 title: "Oriented-Det v0.1.1 — ProbIoU, MMRotate parity, and the updated zoo"
 author: "Jeff Faudi"
 date: 2026-07-11T09:00:00+07:00
-lastmod: 2026-09-19T12:22:00+07:00
+lastmod: 2026-09-21T22:30:00+07:00
 
 description: "Oriented-det v0.1.1 is on PyPI — ProbIoU ROI regression, MMRotate-aligned training fixes, a DOTA le90 zoo on official Task 1 led by Oriented R-CNN 1× at 76.73%, and a hands-on harbor-scene demo of the Faster R-CNN throughput pick."
 
@@ -41,7 +41,7 @@ v0.1.1 ships **ProbIoU ROI regression** for Rotated Faster R-CNN (`roi_box_reg_m
 |---|---|---:|---|---|
 | **Oriented R-CNN** | **1×** | **76.73%** | +1.04 vs 75.69 | **`oriented_rcnn_dota_le90_1x`** |
 | Rotated Faster R-CNN | 1× (ProbIoU) | **74.42%** | +1.02 vs 73.40 | `rotated_faster_rcnn_dota_le90_1x` |
-| Rotated RetinaNet | 1× (circum-HBB) | **67.87%** | +3.32 vs HBB 64.55 | `rotated_retinanet_dota_le90_1x` |
+| Rotated RetinaNet | 1× (OBB) | **71.72%** | +3.30 vs OBB 68.42 | `rotated_retinanet_dota_le90_1x` |
 
 **Accuracy pick:** **`oriented_rcnn_dota_le90_1x`**. **Throughput / finetune pick:** **`rotated_faster_rcnn_dota_le90_1x`**. For the sampled-rIoU vs ProbIoU trade-offs and why Faster R-CNN beats MMRotate’s Rotated Faster R-CNN on Task 1, see the [ProbIoU deep dive](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/).
 
@@ -52,9 +52,9 @@ Official Task 1 is now on the Hub for **all four** DOTA families at both schedul
 | **Oriented R-CNN** | **76.73%** | 74.88% | 50.24 | 51.23 |
 | Rotated Faster R-CNN | 74.42% | 74.48% | 41.90 | 45.39 |
 | Rotated FCOS | 73.07% | 72.91% | 40.40 | 45.39 |
-| Rotated RetinaNet (circum-HBB) | 67.87% | **70.70%** | 40.08 | 43.34 |
+| Rotated RetinaNet (OBB) | 71.72% | **73.89%** | 43.46 | 47.11 |
 
-**Finetune from 1×** for Oriented R-CNN, Faster R-CNN, and FCOS (3× AP50 drops or washes; AP75 is the tightness gain). **RetinaNet 3×** is the AP50 exception (+2.83). FCOS 1×/3× lives in the [v0.2.0 zoo note](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/).
+**Finetune from 1×** for Oriented R-CNN, Faster R-CNN, and FCOS (3× AP50 drops or washes; AP75 is the tightness gain). **RetinaNet 3×** is the AP50 exception (+2.17). Circum-HBB is `*_hbb`. FCOS 1×/3× lives in the [v0.2.0 zoo note](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/).
 
 In [June we recommended Oriented R-CNN](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/) for quick macOS demos because it behaved well without CUDA rotated-IoU kernels. That remains the **accuracy** default. Use Faster R-CNN 1× when you want the throughput story from July without giving up a competitive Task 1 score.
 

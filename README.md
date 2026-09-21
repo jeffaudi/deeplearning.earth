@@ -23,7 +23,7 @@ Posts dated in the future (the v0.3 Mon/Thu series) are omitted from a default `
 hugo server -D -F
 ```
 
-On each publish day, push to `main` (or trigger a Netlify deploy) so the dated post is included. LinkedIn teasers and the partner email live under [`drafts/v0.3/`](drafts/v0.3/) (not Hugo content).
+On each publish day, run `make publish` so Netlify rebuilds from `main` and Hugo includes that day’s post. LinkedIn teasers and the partner email live under [`drafts/v0.3/`](drafts/v0.3/) (not Hugo content).
 
 Requires Hugo **Extended** (for SCSS). The Netlify config pins `HUGO_VERSION` in `netlify.toml`.
 
@@ -62,7 +62,21 @@ Settings are defined in `netlify.toml`:
 - **Publish directory:** `public`
 - **Environment:** `HUGO_VERSION`, `GIT_SUBMODULE_STRATEGY=recursive`
 
-After pushing to `main`, Netlify installs Hugo, initializes the theme submodule, and builds. If the Netlify UI still overrides build settings, either clear those overrides or align them with `netlify.toml`.
+Pushing to `main` also triggers a Netlify build. If the Netlify UI still overrides build settings, either clear those overrides or align them with `netlify.toml`.
+
+Requires the [Netlify CLI](https://docs.netlify.com/cli/get-started/) for a rebuild without a new commit:
+
+```bash
+npm install -g netlify-cli
+netlify login          # once
+```
+
+| Command | Purpose |
+|---------|---------|
+| `make check` | Strict local Hugo build (also run by `make test`) |
+| `make publish` | Run `make check`, then `netlify deploy --prod --trigger` so [deeplearning.earth](https://deeplearning.earth) rebuilds from git |
+
+`make publish` does **not** upload `public/`. Use it on each Mon/Thu once the post’s `date:` has been reached; Hugo omits later-dated posts until then.
 
 ## Content
 

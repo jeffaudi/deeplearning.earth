@@ -189,7 +189,7 @@ If you need ships in production, train on imagery you have licensed for that use
 - [Pretrained zoo](https://huggingface.co/dl4eo/oriented-det-pretrained)
 - [HRSC2016 paper (ICPRAM 2017)](https://www.scitepress.org/Papers/2017/61206/)
 - **Previous:** [Apache 2.0 covers oriented-det. It does not cover DOTA or HRSC.](/posts/2026-09-10_oriented_det_apache_license_versus_dota/) · [Oriented-Det v0.2.0](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/)
-- **Next:** [Lessons learned on DOTA](/posts/2026-09-17_lessons_learned_on_dota_oriented_det_and_mmrotate_parity/) · [Oriented-Det v0.3.0](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/)
+- **Next:** [Lessons learned on DOTA](/posts/2026-09-17_lessons_learned_on_dota_oriented_det_and_mmrotate_parity/) · [Oriented-Det v0.3.1](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/)
 
 * * *
 #### Written on September 13, 2026 by Jeff Faudi.

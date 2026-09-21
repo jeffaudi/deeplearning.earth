@@ -2,7 +2,7 @@
 title: "Lessons learned on DOTA: official Task 1, leaky val, and the last mile"
 author: "Jeff Faudi"
 date: 2026-09-17T09:00:00+07:00
-lastmod: 2026-09-17T09:00:00+07:00
+lastmod: 2026-09-21T22:30:00+07:00
 
 description: "What I would keep from four months on DOTA: quote official Task 1, never quote leaky eval-val, and treat MMRotate as a reference in the same band — the last mile was the box loss, not a new head."
 
@@ -25,9 +25,9 @@ Published DOTA numbers in this series are **evaluation-server VOC Task 1** (hidd
 | Oriented R-CNN | **76.73%** | 75.69% | 74.88% |
 | Rotated Faster R-CNN | 74.42% | 73.40% | 74.48% |
 | Rotated FCOS | 73.07% | 71.28% | 72.91% |
-| Rotated RetinaNet (circum-HBB) | 67.87% | 64.55% (HBB) | **70.70%** |
+| Rotated RetinaNet (OBB) | 71.72% | 68.42% (OBB) | **73.89%** |
 
-MMRotate is the research reference I matched against. Oriented-det 1× sits in the **same band** on the matching recipes. The inference stitch is not identical — live sliding-window merge versus MMRotate’s on-disk pre-tile merge — so I do not treat a point of AP as a ranking. RetinaNet is circum-HBB on both sides of that row; it is not an OBB comparison.
+MMRotate is the research reference I matched against. Oriented-det 1× sits in the **same band** on the matching recipes. The inference stitch is not identical — live sliding-window merge versus MMRotate’s on-disk pre-tile merge — so I do not treat a point of AP as a ranking. From 0.3.1, RetinaNet Hub is OBB on both sides of that row (`rotated_retinanet_dota_le90_1x`); circum-HBB is `*_hbb`.
 
 **Advertise and finetune from 1×** for Oriented R-CNN, Faster R-CNN, and FCOS. 3× Task 1 AP50 is a drop or a wash; the 3× gain is box tightness (AP75). RetinaNet 3× is the AP50 exception. Full table: [v0.2.0 zoo](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/).
 
@@ -56,7 +56,7 @@ Quote **official Task 1**. Treat leaky eval-val as a convergence plot, not a pap
 Hub slugs: `oriented_rcnn_dota_le90_1x`, `rotated_faster_rcnn_dota_le90_1x`, `rotated_fcos_dota_le90_1x`. Reports: [`docs/eval-reports/`](https://github.com/DL4EO/oriented-det/tree/main/docs/eval-reports).
 
 - **Previous:** [HRSC2016](/posts/2026-09-13_hrsc2016_recipes_trains_and_results/) · [Oriented-Det v0.2.0](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/)
-- **Next:** [Oriented-Det v0.3.0](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/) (21 Sep)
+- **Next:** [Oriented-Det v0.3.1](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/) (21 Sep)
 
 * * *
 #### Written on September 17, 2026 by Jeff Faudi.

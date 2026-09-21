@@ -58,7 +58,7 @@ cp pretrained/oriented_rcnn_*_dota_le90_1x*.pth  deploy/example/app/weights/mode
 python deploy/scripts/generate_description.py \
   --config deploy/example/app/config.json \
   --out deploy/example/app/description.json \
-  --deploy-version 0.3.0
+  --deploy-version 0.3.1
 ```
 
 After your own train, copy `runs/<family>/<ts>/config.json` and `checkpoints/checkpoint_best.pth` instead. Same two filenames inside `deploy/example/app/`.
@@ -130,7 +130,7 @@ Deploy does **not** use the eval-val floor of 0.05. `InferenceEngine` reads `con
 
 `demo.jpg` is already 1024, so this run was **one forward**. `demo/large.jpg` (1904×1299) would slide. That path stays in this container. It is **out of the ONNX graph** in v0.3.
 
-DOTA deploy floors are eval-val global F1 − 0.05 (Oriented R-CNN **0.55**, Faster R-CNN **0.6**, FCOS **0.2**, RetinaNet **0.35**). Do not copy `0.55` onto FCOS.
+DOTA deploy floors are eval-val global F1 − 0.05 (Oriented R-CNN **0.55**, Faster R-CNN **0.6**, FCOS **0.2**, RetinaNet OBB **0.25**). Do not copy `0.55` onto FCOS.
 
 ---
 

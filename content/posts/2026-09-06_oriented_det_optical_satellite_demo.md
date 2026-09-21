@@ -2,7 +2,7 @@
 title: "A static demo of three oriented detectors on optical satellite imagery"
 author: "Jeff Faudi"
 date: 2026-09-06T15:00:00+07:00
-lastmod: 2026-09-19T22:40:00+07:00
+lastmod: 2026-09-21T22:30:00+07:00
 
 description: "A browser demo of Oriented-Det’s three 3× DOTA checkpoints — Oriented R-CNN, Rotated Faster R-CNN, and Rotated FCOS — on six optical satellite scenes, with a side by side comparison that lands in parity with state of the art frameworks."
 
@@ -14,7 +14,7 @@ tags: ["oriented-det", "object-detection", "satellite-imagery", "mmrotate", "inf
 subtitle: "Pick a detector. Move the slider."
 ---
 
-The [oriented-det](https://github.com/DL4EO/oriented-det) zoo now has four detector families. Three of them are on the same canvas: **Oriented R-CNN 3×**, **Rotated Faster R-CNN 3×**, and **Rotated FCOS 3×** — the Hub weights served by the [optical demo](https://dl4eo.com/object-detection-optical-satellite/). All **eight** DOTA slugs (1× and 3×) now quote **official Task 1**. The fourth family, **Rotated RetinaNet 3×**, is **70.70%** Task 1 (circum-HBB); it is not on this page. The accuracy pick remains Oriented R-CNN **1× at 76.73%** — this page serves 3× weights for tighter boxes.
+The [oriented-det](https://github.com/DL4EO/oriented-det) zoo now has four detector families. Three of them are on the same canvas: **Oriented R-CNN 3×**, **Rotated Faster R-CNN 3×**, and **Rotated FCOS 3×** — the Hub weights served by the [optical demo](https://dl4eo.com/object-detection-optical-satellite/). All **eight** DOTA slugs (1× and 3×) now quote **official Task 1**. The fourth family, **Rotated RetinaNet 3×**, is **73.89%** Task 1 (OBB); it is not on this page. The accuracy pick remains Oriented R-CNN **1× at 76.73%** — this page serves 3× weights for tighter boxes.
 
 They are on a static page you can open in a browser. No Python, no GPU, no upload:
 
@@ -38,7 +38,7 @@ Three Hub **3×** slugs, ResNet-50 + FPN, DOTA le90. Predictions were inferred a
 | Rotated Faster R-CNN | two-stage, horizontal RPN | **74.48%** | **0.60** | `rotated_faster_rcnn_dota_le90_3x` |
 | Rotated FCOS | one-stage, anchor-free | **72.91%** | **0.20** | `rotated_fcos_dota_le90_3x` |
 
-1× Task 1 for the same three families is **76.73% / 74.42% / 73.07%**. Finetune from 1×; 3× AP50 is a drop or a wash. The 3× gain is AP75 (51.23 / 45.39 / 45.39). RetinaNet is **67.87% → 70.70%**. Full table: [v0.2.0 zoo](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/).
+1× Task 1 for the same three families is **76.73% / 74.42% / 73.07%**. Finetune from 1×; 3× AP50 is a drop or a wash. The 3× gain is AP75 (51.23 / 45.39 / 45.39). RetinaNet is **71.72% → 73.89%** (OBB; HBB is `*_hbb`). Full table: [v0.2.0 zoo](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/).
 
 The page default is Oriented R-CNN. Switching models also resets the slider to that checkpoint’s deploy floor. That is the same trick as the [macOS FCOS walkthrough](/posts/2026-09-02_rotated_fcos_vs_oriented_rcnn_on_macos/): do not copy `0.70` onto FCOS, or you will drop half the boxes.
 

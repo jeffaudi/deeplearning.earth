@@ -21,7 +21,7 @@ Technical notes on [**oriented-det**](https://github.com/DL4EO/oriented-det): an
 12. [Apache 2.0 covers oriented-det. It does not cover DOTA or HRSC.](/posts/2026-09-10_oriented_det_apache_license_versus_dota/) — sovereignty of the stack versus research datasets; train on your own licensed imagery
 13. [HRSC2016 recipes, trains, and results](/posts/2026-09-13_hrsc2016_recipes_trains_and_results/) — native ship loader, three 3× Hub weights, held-out test 90.41% / 88.77% / 88.34%
 14. [Lessons learned on DOTA](/posts/2026-09-17_lessons_learned_on_dota_oriented_det_and_mmrotate_parity/) — official Task 1, the leaky eval-val trap, and why the last mile was the box loss
-15. [Oriented-Det v0.3.0](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/) — four dataset loaders, HRSC Hub 3×, DOTA from 1×, ONNX export
+15. [Oriented-Det v0.3.1](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/) — four dataset loaders, HRSC Hub 3×, RetinaNet OBB, ONNX export
 16. [FAIR1M fine-grained detection](/posts/2026-09-24_fair1m_fine_grained_oriented_detection/) — 37 classes, convert/tile, Faster R-CNN 1× tiled-val 36.70%
 17. [SSDD SAR ship finetune](/posts/2026-09-28_ssdd_sar_ship_finetune/) — optical DOTA → SAR, held-out test 90.34%
 18. [HRSID SAR ship benchmark](/posts/2026-10-01_hrsid_sar_ship_benchmark/) — larger SAR set, 78.55% rotated AP50 vs Wei HBB

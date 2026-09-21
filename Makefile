@@ -14,7 +14,7 @@ HUGO_FLAGS ?= --minify
 HUGO_CHECK_FLAGS ?= --minify --panicOnWarning \
 	--printI18nWarnings --printPathWarnings --printUnusedTemplates
 
-.PHONY: help setup submodules build serve dev clean test check
+.PHONY: help setup submodules build serve dev clean test check publish
 
 .DEFAULT_GOAL := help
 
@@ -43,3 +43,7 @@ test: check ## Run checks (alias for check)
 
 check: submodules ## Build with strict Hugo warnings (CI-friendly)
 	$(HUGO) $(HUGO_CHECK_FLAGS)
+
+publish: check ## Trigger a Netlify production rebuild of deeplearning.earth
+	@command -v netlify >/dev/null || (echo "Netlify CLI not found. Install with: npm install -g netlify-cli" && exit 1)
+	netlify deploy --prod --trigger --site deeplearningearth

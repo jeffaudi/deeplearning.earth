@@ -2,7 +2,7 @@
 title: "Rotated Faster R-CNN on DOTA without custom CUDA: sampled rIoU, ProbIoU, and a 74.42% Task 1 checkpoint"
 author: "Jeff Faudi"
 date: 2026-07-10T09:00:00+07:00
-lastmod: 2026-09-19T12:22:00+07:00
+lastmod: 2026-09-21T22:30:00+07:00
 
 description: "Why OrientedDet avoids MMRotate's exact CUDA IoU kernels, how ProbIoU trains oriented boxes in pure PyTorch, and why the 1× Rotated Faster R-CNN Hub weight beats MMRotate on official DOTA Task 1."
 
@@ -159,7 +159,7 @@ Oriented R-CNN still leads on **large-vehicle** (82.54 vs 75.25) and **harbor** 
 
 ### When 3× is worth it
 
-Official Task 1 is on the Hub for all four DOTA families at 1× and 3×. **AP50:** Oriented R-CNN **drops** (76.73 → 74.88), Faster R-CNN is a **wash** (74.42 vs 74.48), FCOS **drops** slightly (73.07 → 72.91). **RetinaNet 3×** is the exception (**70.70%** vs 1× **67.87%**, still circum-HBB). **AP75** is the 3× tightness gain (Oriented R-CNN 51.23 vs 50.24, Faster R-CNN 45.39 vs 41.90, FCOS 45.39 vs 40.40, RetinaNet 43.34 vs 40.08). Finetune two-stage and FCOS from **1×**. Reach for a 3× slug only if you need tighter boxes, or if you want RetinaNet’s Task 1 peak (`rotated_retinanet_dota_le90_3x`).
+Official Task 1 is on the Hub for all four DOTA families at 1× and 3×. **AP50:** Oriented R-CNN **drops** (76.73 → 74.88), Faster R-CNN is a **wash** (74.42 vs 74.48), FCOS **drops** slightly (73.07 → 72.91). **RetinaNet 3×** is the exception (**73.89%** vs 1× **71.72%**, OBB from 0.3.1). **AP75** is the 3× tightness gain (Oriented R-CNN 51.23 vs 50.24, Faster R-CNN 45.39 vs 41.90, FCOS 45.39 vs 40.40, RetinaNet 47.11 vs 43.46). Finetune two-stage and FCOS from **1×**. Reach for a 3× slug only if you need tighter boxes, or if you want RetinaNet’s Task 1 peak (`rotated_retinanet_dota_le90_3x`). Circum-HBB is `*_hbb`.
 
 ---
 
