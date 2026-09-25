@@ -1,8 +1,8 @@
 ---
 title: "SSDD in oriented-det — optical DOTA to SAR ships in twelve epochs"
 author: "Jeff Faudi"
-date: 2026-09-28T09:00:00+07:00
-lastmod: 2026-09-28T09:00:00+07:00
+date: 2026-09-28T06:00:00+07:00
+lastmod: 2026-09-28T06:00:00+07:00
 
 description: "Native SSDD SAR ship loader in oriented-det v0.3: keep-ratio 608, finetune DOTA Faster R-CNN 1×, held-out last-digit test 90.34% mAP50. No SSDD Hub zoo."
 

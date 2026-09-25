@@ -1,8 +1,8 @@
 ---
 title: "HRSID in oriented-det — the larger SAR ship benchmark at 78.55%"
 author: "Jeff Faudi"
-date: 2026-10-01T09:00:00+07:00
-lastmod: 2026-10-01T09:00:00+07:00
+date: 2026-10-01T06:00:00+07:00
+lastmod: 2026-10-01T06:00:00+07:00
 
 description: "Native HRSID loader in oriented-det v0.3: COCO polygons to le90, keep-ratio 800, Faster R-CNN 1× from DOTA Hub at 78.55% held-out rotated mAP50. Do not compare to Wei HBB >84.7%."
 

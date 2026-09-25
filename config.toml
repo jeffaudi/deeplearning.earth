@@ -1,9 +1,9 @@
 baseURL = "https://deeplearning.earth/"
-languageCode = "en-us"
+languageCode = "en"
 title = "DeepLearning.Earth"
 
 theme = "hugo-coder"
-defaultContentLanguage = "en-us"
+defaultContentLanguage = "en"
 
 paginate = 20
 canonifyUrls = true

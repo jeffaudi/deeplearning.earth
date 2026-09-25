@@ -1,8 +1,8 @@
 ---
 title: "FAIR1M in oriented-det — 37 classes, and why 36.70% is not a failed train"
 author: "Jeff Faudi"
-date: 2026-09-24T09:00:00+07:00
-lastmod: 2026-09-24T09:00:00+07:00
+date: 2026-09-24T06:00:00+07:00
+lastmod: 2026-09-24T06:00:00+07:00
 
 description: "Native FAIR1M support in oriented-det v0.3: convert + tile, finetune DOTA 1× Faster R-CNN, tiled-val 36.70% mAP50. The bottleneck is class ID, not boxes. No Hub zoo — CC BY-NC-SA dump."
 
@@ -73,7 +73,17 @@ Epoch 12 mean best IoU vs any detection was **0.62**, same-class **0.50**, GT co
 
 Literature band (different test sets; cited as a band only): FAIR1M paper Faster R-CNN R101 **31.53%**; later Rotated Faster R-CNN R50 **~33–35%**; Oriented R-CNN R50 **~39–42%**.
 
-To raise the number: resume / 3× from this checkpoint; train Oriented R-CNN 1×; enable `loss.roi_grouped_ce_*` or class weights. Do **not** compare 36.70% to DOTA Hub tables.
+The 1× recipe uses unweighted cross-entropy. Loss and mAP were still moving at epoch 12 (train loss 0.412, mAP50 36.70%), and the 37-way head started from random weights. These are the levers that target that, not a different dataset. None of them has a published FAIR1M number in this series.
+
+**Resume, or a 3× schedule, from this checkpoint.** Twelve epochs is the 1× budget. A 3× run is the longer MMRotate-style schedule (36 epochs) starting from these weights, so the head is not re-initialized. The curve had not flattened. More epochs are the cheapest bet if the only problem is that training stopped early.
+
+**Oriented R-CNN 1×** (`configs/oriented_rcnn/fair1m_le90_1x.json`). Same tiles, oriented proposals instead of a horizontal RPN. Literature for Oriented R-CNN R50 sits about **39–42%**, against about **33–35%** for Rotated Faster R-CNN. That gap is mostly better RoIs, not a smarter subtype head. It will not by itself name a C919, but it is why the upper end of the band is higher than 36.70%.
+
+**Coarse-to-fine groups** (`loss.roi_grouped_ce_*`). FAIR1M’s five groups are ship, vehicle, airplane, court, and road (`FAIR1M_GROUPS`). Early epochs can train those coarse labels while the head stays 37-way: a Boeing737 called a C919 is not an error while both are “airplane.” A `step` or `linear_ramp` schedule then hands the loss back to the fine names. This needs `loss_type` `cross_entropy` or `class_weighted`.
+
+**Class weights, or focal loss, for the 1038× imbalance.** Inverse-frequency weights (`class_weighted`, or `class_weight_*`) stop Small Car (143,249) from owning the gradient over C919 (138). Focal loss (`loss_type: focal`) does the same job a different way: easy, frequent boxes contribute less, so rare subtypes are not washed out. `focal_weighted` applies the class weights on top of focal. Focal does **not** combine with grouped CE — the trainer ignores `roi_grouped_ce_*` when the loss is focal. Pick a curriculum (groups, then fine labels) or a reweighting (class weights and/or focal), not both at once.
+
+Do **not** compare 36.70% to DOTA Hub tables.
 
 ---
 

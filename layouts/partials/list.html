@@ -5,8 +5,10 @@
         {{- if eq .Kind "term" -}}
           {{- i18n .Data.Plural 1 | title -}}
           {{- print ": " -}}
+          {{- .Title | title -}}
+        {{- else -}}
+          {{- i18n (lower .Title) | default .Title | title -}}
         {{- end -}}
-        {{- i18n (lower .Title) | default .Title | title -}}
       </a>
     </h1>
   </header>

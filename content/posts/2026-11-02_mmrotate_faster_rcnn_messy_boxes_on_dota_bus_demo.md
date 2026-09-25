@@ -1,8 +1,8 @@
 ---
 title: "Does MMRotate Faster R-CNN also mess up the bus lot?"
 author: "Jeff Faudi"
-date: 2026-11-02T09:00:00+07:00
-lastmod: 2026-11-02T09:00:00+07:00
+date: 2026-11-02T06:00:00+07:00
+lastmod: 2026-11-02T06:00:00+07:00
 
 description: "Official MMRotate Rotated Faster R-CNN 1× is as messy as OrientedDet Faster R-CNN on the DOTA bus-lot demo tile. The failure is architectural and rare (dense ~45° objects). Oriented R-CNN is clean but heavy to finetune; that pushes toward FCOS."
 

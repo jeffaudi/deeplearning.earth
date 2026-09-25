@@ -173,3 +173,36 @@ oriented-det 0.3 exports Oriented R-CNN, Faster R-CNN, and FCOS to ONNX. The run
 This release is honest about the canvas: fixed 1024 tiles, not whole-image `keep_ratio`, not sliding windows yet. If your deployment is tiled optical, you can ship a graph this week. If you need SAR whole-image or large-scene tiling in the exported graph, that is the next engineering slice — and a typical DL4EO packaging engagement.
 
 https://deeplearning.earth/posts/2026-10-08_onnx_export_without_pytorch/
+
+---
+
+## Fri 6 Nov — which detector to train
+
+**URL:** https://deeplearning.earth/posts/2026-11-05_which_oriented_detector_to_train/  
+**Image:** `2026-11-02_odet_orcnn_score0.6.png` (clean Oriented R-CNN on the bus lot; pair with the FRCNN overlay if the post is a carousel)
+
+### Technical (personal)
+
+Three oriented-det families, one pick.
+
+**Oriented R-CNN** when the box has to be tight. Task 1 AP50 **76.73%**, AP75 **50.24%** (Faster R-CNN 41.90, FCOS 40.40). That gap is localization. Recall at IoU 0.50 does not follow it. Oriented RoIAlign is also why I cannot train that 1× recipe on my RTX 3090. The published run is **1d 12h** on an L4.
+
+**Rotated Faster R-CNN** when recall matters more than mAP, and for aircraft. Task 1 **74.42%**, about **11h 30m** on the same L4. The miss is specific: long objects, packed, near **45°**. Horizontal RoIAlign. Same mess in official MMRotate.
+
+**Rotated FCOS** for that pack, for a one-stage train, or for the same recall-first case on a cheaper schedule. No RPN. Train wall **7h 59m**. Task 1 **73.07%**. Deploy score **0.20**, not 0.60.
+
+Oriented R-CNN’s published 1× wall is AMP off, batch 2, mAP every 4 epochs — and that recipe does not fit my RTX 3090. The levers are `--use-amp`, a higher `--batch-size` while VRAM remains, and a thinner val match (`compute_map_every_n_epochs: 0`, or a higher `train_val_score_threshold` than 0.3).
+
+Finetune from **1×**. RetinaNet is the parity baseline, not this decision.
+
+https://deeplearning.earth/posts/2026-11-05_which_oriented_detector_to_train/
+
+### Business (DL4EO)
+
+The model follows the object and the GPU, not the leaderboard gap.
+
+Oriented R-CNN is the pick when the box has to be tight and the GPU can take it. When the requirement is recall — find the object, even if the box is a few degrees off — Faster R-CNN and FCOS are the better default, and they train on a 3090-class card. Dense, elongated targets parked near 45° are the case where Faster R-CNN gets the heading wrong: there we use FCOS, or we pay for Oriented R-CNN.
+
+A few points of DOTA mAP is the wrong tie-break. The tie-break is your imagery and whether the card in the rack can hold an oriented second stage. Workshops and custom training: dl4eo.com
+
+https://deeplearning.earth/posts/2026-11-05_which_oriented_detector_to_train/

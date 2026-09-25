@@ -1,8 +1,8 @@
 ---
 title: "ONNX export in oriented-det — inference without PyTorch"
 author: "Jeff Faudi"
-date: 2026-10-08T09:00:00+07:00
-lastmod: 2026-10-08T09:00:00+07:00
+date: 2026-10-08T06:00:00+07:00
+lastmod: 2026-10-08T06:00:00+07:00
 
 description: "oriented-det v0.3 ships pre-NMS ONNX export for Rotated FCOS, Oriented R-CNN, and Faster R-CNN. Consumers run ONNX Runtime + numpy + Pillow. Fixed 1024 canvas; keep_ratio and sliding windows stay out of graph."
 

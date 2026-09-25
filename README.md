@@ -6,7 +6,7 @@ Technical blog on oriented object detection for Earth Observation and the [orien
 - **About (`/about/`)** — author bio, photo, company, and social links
 - **Demo** — [optical satellite demo](https://dl4eo.com/object-detection-optical-satellite/) on dl4eo.com (opens in a new tab)
 
-Built with [Hugo](https://gohugo.io/) and the [hugo-coder](https://github.com/luizdepra/hugo-coder) theme (git submodule at `themes/hugo-coder`).
+Built with [Hugo](https://gohugo.io/) and the [hugo-coder](https://github.com/luizdepra/hugo-coder) theme (git submodule at `themes/hugo-coder`). Site language is `en` so Hugo loads the theme’s `i18n/en.toml`.
 
 ## Local development
 
@@ -17,7 +17,7 @@ hugo server -D
 
 Open [http://localhost:1313/](http://localhost:1313/).
 
-Posts dated in the future (the v0.3 Mon/Thu series) are omitted from a default `hugo` / Netlify build until that calendar day. Preview them locally with:
+Posts dated in the future (the v0.3 Mon/Thu series) are omitted from a default `hugo` / Netlify build until their `date:` timestamp. New posts publish at **06:00 +07**. Preview them locally with:
 
 ```bash
 hugo server -D -F
@@ -76,7 +76,7 @@ netlify login          # once
 | `make check` | Strict local Hugo build (also run by `make test`) |
 | `make publish` | Run `make check`, then `netlify deploy --prod --trigger` so [deeplearning.earth](https://deeplearning.earth) rebuilds from git |
 
-`make publish` does **not** upload `public/`. Use it on each Mon/Thu once the post’s `date:` has been reached; Hugo omits later-dated posts until then.
+`make publish` does **not** upload `public/`. Use it on each Mon/Thu after **06:00 +07**; Hugo omits posts until that timestamp.
 
 ## Content
 
@@ -93,6 +93,7 @@ Posts live under `content/posts/`. The about page is `content/about.md` (layout:
 - `layouts/_default/about.html` — about page with avatar and social links
 - `layouts/partials/header.html` — menu `target`/`rel` support and theme header build fix
 - `layouts/partials/list.html` — taxonomy/series list pages use the same post list markup
+- `layouts/_default/list.html` — term pages (tags, categories, series) use the term name as the title; tag names are not i18n keys
 - `layouts/posts/list.html` — `/posts/` section list (redirects to `/` on Netlify)
 - `assets/css/custom.css` — single-column blog layout (post list, about page, post meta)
 - `assets/css/medium-zoom.css` — overlay styles for click-to-zoom images ([medium-zoom](https://github.com/francoischalifour/medium-zoom))

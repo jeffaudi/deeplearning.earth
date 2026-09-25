@@ -1,8 +1,8 @@
 ---
 title: "Deploy oriented-det in Docker — Tile Geo Process, GeoJSON out"
 author: "Jeff Faudi"
-date: 2026-10-05T09:00:00+07:00
-lastmod: 2026-10-05T09:00:00+07:00
+date: 2026-10-05T06:00:00+07:00
+lastmod: 2026-10-05T06:00:00+07:00
 
 description: "oriented-det v0.3 ships a Sanic Tile Geo Process example: bake a DOTA checkpoint into an NVIDIA CUDA image, POST a base64 tile, get oriented GeoJSON. PyTorch stays in the container. ONNX is next."
 

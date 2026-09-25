@@ -1,0 +1,12 @@
+{{ define "title" }}
+  {{- if eq .Kind "term" -}}
+    {{- i18n .Data.Plural 1 | title -}}
+    {{- print ": " -}}
+    {{- .Title | title }} · {{ .Site.Title -}}
+  {{- else -}}
+    {{- i18n (lower .Title) | default .Title | title }} · {{ .Site.Title -}}
+  {{- end -}}
+{{ end }}
+{{ define "content" }}
+  {{ partial "list.html" . }}
+{{ end }}

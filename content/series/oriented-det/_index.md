@@ -28,6 +28,7 @@ Technical notes on [**oriented-det**](https://github.com/DL4EO/oriented-det): an
 19. [Deploy in Docker](/posts/2026-10-05_deploy_oriented_det_in_docker/) — Sanic Tile Geo Process, GeoJSON out, PyTorch in CUDA
 20. [ONNX export without PyTorch](/posts/2026-10-08_onnx_export_without_pytorch/) — pre-NMS ONNX + ORT consumer stack
 21. [Does MMRotate Faster R-CNN also mess up the bus lot?](/posts/2026-11-02_mmrotate_faster_rcnn_messy_boxes_on_dota_bus_demo/) — official 1× Rotated Faster R-CNN is messy on the same DOTA bus tile as OrientedDet FRCNN (architecture, rare ~45° clutter); Oriented R-CNN is clean but heavy, which pushes toward FCOS
+22. [Which oriented detector should you train?](/posts/2026-11-05_which_oriented_detector_to_train/) — Oriented R-CNN when the box must be tight (AP75); Faster R-CNN or FCOS when recall matters more, with FCOS for dense ~45° objects
 
 **Links**
 
