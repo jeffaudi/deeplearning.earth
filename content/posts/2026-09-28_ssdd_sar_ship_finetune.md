@@ -11,14 +11,12 @@ image: "/posts/img/2026-09-28_ssdd_offshore_gt.jpg"
 series: ["oriented-det"]
 tags: ["oriented-det", "ssdd", "sar", "object-detection", "ship-detection"]
 
-subtitle: "90.34% held-out. No Hub. Download Official-SSDD and run the recipe."
+subtitle: "90.34% on the held-out chips, from an optical pretrain."
 ---
 
-Optical pretrain, SAR finetune, twelve epochs.
+Start from a detector that already knows what a ship looks like in daylight. Twelve epochs later, it knows a SAR chip too.
 
-[SSDD](https://github.com/TianwenZhang/Official-SSDD) (Zhang et al.) is **1,160** SAR ship chips (~190–688 px), RadarSat-2 / TerraSAR-X / Sentinel-1, 1–15 m. Official split: file numbers whose last digit is **1 or 9** are **test** (~232); the rest are **train** (~928). [oriented-det](https://github.com/DL4EO/oriented-det) v0.3 loads it natively (`dataset.format: ssdd`). A full Faster R-CNN 1× finetune from the DOTA Hub reached **90.34%** mAP50 on held-out test. There is **no SSDD Hub zoo**.
-
-You do not start SAR detection from random weights. You start from an oriented optical zoo, swap the head, and qualify on a real holdout. Literature Faster R-CNN on SSDD sits around **~89%**. Treat **under 80%** overall as a failed train. We do not redistribute the chips and we do not ship a SAR zoo. Weather-independent ships on **your** SAR still need your license and your test set.
+[SSDD](https://github.com/TianwenZhang/Official-SSDD) is 1,160 radar ship chips. [oriented-det](https://github.com/DL4EO/oriented-det) loads them natively. A Faster R-CNN finetune from the DOTA Hub reached **90.34%** on the held-out test, in the same band as the published Faster R-CNN numbers on this set (around 89%). Download the chips from the authors and run the recipe. For ships on your own radar, train on imagery your contract allows. The split and the curves are below.
 
 ![SSDD offshore test chip — official RBox ground truth (research illustration; chips stay with the authors)](/posts/img/2026-09-28_ssdd_offshore_gt.jpg#layoutTextWidth)
 

@@ -4,21 +4,19 @@ author: "Jeff Faudi"
 date: 2026-10-01T06:00:00+07:00
 lastmod: 2026-10-08T07:30:00+07:00
 
-description: "Native HRSID loader in oriented-det v0.3: COCO polygons to le90, keep-ratio 800, Faster R-CNN 1× from DOTA Hub at 78.55% held-out rotated mAP50. Do not compare to Wei HBB >84.7%."
+description: "Native HRSID loader in oriented-det v0.3: COCO polygons to le90, keep-ratio 800, Faster R-CNN 1× from DOTA Hub at 78.55% held-out rotated mAP50."
 
 image: "/posts/img/2026-10-01_hrsid_dense_gt.png"
 
 series: ["oriented-det"]
 tags: ["oriented-det", "hrsid", "sar", "object-detection", "ship-detection"]
 
-subtitle: "78.55% rotated AP50. Wei’s 85%+ is horizontal COCO."
+subtitle: "78.55% rotated AP50 on the larger SAR ship set."
 ---
 
-Two SAR ship benchmarks, two different jobs. [SSDD](/posts/2026-09-28_ssdd_sar_ship_finetune/) is the small-chip sanity check (~90% held-out). [HRSID](https://github.com/chaozhong2010/HRSID) (Wei et al., IEEE Access 2020) is the larger, higher-resolution set: **5,604** 800×800 chips, **16,951** ships, Sentinel-1B / TerraSAR-X / TanDEM-X, 0.5–3 m.
+[SSDD](/posts/2026-09-28_ssdd_sar_ship_finetune/) is the small radar check, around 90%. [HRSID](https://github.com/chaozhong2010/HRSID) is the larger one: 5,604 chips, finer resolution, harbours as well as open water.
 
-[oriented-det](https://github.com/DL4EO/oriented-det) v0.3 loads it natively (`dataset.format: hrsid`). A full Faster R-CNN 1× finetune from the DOTA Hub reached **78.55%** mAP50 on official held-out test — **rotated** IoU on min-area rectangles. There is **no HRSID Hub slug**.
-
-Do not put that next to Wei et al. (IEEE Access 2020, Table 4). They report **horizontal** bbox AP on the same official split, with two-stage SOTA **above 84.7%** AP50. That protocol is COCO HBB, not rotated IoU on min-area rectangles. Oriented boxes are the stricter number when heading matters. Treat **under 70%** rotated eval-val as a failed train; a healthy run lives in the high 70s to mid 80s.
+A Faster R-CNN finetune from the optical DOTA Hub reached **78.55%** on the official held-out test. That is rotated overlap on the ship’s own rectangle, which is the number I want when the heading matters. A healthy run on this set lives in the high 70s to the mid 80s. Download the chips and run the recipe. The curves are below.
 
 ![HRSID test — dense harbour chip with COCO-polygon ground truth (research illustration)](/posts/img/2026-10-01_hrsid_dense_gt.png#layoutTextWidth)
 
@@ -57,7 +55,9 @@ From `hf://rotated_faster_rcnn_dota_le90_1x` (1-way `ship` head re-init), RTX 30
 | 8 | 0.270 | 69.94% |
 | 12 | 0.245 | **71.53%** |
 
-`make eval-val` (score ≥ 0.05) is **78.55%** — same checkpoint. The 0.3 in-train floor drops many true positives (recall 0.83 at 0.05 vs GT cover 79% at 0.3). That is a **threshold**, not a collapsed run. Best-F1 deploy threshold on that sweep is **0.60** (P 0.90 / R 0.74 / F1 0.81). Mean best IoU vs GT is **0.68**.
+`make eval-val` (score ≥ 0.05) is **78.55%** — same checkpoint. The 0.3 in-train floor drops many true positives (recall 0.83 at 0.05 vs GT cover 79% at 0.3). That is a threshold. Best-F1 deploy threshold on that sweep is **0.60** (P 0.90 / R 0.74 / F1 0.81). Mean best IoU vs GT is **0.68**.
+
+Wei et al. (IEEE Access 2020, Table 4) report horizontal box AP above **84.7%** on this split. The **78.55%** here is rotated overlap on the ship’s own rectangle.
 
 ![Precision–recall on HRSID held-out test (Rotated Faster R-CNN 1×)](/posts/img/2026-10-01_hrsid_pr_curve.png#layoutTextWidth)
 

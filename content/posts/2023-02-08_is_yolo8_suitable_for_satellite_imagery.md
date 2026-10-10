@@ -17,18 +17,13 @@ subtitle: ""
 For current work on oriented and rotated object detection in aerial and satellite images, see **[oriented-det](https://github.com/DL4EO/oriented-det)** and the overview of [oriented detection in aerial and satellite images](/oriented-detection-in-satellite-images/).
 {{< /notice >}}
 
-# Yes — if you stop treating the image like a photograph
+# Yes. Keep the pixels the size they are.
 
-**YOLOv8 is a very good framework** for object detection in satellite imagery. It is built for COCO photographs, so it trades some accuracy for speed. Use it when inference cost matters. It is not the automatic winner for every sensor.
+YOLOv8 is a pleasure to train, and it is fast, which matters when you are paying for GPU time. On satellite imagery I change a few habits it learned from photographs.
 
-The defaults that hurt on satellite imagery:
+Keep **`imgsz`** at the tile size. On these Pleiades extracts, test at **2560**. Raise **`max_det`** when a scene holds more than 300 objects. Turn **mosaic** off, skip the scaling that throws resolution away, and add up/down flips — a ship has no privileged “up.” Tile the big image, and keep every tile from one acquisition in the same split.
 
-- Keep **`imgsz`** at the tile size. Do not let the model shrink the image. At test time on these Pleiades extracts that means **2560**, not 640.
-- Raise **`max_det`** if a scene can hold more than the default 300 objects.
-- Turn **mosaic** off, and skip scaling augmentations that throw away resolution. Add up/down flips. Satellite objects have no privileged “up.”
-- Tile large images, and keep every tile from one source image in the **same** train or validation split.
-
-On the small annotated test set, with `imgsz` kept at the full image size, there were very few false alarms and few misses. The install, the tiling, and the training log are below.
+On the small annotated test set, with the full image size kept, there were very few false alarms and few misses. The install and the log are below.
 
 # The latest YOLO version has been published
 

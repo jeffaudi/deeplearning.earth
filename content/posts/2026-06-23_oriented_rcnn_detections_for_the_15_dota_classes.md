@@ -14,13 +14,9 @@ tags: ["oriented-det", "dota", "oriented-rcnn", "dataset"]
 subtitle: ""
 ---
 
-Oriented object detection becomes concrete when you look at the boxes.
+A plane on a taxiway, a ship against a quay, a bus in a diagonal row: the interesting part of the box is the angle.
 
-In this post we will walk through detections produced by **Oriented R-CNN** on the 15 original classes from [DOTA v1.0](https://captain-whu.github.io/DOTA/), the benchmark dataset that shaped much of the modern work on rotated object detection in aerial imagery.
-
-DOTA matters because it is not a neat toy dataset. Its images contain large scenes, dense object layouts, arbitrary object directions, and strong scale variation. Aircraft, ships, sports fields, bridges, harbors, storage tanks, vehicles, and helicopters do not line up with image axes just because our detectors prefer rectangles. DOTA forces the detector to care about orientation.
-
-Orientation is part of the visual signal. When objects are long, dense, rotated, or tightly packed, a horizontal rectangle often describes the image crop more than it describes the object. Oriented R-CNN makes that angle explicit, keeps detections readable in dense scenes, and gives downstream systems a geometry closer to the real footprint. When the job is choosing a head to finetune, the later note is [which detector to train](/posts/2026-10-29_which_oriented_detector_to_train/). The fifteen classes are below.
+These are Oriented R-CNN detections on the fifteen classes of [DOTA v1.0](https://captain-whu.github.io/DOTA/). The box follows the object, so a harbour stays a harbour and a vehicle stays a vehicle, even when they sit packed together. When you are choosing a head to finetune, the later note is [which detector to train](/posts/2026-10-29_which_oriented_detector_to_train/). The gallery is below.
 
 ---
 

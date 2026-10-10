@@ -11,16 +11,14 @@ image: "/posts/img/2026-10-05_onnx_ort_planes_overlay.jpg"
 series: ["oriented-det"]
 tags: ["oriented-det", "onnx", "export", "deployment", "rotated-fcos"]
 
-subtitle: "odet export. No PyTorch on the infer box."
+subtitle: "Ship a graph. Run it with ONNX Runtime."
 ---
 
-Training can stay on a GPU box. Inference does not have to. The [Docker Tile Geo Process example](/posts/2026-10-05_deploy_oriented_det_in_docker/) still runs PyTorch in NVIDIA CUDA. This post is the graph you ship when that stack is not allowed on the infer box.
+Train on the GPU box. Send the infer box a small graph.
 
-[oriented-det](https://github.com/DL4EO/oriented-det) v0.3 ships **ONNX** export. The producer writes a **pre-NMS** graph plus Python preprocess and rotated NMS. Decode lives in ONNX. Final NMS stays numpy. Consumers need **numpy, Pillow, and ONNX Runtime** — not PyTorch, not oriented-det.
+[oriented-det](https://github.com/DL4EO/oriented-det) writes a **pre-NMS ONNX** file. Decode lives in the graph. A few lines of Python do the preprocess and the rotated NMS. The machine that runs it needs **numpy, Pillow, and ONNX Runtime**. For a tiled optical scene at 1024, that is enough to ship this week. [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) uses the same contract for Rotated RTMDet.
 
-Air-gapped and on-prem environments often will not take a PyTorch stack on the infer box. ONNX Runtime + three Python files is a smaller surface. If your deployment is tiled optical at 1024, you can ship a graph this week. If you need SAR whole-image `keep_ratio` or large-scene tiling in the exported graph, that is the next engineering slice — and a typical packaging engagement.
-
-[v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) adds the same pre-NMS contract for **Rotated RTMDet** (`rotated_rtmdet_pre_nms`). Native YOLO-OBB is **v0.4.1**. The producer and consumer commands are below.
+The [Docker post](/posts/2026-10-05_deploy_oriented_det_in_docker/) is the path that tiles a large scene and returns GeoJSON. The commands for the graph are below.
 
 ![ONNX Runtime overlay — Rotated FCOS DOTA 1× Hub on the export demo tile (score ≥ 0.20, NMS 0.1)](/posts/img/2026-10-05_onnx_ort_planes_overlay.jpg#layoutTextWidth)
 

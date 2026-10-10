@@ -12,25 +12,11 @@ tags: ["oriented-det", "licensing", "dota"]
 subtitle: "Sovereignty is the stack. The detector is your data."
 ---
 
-Two things get collapsed into one sentence far too often: **the software** and **the data the software was demonstrated on**.
+[oriented-det](https://github.com/DL4EO/oriented-det) is Apache 2.0. You can install it, read it, change it, and run it on your own machines.
 
-[oriented-det](https://github.com/DL4EO/oriented-det) is a **sovereign**, **Apache 2.0** framework for oriented object detection. You can install it, audit it, fork it, run it on-prem or in a private cloud, and **train it on imagery you have the right to use**. That part is clear.
+The detector you ship is the one you train on imagery your contract allows: you annotate your classes, you train, you keep the weights. That is the whole path. DOTA and HRSC are how we show the tooling works. Your archive is how you operate.
 
-[DOTA](https://captain-whu.github.io/DOTA/dataset.html) and [HRSC2016](https://www.scitepress.org/Papers/2017/61206/) are **not** that grant. They are research datasets. They are useful for reproducing papers, comparing architectures, and showing that the stack works. They are **not** a production training set, and weights trained on them are **not** a commercial product license.
-
-This post draws that line. It is **not legal advice**. If you are shipping a detector, talk to counsel who can read your contracts and your jurisdiction. What follows is how we, DL4EO, treat the pieces so the Apache license is not asked to do a job it does not do.
-
-| Asset | License posture | Production? |
-|---|---|---|
-| oriented-det code, configs, docs | **Apache 2.0** | Yes — this is the stack |
-| DOTA images and annotations | Academic only; commercial use prohibited | **No** |
-| HRSC2016 images and annotations | Research set; Google Earth source; no commercial grant we rely on | **No** |
-| FAIR1M images and annotations | Research set; Kaggle dump is CC BY-NC-SA; no Hub zoo | **No** |
-| SSDD and HRSID images and annotations | Research SAR sets; not redistributed with oriented-det; no Hub zoo | **No** |
-| Hub checkpoints trained on DOTA or HRSC | Research / demo artifacts | **No** as a shipped product |
-| A model you train on imagery you licensed for ML | Yours, subject to *your* data contract | **Yes** — this is the path |
-
-The production path is imagery you licensed for training, annotated for your classes, then trained with oriented-det. The sections below are where each dataset’s terms actually stop.
+This is how we treat the pieces at DL4EO. It is a practical note for engineers, and your counsel is the one who reads your contracts. The dataset terms, and a short table, are below.
 
 ---
 
@@ -133,6 +119,18 @@ That is sovereignty in the operational sense: **a framework you can keep, on dat
 We help teams do exactly this — workshops, consulting, and project delivery around oriented-det, typically from two weeks to three months. The public zoo is how we show the tooling. Your archive is how you ship.
 
 ---
+
+## A short checklist
+
+| Asset | License posture | Production? |
+|---|---|---|
+| oriented-det code, configs, docs | **Apache 2.0** | Yes — this is the stack |
+| DOTA images and annotations | Academic only; commercial use prohibited | **No** |
+| HRSC2016 images and annotations | Research set; Google Earth source; no commercial grant we rely on | **No** |
+| FAIR1M images and annotations | Research set; Kaggle dump is CC BY-NC-SA; no Hub zoo | **No** |
+| SSDD and HRSID images and annotations | Research SAR sets; not redistributed with oriented-det; no Hub zoo | **No** |
+| Hub checkpoints trained on DOTA or HRSC | Research / demo artifacts | **No** as a shipped product |
+| A model you train on imagery you licensed for ML | Yours, subject to *your* data contract | **Yes** — this is the path |
 
 ## Not legal advice
 

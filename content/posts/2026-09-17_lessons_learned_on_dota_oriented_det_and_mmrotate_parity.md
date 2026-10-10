@@ -4,23 +4,19 @@ author: "Jeff Faudi"
 date: 2026-09-17T09:00:00+07:00
 lastmod: 2026-09-21T22:30:00+07:00
 
-description: "What I would keep from four months on DOTA: quote official Task 1, never quote leaky eval-val, and treat MMRotate as a reference in the same band — the last mile was the box loss, not a new head."
+description: "What I would keep from four months on DOTA: the official Task 1 number, MMRotate as a neighbour in the same band, and a better box loss when ships are still a few degrees off."
 
 series: ["oriented-det"]
 tags: ["oriented-det", "dota", "mmrotate"]
 
-subtitle: "Quote Task 1. Do not quote eval-val."
+subtitle: "Quote the official Task 1 number."
 ---
 
-This is the DOTA chapter I promised in [Introducing oriented-det](/posts/2026-05-28_introducing_oriented-det_sovereign_oriented_object_detection_for_eo/). The September retrains are on the [official Task 1](https://captain-whu.github.io/DOTA/evaluation.html) server. [v0.2.0](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/) already shipped the four-family zoo; this post is what I would actually keep from the work — not the training diary.
+After four months of training on DOTA, the number I trust is the one on the [official Task 1](https://captain-whu.github.io/DOTA/evaluation.html) server.
 
-I built [oriented-det](https://github.com/DL4EO/oriented-det) as a lightweight PyTorch stack next to [MMRotate](https://github.com/open-mmlab/mmrotate): Apache 2.0, JSON configs, no MMCV runtime. The goal was **parity**, not a new architecture. DOTA v1.0 is the honest benchmark. Four lessons survived.
+The curve in the training log is how I watch a run settle. The server score is what I put in a sentence. [oriented-det](https://github.com/DL4EO/oriented-det) lands in the same band as [MMRotate](https://github.com/open-mmlab/mmrotate). When planes and tanks already look right, and ships are still a few degrees off, I change the **box loss** and I keep the detector.
 
-Quote **official Task 1**. Treat leaky eval-val as a convergence plot, not a paper number. Use MMRotate as a reference in the same band, not as a leaderboard to beat. When compact classes are already fine and ships still sit a few degrees off, change the **box loss**, not the detector name.
-
-Hub slugs to finetune: `oriented_rcnn_dota_le90_1x`, `rotated_faster_rcnn_dota_le90_1x`, `rotated_fcos_dota_le90_1x`. Reports: [`docs/eval-reports/`](https://github.com/DL4EO/oriented-det/tree/main/docs/eval-reports).
-
-Why those three sentences, and the table they sit on, are below.
+The weights I finetune from are `oriented_rcnn_dota_le90_1x`, `rotated_faster_rcnn_dota_le90_1x`, and `rotated_fcos_dota_le90_1x`. The table, and the story of how the loss closed the gap, are below.
 
 ## Quote official Task 1
 

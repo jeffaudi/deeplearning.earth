@@ -14,25 +14,13 @@ tags: ["oriented-det", "tutorial", "macos", "rotated-fcos", "inference"]
 subtitle: "odet image-demo … --device mps"
 ---
 
-In [June](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/) we ran **Oriented R-CNN** on a MacBook with `--device mps` — no CUDA toolchain, one CLI command, rotated boxes on a real aerial tile. [v0.2.0](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/) added a fourth detector family: **Rotated FCOS**, an anchor-free single-stage model with a decoded-rIoU 1× Hub checkpoint.
+I put two detectors on the same MacBook and the same pictures.
 
-This post puts both on the same Mac and the same images. Same canvas, same NMS — Apple M1 Max, PyTorch MPS, Hub **1×** weights. We also pull the **training wall times** from the published Hub runs (same NVIDIA L4 recipe). The question is practical: does the new one-stage model feel good enough on a laptop to replace the two-stage demo default?
+**FCOS** is the one I reach for when I want a quick look: it trains in about eight hours on the L4 recipe, it runs happily on Apple Silicon, and the score to start with is **0.20**. Official Task 1 is **73.07%**.
 
-**Short answer:** FCOS is the faster one-stage / cheaper-train / MPS demo. It is **not** more accurate: official Task 1 is **73.07%** versus Oriented R-CNN **76.73%**. Scores are less peaked, so copying a two-stage threshold onto FCOS will silently drop half the boxes. Use **0.20** for FCOS and **0.55** for Oriented R-CNN.
+**Oriented R-CNN** is the one I reach for when the box has to be right. Task 1 is **76.73%**, and the score to start with is **0.55**. It takes about a day and a half to train.
 
-| Goal | Pick |
-|---|---|
-| Fast macOS / MPS demo, one-stage stack | **`rotated_fcos_dota_le90_1x`** |
-| Fast 1× training iteration on a single L4 | **`rotated_fcos_dota_le90_1x`** (~8 h vs ~1.5 days) |
-| Highest official Task 1 accuracy | **`rotated_rtmdet_dota_le90_3x`** (77.60%, [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/)) |
-| Highest Task 1 in this two-model comparison | **`oriented_rcnn_dota_le90_1x`** (76.73%) |
-| Throughput / finetune default | `rotated_faster_rcnn_dota_le90_1x` (74.42%) |
-| Rotated RoIAlign behaviour / continuity with June tutorials | `oriented_rcnn_dota_le90_1x` |
-| Ships / elongated classes as the product | Prefer Faster R-CNN ProbIoU or Oriented R-CNN. Ground-track-field Task 1 1× is FCOS **59.88**, Faster R-CNN **71.39**, Oriented R-CNN **74.61** |
-
-For laptop demos after v0.2, **Rotated FCOS 1×** is the better **speed** default than Oriented R-CNN: fewer parameters, faster MPS inference, cheaper 1× training, and no RPN. Oriented R-CNN still **wins this pair** on Task 1. The zoo peak after [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) is Rotated RTMDet-S at **77.60%**; it was not timed on this Mac. Keep FCOS at **0.20** and Oriented R-CNN at **0.55**, NMS **0.1**.
-
-The same scenes, the latency, and the commands are below.
+Since [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/), the published peak is Rotated RTMDet-S at **77.60%**. This note is the afternoon I spent comparing the two ResNet heads on an M1 Max. The pictures, the timings, and the commands are below.
 
 ---
 

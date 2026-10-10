@@ -31,9 +31,9 @@ aliases:
 
 ---
 
-After a few epochs and no special tuning, YOLOX already reaches about **85% recall** on large oil tanks and just over **55%** on the smaller ones. Average precision on the large tanks, across IoU 0.50 to 1.0, is over **80%**. The false alarms are mostly other round structures, such as water-treatment tanks. Good enough to see that the recipe works. Not good enough to stop.
+A few epochs of YOLOX, untuned, already finds about **85%** of the large oil tanks on this SPOT sample, with precision over **80%**. The smaller tanks are harder: recall sits just above **55%**. The false alarms are mostly other round things, water-treatment tanks in particular. Tag those, train longer, and the precision moves.
 
-The Airbus sample is [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/): fine for learning, not for a commercial product. The obvious next step is more epochs, and to tag those lookalike tanks so the model stops calling them oil storage. How the tiles were cut, and the training setup, are below.
+The Airbus sample is for learning, under [CC BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/). How the tiles were cut is below.
 
 ### Introduction
 

@@ -14,21 +14,11 @@ tags: ["oriented-det", "sentinel-2", "ship-detection", "zero-shot"]
 subtitle: ""
 ---
 
-How far can a DOTA-pretrained oriented detector go on real Sentinel-2 imagery without any fine-tuning?
+I took a public Oriented R-CNN, trained on aerial photos, and pointed it at one Copernicus Sentinel-2 tile. Ten metres a pixel. Ships at every heading. No new labels.
 
-We took a single 10 m true-colour crop from Copernicus Sentinel-2 — a busy patch of open water with ships at many headings — and ran it through the **Oriented R-CNN** model shipped with [oriented-det](https://github.com/DL4EO/oriented-det). No maritime labels. No changes to the weights. Just a public checkpoint, a satellite tile, and a few inference knobs.
+The rotated boxes came out with plausible headings. That part worked the first time. What moved the recall was scale: zooming the tile so the ships looked the size the detector expects. Lowering the score on the original tile barely changed anything. By eye, the zoomed pass finds something like a third to a half of the vessels you can see.
 
-The short version: oriented boxes are the right shape, but scale and domain shift still matter. A zero-shot model can find some ships, especially after zoomed sliding-window inference, but it is not a substitute for a detector tuned on maritime satellite data.
-
-**Oriented boxes are the right geometry.** Even zero-shot, the detected ships generally have plausible headings. For maritime imagery, the rotated box is not cosmetic; it carries information about footprint and orientation.
-
-**Scale beats threshold tuning alone.** Lowering the score threshold at 1× helped only marginally. Zoomed sliding-window inference helped more because the detector finally saw ships at a more familiar pixel size.
-
-**Domain shift remains the ceiling.** At 4× with ship-only filtering, the model still misses many visible vessels. Fine-tuning on labelled maritime satellite data is the path to production recall; upscaling is a useful diagnostic, not a replacement. Visual inspection suggests recall around **30–50%** here. That is not a measured metric.
-
-**Explicit tiling settings matter.** Overlap, ignore margin, score threshold, and merge NMS are part of the experiment. The reproduce command is the record of what worked on this tile.
-
-Next: fine-tune on labelled tiles from Sentinel-2, Airbus SPOT, or synthetic ship sets; score a held-out set with manual counts; and run larger Copernicus scenes through the same sliding-window path. If you run the same experiment on your own tiles, the result is useful reference material. The scene and the pictures are below.
+The next step is a finetune on labelled maritime tiles. The scene, the pictures, and the exact command are below.
 
 ---
 

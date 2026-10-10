@@ -12,15 +12,11 @@ tags: ["oriented-det", "ossdd", "sar", "rtmdet", "rotated-fcos", "ship-detection
 subtitle: "88.49% rotated AP50 on held-out VH test. Their 0.70 is a different mAP."
 ---
 
-[OSSDD](https://arxiv.org/abs/2608.01963) (Hammer et al., 2026) is Sentinel-1 GRD ship chips built from the scenes behind OpenSARShip. [oriented-det](https://github.com/DL4EO/oriented-det) does not load the zip. It trains the DOTA export: PNG chips, rotated-box labels, official train / val / test. VH is the polarization the paper found stronger, and it is the one we trained.
+We took a detector that had learned ships in daylight, and taught it to find them in Sentinel-1 radar.
 
-The optical DOTA zoo transfers to this Sentinel-1 holdout, and the head you start from matters. RTMDet-S, twelve epochs, is the run I would repeat: **88.49%** test AP50, **94.4%** recall at IoU 0.5, 45 minutes. Faster R-CNN and FCOS land near **60%** on the same export and the same protocol.
+Twelve epochs of **RTMDet-S** on the VH chips of [OSSDD](https://arxiv.org/abs/2608.01963) reached **88.49%** on the held-out test, and it found **94%** of the ships, in 45 minutes. Faster R-CNN and FCOS, on the same chips and the same recipe, landed near **60%**. The head you start from matters.
 
-**88.49% AP50 is not a ranking against the paper’s 0.70 mAP.** Their number averages horizontal boxes from IoU 0.10 to 0.95, trained from scratch. Ours is one rotated-IoU point after an optical-DOTA finetune.
-
-We do not redistribute the chips and we do not ship an OSSDD zoo. Weather-independent ships on **your** SAR still need your license and your test set. SSDD and HRSID remain the other two research checks; they are not this dataset.
-
-There is **no OSSDD Hub slug**. Annotations are CC-BY-NC-SA-4.0. The pixels come from Copernicus. Download the dataset yourself.
+OSSDD is Sentinel-1 ship chips with rotated boxes, cut from the scenes behind OpenSARShip. Download the set yourself — the annotations are CC-BY-NC-SA — and train the DOTA export. The split, the three runs, and how this number sits beside the paper are below.
 
 Three 12-epoch finetunes, same export, same 512 crop. Held-out test AP50 at score ≥ 0.3:
 

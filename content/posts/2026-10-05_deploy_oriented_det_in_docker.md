@@ -14,15 +14,13 @@ tags: ["oriented-det", "docker", "deployment", "oriented-rcnn", "geojson"]
 subtitle: "docker build. POST /api/v1/process. 100 oriented polygons."
 ---
 
-Training can stay on a GPU box. Serving should be a container.
+I wanted a tile to go in and polygons to come out, the way a GIS service already expects.
 
-[oriented-det](https://github.com/DL4EO/oriented-det) v0.3 ships [`deploy/example/`](https://github.com/DL4EO/oriented-det/tree/main/deploy/example): a **Sanic** service that speaks a **Tile Geo Process** contract — base64 JPEG/PNG in, **GeoJSON** polygons out. No OpenMMLab. No MMCV. Bake a checkpoint, `docker build`, `POST /api/v1/process`. This is still **PyTorch** in an NVIDIA CUDA image. The [ONNX walkthrough](/posts/2026-10-08_onnx_export_without_pytorch/) is the path when the infer box cannot take that stack.
+[oriented-det](https://github.com/DL4EO/oriented-det) ships that as a container: [`deploy/example/`](https://github.com/DL4EO/oriented-det/tree/main/deploy/example). You bake a checkpoint, `docker build`, and `POST` a JPEG. GeoJSON comes back. Sliding windows, a healthcheck, a lock, and a GPU runtime are in the image, so a large scene is tiled for you.
 
-I published the Oriented R-CNN DOTA **1×** Hub slug (`production.score_threshold` **0.55**, NMS **0.1**) and posted `demo/demo.jpg`. **100** boxes came back (95 `large-vehicle`, 5 `small-vehicle`). Same overlay the CLI has been drawing since June — as polygons a GIS client can store.
+I tried it with Oriented R-CNN on the bus-lot demo, score **0.55**. **100** boxes came back — 95 large vehicles, 5 small ones — the same picture the CLI has been drawing since June, now as polygons a map can store. FCOS on this service starts at **0.2**, because its scores sit lower.
 
-Use the container when the service has to tile a large scene, speak GeoJSON, and sit behind a POST. It is the operational checkpoint: sliding windows, `keep_ratio` canvases, a healthcheck, a lock, and a GPU runtime. Teams that already run tile services can drop this image behind the same POST. Use [ONNX](/posts/2026-10-08_onnx_export_without_pytorch/) when the infer box cannot take PyTorch: numpy, Pillow, and ONNX Runtime, fixed **1024** canvas, no sliding window in the graph. Skipping Docker to jump to export skips the path that actually tiles a large scene today.
-
-Do not copy `0.55` onto FCOS (use **0.2**). Apache 2.0 covers the image recipe. It does not cover DOTA pixels — do not push Hub weights to a public registry without checking the dataset terms.
+When the infer machine should stay small, the [ONNX graph](/posts/2026-10-08_onnx_export_without_pytorch/) is the next step: a fixed 1024 canvas, numpy and ONNX Runtime. The Dockerfile and the request are below. Apache 2.0 covers the recipe; train the weights on imagery your contract allows.
 
 ![GeoJSON from POST /api/v1/process — Oriented R-CNN DOTA 1× Hub on demo/demo.jpg (score ≥ 0.55, NMS 0.1)](/posts/img/2026-10-05_docker_demo_overlay.jpg#layoutTextWidth)
 

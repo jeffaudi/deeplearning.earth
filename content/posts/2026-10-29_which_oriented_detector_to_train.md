@@ -12,25 +12,22 @@ image: "/posts/img/2026-11-02_odet_orcnn_score0.6.png"
 series: ["oriented-det"]
 tags: ["oriented-det", "rtmdet", "oriented-rcnn", "rotated-faster-rcnn", "rotated-fcos", "dota"]
 
-subtitle: "RTMDet on Task 1, then the ResNet three."
+subtitle: "Start with RTMDet. Switch when the scene asks for it."
 ---
 
-## What I would actually train
+If I were starting a train tomorrow, I would start with **Rotated RTMDet-S**.
 
-- The published Task 1 peak, one stage, on a 3090-class card → **`rotated_rtmdet_dota_le90_3x`**, score **0.45**. This is the 3× weight. There is no 1× slug.
-- A diagonal pack of long objects, and you want the head checked on that tile → **`oriented_rcnn_dota_le90_1x`**. On a 24 GB card, turn **AMP** on and raise the batch before you decide it will not fit. RTMDet was not run on the bus lot.
-- Recall matters more than mAP, or the card is a 3090 and you are staying on ResNet → **`rotated_faster_rcnn_dota_le90_1x`**, unless the objects are long, dense, and near 45°.
-- That pack on a cheaper ResNet train → **`rotated_fcos_dota_le90_1x`**, score **0.20**.
+It is the weight that reached **77.60%** on official DOTA Task 1, and the boxes are tight: AP75 **52.01**. It is small, it trains on a 3090-class card, and I deploy it at score **0.45**. The slug is `rotated_rtmdet_dota_le90_3x`.
 
-Mean mAP is the wrong tie-break once the ResNet numbers sit inside a few points. The tie-break is whether a miss is worse than a loose box, whether the scene looks like the apron or the bus lot, and whether the card can hold oriented RoIAlign. When none of those constraints bite, the Hub peak is RTMDet-S.
+When the picture is a tight diagonal row of long vehicles, I switch to **Oriented R-CNN** (`oriented_rcnn_dota_le90_1x`, score **0.55**). That head looks at each object along its own angle. On a 24 GB card I turn AMP on, raise the batch, and it fits.
 
-Apache 2.0 is the code. DOTA and HRSC pixels stay research. Production still needs imagery you are allowed to train on — [dl4eo.com](https://dl4eo.com).
+When I care most about finding the object, and I am staying with a ResNet recipe, I use **Faster R-CNN** (`rotated_faster_rcnn_dota_le90_1x`). Aprons full of aircraft, and ordinary ship scenes, are happy there.
 
-The tables below are why those four lines look like that.
+When that same diagonal row has to train on a shorter ResNet schedule, I use **FCOS** (`rotated_fcos_dota_le90_1x`) and I start the score at **0.20**. The boxes follow the row, and the train is the short one.
 
-The zoo numbers are in, including [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/). Official DOTA Task 1 puts **Rotated RTMDet-S** first. A held-out HRSC test still orders the three ResNet families the same way Task 1 does, and the [bus-lot check](/posts/2026-10-26_mmrotate_faster_rcnn_messy_boxes_on_dota_bus_demo/) shows the one scene where that ResNet order flips. RTMDet was not in the HRSC zoo and was not re-run on that tile.
+The code is Apache 2.0. For a programme you will actually operate, train it on imagery your contract allows — [dl4eo.com](https://dl4eo.com).
 
-**Rotated RetinaNet** stays in the zoo as the MMRotate-parity baseline (Task 1 **71.72%** at 1×). It is not in this decision.
+A held-out HRSC test orders the three ResNet families the same way Task 1 does. The [bus-lot check](/posts/2026-10-26_mmrotate_faster_rcnn_messy_boxes_on_dota_bus_demo/) is the scene where that order changes. Rotated RetinaNet stays in the zoo as the parity baseline, at Task 1 **71.72%**. The tables are the numbers behind the pick.
 
 ## RTMDet-S, when you want the published peak
 

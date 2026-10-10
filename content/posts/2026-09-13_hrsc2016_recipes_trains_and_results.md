@@ -14,11 +14,9 @@ tags: ["oriented-det", "hrsc2016", "object-detection", "pretrained-models"]
 subtitle: "Trainval in. Test out. Three 3× Hub weights."
 ---
 
-DOTA is the pretrain zoo. [HRSC2016](https://www.scitepress.org/Papers/2017/61206/) is the small-data ship zoo.
+[HRSC2016](https://www.scitepress.org/Papers/2017/61206/) is the small ship set I use when I want a number I can trust. The test images stay out of training, and the score is on that holdout.
 
-Three [oriented-det](https://github.com/DL4EO/oriented-det) families now have native HRSC recipes and published 3× Hub weights: **Oriented R-CNN 90.41%**, **Rotated Faster R-CNN 88.77%**, **Rotated FCOS 88.34%** mAP50. Those numbers are `make eval-val` on ImageSets **test**. Test is **not** in training. That sentence is the whole point of this dataset in our stack — [DOTA eval-val is leaky](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/); HRSC eval-val is a real holdout.
-
-This post is the dataset, the recipes, the L4 trains, and the reports. It is a research benchmark. It is **not** a production ship detector — see [the licensing note](/posts/2026-09-10_oriented_det_apache_license_versus_dota/). Apache 2.0 covers the code. It does not cover these Google Earth images, and it does not turn a 90% mAP weight file into a commercial detector. If you need ships in production, train on imagery you have licensed for that use.
+Three Hub weights, all 3×: **Oriented R-CNN 90.41%**, **Faster R-CNN 88.77%**, **FCOS 88.34%**. Close enough that I would pick on speed and on how the boxes sit, then read the curves below. Apache 2.0 is the code. For ships you will operate, train on imagery your contract allows — the [license note](/posts/2026-09-10_oriented_det_apache_license_versus_dota/) is the longer version of that sentence.
 
 ```bash
 odet pretrained download oriented_rcnn_hrsc2016_le90_3x
@@ -29,7 +27,7 @@ odet image-demo path/to/test.bmp hf://oriented_rcnn_hrsc2016_le90_3x \
   --score-thr 0.85 --nms-thr 0.1 --out-file out_orcnn.png
 ```
 
-Faster R-CNN uses the same **0.85**. FCOS uses **0.20**. Keep **`--nms-thr 0.1`**. `make eval-val` still uses score ≥ **0.05** — do not mix that protocol with the deploy floor. Inference is one whole-image forward (`keep_ratio` / pad), not a sliding window.
+Faster R-CNN uses the same **0.85**. FCOS likes **0.20**, because its scores sit lower. Keep **`--nms-thr 0.1`**. The published mAP above is score ≥ **0.05**. Inference is one whole-image forward.
 
 ![In-train val mAP50 every 4 epochs on the three HRSC 3× runs (non-empty ImageSets test)](/posts/img/2026-09-13_hrsc2016_train_map.png#layoutTextWidth)
 

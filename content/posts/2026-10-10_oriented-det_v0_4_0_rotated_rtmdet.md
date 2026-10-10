@@ -12,13 +12,13 @@ tags: ["oriented-det", "release", "rtmdet", "dota", "pretrained-models"]
 subtitle: "pip install oriented-det==0.4.0"
 ---
 
-After [v0.3.1](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/) (21 September), [**Oriented-Det v0.4.0**](https://github.com/DL4EO/oriented-det/releases/tag/v0.4.0) is on [PyPI](https://pypi.org/project/oriented-det/0.4.0/) and tagged on GitHub today. The headline is a fifth detector: **Rotated RTMDet**, CSPNeXt-S, one stage, no RPN. The Hub slug `rotated_rtmdet_dota_le90_3x` is official DOTA v1.0 **Task 1 77.60%** (AP75 **52.01**, COCO-style mAP **49.02**). That is the top of the zoo.
+[**Oriented-Det v0.4.0**](https://github.com/DL4EO/oriented-det/releases/tag/v0.4.0) adds a detector I actually want to train: **Rotated RTMDet**.
 
-Native YOLO-OBB stays **v0.4.1**. This tag is RTMDet.
+One stage, a small CSPNeXt backbone, and the best official DOTA Task 1 number in the zoo: **77.60%**, with tight boxes at AP75 **52.01**. The slug is `rotated_rtmdet_dota_le90_3x`. It trains on a 3090-class card. Deploy it at **0.45**.
 
-Use `rotated_rtmdet_dota_le90_3x` when you want the highest Task 1 number on the Hub, in one stage, on a 3090-class card. The [pick among the ResNet families](/posts/2026-10-29_which_oriented_detector_to_train/) still stands for those three: Oriented R-CNN when you have checked oriented RoIAlign on a diagonal pack, Faster R-CNN or FCOS when recall and a cheaper L4 schedule matter more. RTMDet is the row above them on Task 1 AP50 and on AP75. There is no HRSC Hub weight for it, and the bus-lot tile in that note was not re-run with this checkpoint.
+The [ResNet families](/posts/2026-10-29_which_oriented_detector_to_train/) are still there when the scene asks for them: Oriented R-CNN for a diagonal pack, Faster R-CNN or FCOS when you want a cheaper schedule. The same RTMDet weight, taught Sentinel-1 ships for twelve epochs, is the [OSSDD note](/posts/2026-10-15_ossdd_sentinel1_ships_rtmdet_faster_rcnn_fcos/) — **88.49%** on the held-out VH test, in 45 minutes.
 
-A VH finetune of this same slug on OSSDD (Sentinel-1 ships) is the [OSSDD note](/posts/2026-10-15_ossdd_sentinel1_ships_rtmdet_faster_rcnn_fcos/): held-out test AP50 at score ≥ 0.3 is **88.49% / 60.10% / 58.21%**, walls **45 min / 2h 55m / 1h 29m**. That AP50 is one rotated IoU of 0.5. It is not Hammer et al.’s mAP. No OSSDD Hub slug.
+`pip install oriented-det==0.4.0` is below, with the speed and the head.
 
 ## Upgrade
 
@@ -110,6 +110,8 @@ make export-onnx EXPERIMENT=runs/rotated_rtmdet/<timestamp> EXPORT_MODE=rotated_
 The [v0.3 ONNX post](/posts/2026-10-08_onnx_export_without_pytorch/) is FCOS, Oriented R-CNN, and Faster R-CNN. RTMDet export ships in this tag.
 
 ## Also in 0.4.0
+
+Native YOLO-OBB is the following tag, **v0.4.1**. This tag is RTMDet.
 
 - Periodic val and `make eval-val` use `val_score_threshold`. `test_map` and `make eval-test` use `test_score_threshold` (null → **0.05**). Older key names still load.
 - `odet preds` / `make metrics` scores every ground truth and every detection (margin **0**). Deploy / `image_demo` still use `production.ignore_margin_pixels`. On this slug that margin is **0**.

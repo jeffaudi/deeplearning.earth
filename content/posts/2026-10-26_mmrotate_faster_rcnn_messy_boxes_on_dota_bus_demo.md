@@ -15,25 +15,13 @@ tags: ["oriented-det", "mmrotate", "rotated-faster-rcnn", "oriented-rcnn", "rota
 subtitle: "Same 1024 tile, same knobs, official zoo weights."
 ---
 
-The [oriented-det](https://github.com/DL4EO/oriented-det) README hero uses **Oriented R-CNN** on `demo/demo.jpg` for a reason. That 1024×1024 DOTA-style bus parking lot — dense diagonal rows of large vehicles — is a stress case. Rotated Faster R-CNN on the same tile looks messy: duplicate high-score boxes, awkward angles, overlapping hulls. The first question anyone should ask is whether that is an OrientedDet decode bug, or whether [MMRotate](https://github.com/open-mmlab/mmrotate)’s published Rotated Faster R-CNN does it too.
+There is a parking lot in the demo image. Buses sit in two chevron rows. **Oriented R-CNN** draws one box per bus, along the row. **Faster R-CNN** piles extra boxes on those same rows.
 
-We ran the official MMRotate **v0.3.4** 1× zoo checkpoint (`rotated_faster_rcnn_r50_fpn_1x_dota_le90-0393aa5c.pth`, published **73.40%** mAP on DOTA 1×) against OrientedDet’s Hub 1× Faster R-CNN and Oriented R-CNN. Same image, same score floors, same rotated NMS, one GPU forward. The file is the one MMRotate ships: 1024×1024, same MD5 as OrientedDet `demo/demo.jpg`.
+I ran the official [MMRotate](https://github.com/open-mmlab/mmrotate) 1× zoo weight on the same tile, same score, same NMS. It draws the same tangle. So I still train Faster R-CNN for most scenes. The vertical rows on the edge of this very picture come out tidy. The tangle shows up when long objects sit packed near 45°, because that head proposes a horizontal window and then has to invent the angle.
 
-**Verdict:** official MMRotate is **also messy** on the diagonal rows. OrientedDet Faster R-CNN has the same character. Oriented R-CNN is clean. This is a **horizontal-RPN Faster R-CNN** failure mode, not an OrientedDet-only bug — and it is **rare**: dense objects parked near 45°. The vertical edge rows on the same tile are fine.
+When your scene looks like the chevron, **Oriented R-CNN** keeps the heading. It also takes about a day and a half on an L4, against about half a day for Faster R-CNN. **FCOS** follows the heading too, and finishes the same recipe in about eight hours — see the [macOS walkthrough](/posts/2026-09-02_rotated_fcos_vs_oriented_rcnn_on_macos/). [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) later put Rotated RTMDet-S at **77.60%** Task 1; the pictures below are the ResNet heads on this tile.
 
-The oriented-det code is Apache 2.0. The tile is DOTA imagery — academic / non-commercial; see [Apache 2.0 vs DOTA](/posts/2026-09-10_oriented_det_apache_license_versus_dota/). Consulting and custom work live at [dl4eo.com](https://dl4eo.com).
-
-## Takeaway
-
-Do not throw out Rotated Faster R-CNN because of one bus lot. The failure is **rare** — dense objects at ~45° — and it is the **architecture**, not OrientedDet’s decode. The same mess is in the official MMRotate 1× zoo.
-
-When the scene *does* look like this, **Oriented R-CNN** is the two-stage that stays clean. The cost is real: oriented RoIAlign is slower to train and hungrier on GPU (about **1 d 12 h** for 1× on an L4 versus ~11.5 h for Faster R-CNN). That is why the README hero uses it, and why we do not default every finetune to it.
-
-**Rotated FCOS** is the practical middle among the ResNet heads: one-stage, no RPN, about **8 h** 1× on the same L4, and boxes that follow heading on this tile — see the [macOS FCOS walkthrough](/posts/2026-09-02_rotated_fcos_vs_oriented_rcnn_on_macos/). Official Task 1 is a bit lower (**73.07%** vs Oriented R-CNN **76.73%** and Faster R-CNN **74.42%**). If you are choosing a head to finetune on your own imagery, that paper gap is usually the wrong number to optimize; training wall and box tightness on hard headings matter more.
-
-[v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) put **Rotated RTMDet-S** at **77.60%** Task 1 (AP75 **52.01**), one stage, above both of those ResNet numbers. This bus tile was not re-run with that checkpoint. The clutter in the overlays below is still the horizontal-RoI failure. It is not a claim about RTMDet.
-
-The overlays, the counts, and the commands are below.
+The code is Apache 2.0. The tile is a DOTA image, so the [license note](/posts/2026-09-10_oriented_det_apache_license_versus_dota/) applies if you want to train on your own archive — [dl4eo.com](https://dl4eo.com). The overlays and the commands are below.
 
 ---
 

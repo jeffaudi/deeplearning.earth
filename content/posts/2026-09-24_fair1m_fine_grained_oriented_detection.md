@@ -14,13 +14,11 @@ tags: ["oriented-det", "fair1m", "object-detection", "fine-grained"]
 subtitle: "Mid-30s mAP50 is in band for FAIR1M Faster R-CNN."
 ---
 
-DOTA is the pretrain zoo. [FAIR1M](https://arxiv.org/abs/2103.05569) is the fine-grained optical set — **37** classes under five coarse groups. [oriented-det](https://github.com/DL4EO/oriented-det) v0.3 loads it natively, converts to DOTA folders, tiles 1024/200, and finetunes the matching DOTA 1× Hub checkpoint. There is **no FAIR1M Hub zoo**.
+[FAIR1M](https://arxiv.org/abs/2103.05569) asks the detector to tell a Boeing from a C919, a small car from a van, across **37** names. That is a different job from DOTA’s fifteen broad classes.
 
-A full 12-epoch Rotated Faster R-CNN finetune reached **36.70%** mAP50 on official val tiles. That looks terrible next to DOTA ~74% Task 1. It is **in band** for FAIR1M Faster R-CNN (literature ~31–35%; Oriented R-CNN papers ~39–42%). Do **not** compare 36.70% to DOTA Hub tables.
+A 12-epoch Faster R-CNN finetune reached **36.70%** on the official val tiles. Published Faster R-CNN numbers on this set sit around 31–35%, and Oriented R-CNN papers around 39–42%, so this run is in the band. The boxes often land on the right object. The name is the hard part: small cars outnumber the rarest aircraft by about a thousand to one.
 
-The bottleneck is class identity, not the boxes. About **32.6k** ground truths had IoU ≥ 0.5 with a **wrong-class** box, and train imbalance is **1038×** (Small Car vs C919). The usual dump is CC BY-NC-SA, and the official test is closed. If your programme needs aircraft or vehicle subtypes, pretrain on a public oriented zoo, re-init the head, and watch imbalance — on **your** licensed imagery.
-
-The levers that target the class problem (more epochs from this checkpoint, Oriented R-CNN, coarse-to-fine groups, class weights or focal loss) are below. None of them has a published FAIR1M number in this series.
+[oriented-det](https://github.com/DL4EO/oriented-det) loads the set, tiles it, and finetunes a DOTA checkpoint. More epochs from this run, an Oriented R-CNN head, or class weights are the levers below. For a programme that needs subtypes, do that on imagery your contract allows.
 
 ![FAIR1M val — ground-truth oriented boxes on a sports-field scene (research illustration; not a dataset mirror)](/posts/img/2026-09-24_fair1m_sports_gt.jpg#layoutTextWidth)
 

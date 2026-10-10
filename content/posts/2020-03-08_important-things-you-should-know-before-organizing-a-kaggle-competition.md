@@ -23,13 +23,11 @@ aliases:
 
 ---
 
-The work that matters is **before** the competition and **after** it.
+A year after we ran the Airbus ship challenge on Kaggle, the part I would repeat is simple.
 
-Before: a dataset that matches what your users actually need, covers the variety you will see in operations, keeps an honest imbalance, and is scored by a metric you chose on purpose. Release it only after legal has agreed it can stay public.
+Spend the time before launch on the dataset: the ships your users actually care about, seas that look like your seas, and a score that matches that job. Spend the time after the leaderboard on the code. We retested the winners on imagery they had never seen. The model that traveled best raised our precision from **70% to 90%**, and we kept the same recall. We then put more GPUs under it.
 
-After: read the winning code, then retest it on imagery the leaderboard never saw. On our internal qualification set, the model that generalized — second on the public board, not first — raised precision from **70% to 90%** without losing recall. The separate speed prize was not worth running. Almost nobody entered, and our users would not accept a less accurate model. We scaled the accurate one on more GPUs instead.
-
-Expect a leak. Smart people will find it. Say so, and replace the data if you can. The story of how that went, including the month we lost, is below.
+Someone will find a leak. We did, we said so, and we rebuilt the validation set. That month is the story below.
 
 ### Lessons Learned from the Airbus Ship Detection Challenge
 

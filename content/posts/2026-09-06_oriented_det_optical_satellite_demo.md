@@ -14,25 +14,17 @@ tags: ["oriented-det", "object-detection", "satellite-imagery", "mmrotate", "inf
 subtitle: "Pick a detector. Move the slider."
 ---
 
-The [oriented-det](https://github.com/DL4EO/oriented-det) zoo now has five detector families. Three ResNet heads are on the same canvas: **Oriented R-CNN 3×**, **Rotated Faster R-CNN 3×**, and **Rotated FCOS 3×** — the Hub weights served by the [optical demo](https://dl4eo.com/object-detection-optical-satellite/). **Rotated RetinaNet 3×** is **73.89%** Task 1 (OBB); it is not on this page. [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) added **Rotated RTMDet-S** at **77.60%** Task 1; that weight is not on this page either. Among the three weights the page does serve, the accuracy pick remains Oriented R-CNN, and the page uses the **3×** slugs for tighter boxes (1× Task 1 for that family is **76.73%**).
-
-They are on a static page you can open in a browser. No Python, no GPU, no upload:
+Open a browser. Pick a detector, pick a scene, move the slider.
 
 **[dl4eo.com/object-detection-optical-satellite](https://dl4eo.com/object-detection-optical-satellite/)**
 
-Pick a detector, pick a scene, then move the confidence slider. The boxes are precomputed; the page only filters what is drawn.
+Three ResNet heads are on the page, the 3× Hub weights: **Oriented R-CNN**, **Faster R-CNN**, and **FCOS**. Oriented R-CNN is the one I look at first for a tight box. FCOS is the fast one. Give each its own starting score — **0.70**, **0.60**, and **0.20** — and the scenes line up. The same three sit comfortably next to an MMRotate Faster R-CNN run on these images.
 
-Leave each model on its own threshold. Dragging all three to the same number is how you convince yourself FCOS is worse. FCOS is the fastest of the three; the two R-CNN heads sit in the same latency band. Those three 3× checkpoints are comparable to an MMRotate Rotated Faster R-CNN run on the same six images. Scene-by-scene counts are below.
-
-| Detector | Start here | Why |
-|---|---|---|
-| Oriented R-CNN | **0.70** | peaked two-stage scores; the page default |
-| Rotated Faster R-CNN | **0.60** | peaked two-stage scores |
-| FCOS | **0.20** | sigmoid head; 0.70 will hide most of the scene |
+The boxes are already computed. The page only chooses which ones to draw. Scene counts are below.
 
 ![Pleiades airport — Rotated Faster R-CNN 3× at score ≥ 0.60, 27 aircraft](/posts/img/2026-09-06_oriented_det_optical_demo_airport_rfrcnn.jpg#layoutTextWidth)
 
-The checkpoints were trained on [DOTA](https://captain-whu.github.io/DOTA/dataset.html) (academic-use). The six scenes are a mix of DOTA tiles and commercial optical rasters used as research illustration — not a commercial product. For production detectors on your own imagery, [contact DL4EO](mailto:contact@dl4eo.com).
+The checkpoints were trained on [DOTA](https://captain-whu.github.io/DOTA/dataset.html). The six scenes mix DOTA tiles and commercial optical pictures, shown here so you can compare the boxes. For a detector on your own imagery, [contact DL4EO](mailto:contact@dl4eo.com).
 
 ---
 

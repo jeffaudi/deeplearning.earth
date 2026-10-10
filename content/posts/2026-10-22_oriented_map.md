@@ -9,51 +9,23 @@ description: "Oriented mAP matches rotated rectangles, not the axis-aligned box 
 series: ["oriented-det"]
 tags: ["oriented-det", "dota", "evaluation", "map"]
 
-subtitle: "Rotated IoU. AP50 for the headline. AP75 when the box has to be tight."
+subtitle: "Say which images, which boxes, then the number."
 
 ---
 
-Write the protocol in one sentence, then the number. Two percentages that were not measured the same way are not a comparison.
+When I write a detector percentage down, I tell the story of the number first.
 
-## What goes in a report
+Which images. Whether those images were in the training set. Rotated boxes, exact polygon overlap, and the threshold. Then **AP50**: did the rotated rectangles overlap by half? If the heading has to be tight, I add **AP75**, three quarters of the area. On a long ship, a few degrees already fails the half-overlap. On a compact vehicle, the same error can still pass. The two numbers answer different questions, and both are useful.
 
-One sentence, then the numbers. The sentence has to carry:
+For a DOTA pretrain, the number I quote is official Task 1. On the Hub that field is `eval_task1_map50`. For a finetune, I name the held-out split the recipe really has. Large-vehicle and harbor move a decision more than the average does.
 
-- dataset and split, and whether that split was in training
-- canvas (1024 tile, or keep-ratio for HRSC / SSDD / HRSID)
-- rotated IoU, exact polygon, and the threshold
-- 11-point at one IoU, or area-under-PR over a list
-- NMS IoU and the score floor
-- the class set the mean is over
+`odet preds` writes the boxes. `make metrics` can recompute the curves from `predictions.json` if you want another overlap without another forward.
 
-Then AP50. Add AP75 when the product cares about heading or about a tight footprint. Add the per-class row for the classes you will actually ship — large-vehicle and harbor move the decision more than the mean does. For a DOTA pretrain, the sentence ends with “official Task 1.” For a finetune, it ends with the held-out split the recipe really has.
-
-`odet preds` writes the boxes; `make metrics` recomputes the curves from `predictions.json` if you need another IoU without another forward. The Hub field to quote for DOTA is `eval_task1_map50`, not the leaky `eval_map50` sitting next to it in the same manifest.
-
-## Pairs I will not subtract
-
-| If the left number is | and the right number is | they differ in |
-|---|---|---|
-| DOTA Task 1 AP50 | leaky `make eval-val` | which images were in training |
-| Rotated AP50 | horizontal AP (Wei et al. on HRSID, **>84.7%** HBB vs **78.55%** rotated) | the box that is matched |
-| 11-point AP at IoU 0.5 | area-under-PR averaged from 0.10 to 0.95 | both the integral and the thresholds |
-| AP50 | AP75 | how wrong the heading is allowed to be |
-| mAP at IoU 0.1 | mAP at IoU 0.5 | the match itself |
-| Tiled-val mAP | full-scene mAP after merge NMS | where duplicate tiles can vote |
-| Boxes drawn at score 0.55 | AP | an operating point vs the whole curve |
-| One demo tile | mAP | a picture vs a dataset |
-
-The HRSID row is the one that looks most like a leaderboard. [That post](/posts/2026-10-01_hrsid_sar_ship_benchmark/) already says the Wei number is COCO horizontal AP. Putting 78.55 next to 84.7 without the box type is how a rotated model gets described as behind on a metric it did not enter.
-
-**AP50** asks whether the rotated boxes overlap by half. **AP75** asks for three quarters. On a long ship, a few degrees of heading error fails 0.5. On a compact vehicle, the same angular error can still pass 0.5 and fail 0.75. Quote Task 1 for a DOTA pretrain. A training-log `eval-val` on DOTA is a convergence plot: the model was trained on those tiles.
-
-How a rotated box becomes a true positive, and how that walk becomes the percentage, is below.
+How a rotated box becomes that percentage is below.
 
 ---
 
-A detector percentage is a protocol with the number left on. [oriented-det](https://github.com/DL4EO/oriented-det) has spent the series quoting **official DOTA Task 1**, and warning when a local log is something else. This post is the metric those quotes use: how a rotated box becomes a true positive, how that becomes AP, and which pairs of numbers are not allowed to be subtracted.
-
-The [DOTA lessons](/posts/2026-09-17_lessons_learned_on_dota_oriented_det_and_mmrotate_parity/) cover the leaky eval-val trap and why the last mile was the box loss. The [le90 note](/posts/2026-10-19_le90_geometry/) covers the box those IoUs are computed on. Here the question is only: given two sets of le90 boxes, what does the percentage mean?
+Here is how that percentage is built, once the boxes are already in [le90](/posts/2026-10-19_le90_geometry/). The [DOTA lessons](/posts/2026-09-17_lessons_learned_on_dota_oriented_det_and_mmrotate_parity/) are the chapter on why the last mile was the box loss.
 
 ## A match is a rotated overlap
 
@@ -101,6 +73,21 @@ Read the ResNet columns in pairs. For Oriented R-CNN, Faster R-CNN, and FCOS, an
 DOTA zoo recipes train on **trainval**. Official Task 1 is the hidden test. Local `make eval-val` scores val tiles that were in that train. On Faster R-CNN 3× that log says **83.46%** and the server says **74.48%**. The gap is memorized tiles. Quote the server number for DOTA. Keep eval-val as a convergence plot.
 
 That word is DOTA-only. HRSC eval-val is the ImageSets test. SSDD and HRSID eval-val are the official test splits. FAIR1M eval-val is official val, and the 36.70% Faster R-CNN figure is tiled val, not a hidden Gaofen test. Those are held-out. They are also not Task 1, and they are not comparable to 76.73% just because the detector family is the same.
+
+## Pairs I will not subtract
+
+| If the left number is | and the right number is | they differ in |
+|---|---|---|
+| DOTA Task 1 AP50 | leaky `make eval-val` | which images were in training |
+| Rotated AP50 | horizontal AP (Wei et al. on HRSID, **>84.7%** HBB vs **78.55%** rotated) | the box that is matched |
+| 11-point AP at IoU 0.5 | area-under-PR averaged from 0.10 to 0.95 | both the integral and the thresholds |
+| AP50 | AP75 | how wrong the heading is allowed to be |
+| mAP at IoU 0.1 | mAP at IoU 0.5 | the match itself |
+| Tiled-val mAP | full-scene mAP after merge NMS | where duplicate tiles can vote |
+| Boxes drawn at score 0.55 | AP | an operating point vs the whole curve |
+| One demo tile | mAP | a picture vs a dataset |
+
+The HRSID row is the one that looks most like a leaderboard. [That post](/posts/2026-10-01_hrsid_sar_ship_benchmark/) already says the Wei number is COCO horizontal AP. Putting 78.55 next to 84.7 without the box type is how a rotated model gets described as behind on a metric it did not enter.
 
 ## Links
 

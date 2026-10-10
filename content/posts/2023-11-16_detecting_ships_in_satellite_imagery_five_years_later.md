@@ -19,11 +19,9 @@ For current work on oriented and rotated object detection in aerial and satellit
 
 # Start with oriented boxes
 
-Five years after the Airbus Kaggle, you do not have to predict a mask and then turn it into a ship. **MMRotate** trains a rotated-box detector on this SPOT set, runs faster than the 2018 U-Net pipeline, and handles ships that sit next to each other.
+Five years after the Airbus Kaggle, I can train a detector that draws the ship directly.
 
-It is not a copy of the old leaderboard winners. A classifier in front still helps on empty sea, ship-shaped anchors still help, and test-time augmentation still helps. It is the tool I would start an R&D study with. The learning curve is real, and it is worth it.
-
-The 2018 winning pattern — classifier, then U-Net, then a trick for ships moored side by side — and the MMRotate setup, are below.
+**MMRotate** does that on this SPOT set. It is faster than the old U-Net pipeline, and ships moored side by side stay separate boxes. A classifier in front still helps on empty sea, and ship-shaped anchors still help. It is where I would start a study. The 2018 winning pattern, and the MMRotate setup, are below.
 
 # Context
 

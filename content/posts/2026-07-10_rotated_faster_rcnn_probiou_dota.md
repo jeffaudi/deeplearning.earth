@@ -16,24 +16,19 @@ subtitle: "74.42% official Task 1 vs MMRotate 73.40% — Hub slug `rotated_faste
 
 ![Satellite scene with oriented bounding boxes](/posts/img/2026-07-10_rotated_faster_rcnn_probiou_dota.png)
 
-Oriented object detection on satellite imagery lives or dies on **rotated IoU** — the overlap between two arbitrarily angled rectangles. Frameworks like [MMRotate](https://github.com/open-mmlab/mmrotate) ship **exact, CUDA-accelerated** rotated IoU for training and inference. That is fast and precise, but it ties you to a heavy stack: MMCV custom ops, version pins, and compiled extensions that are painful to ship in a lean research codebase.
+I wanted a rotated detector I could train in ordinary PyTorch.
 
-**[OrientedDet](https://github.com/DL4EO/oriented-det)** takes a different path for v1: a **full Python / PyTorch** detector with **no custom CUDA kernels** and **no MMCV runtime dependency**. For the hot paths that still need oriented geometry at scale — anchor matching, proposal assignment, optional GPU NMS — we use **sampled rIoU** on the GPU. For losses and for published metrics, we use **different tools** that better match what we actually want to optimize.
+[OrientedDet](https://github.com/DL4EO/oriented-det) does that. Matching on the GPU uses a sampled overlap, which is fast. The loss that actually moves the boxes is **ProbIoU**, a smooth stand-in for the real rotated overlap. The number I publish is still exact polygon IoU on the official DOTA Task 1 server.
 
-For DOTA-style **finetuning and throughput** on the ResNet zoo, use **`rotated_faster_rcnn_dota_le90_1x`** (official Task 1 **74.42%**, deploy `--score-thr 0.60`). For the highest official Task 1 accuracy, use **`rotated_rtmdet_dota_le90_3x`** (**77.60%**, [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/)). Oriented R-CNN 1× (**76.73%**) remains the pick when rotated RoIAlign behaviour matters for your domain.
+The Faster R-CNN weight from that recipe, `rotated_faster_rcnn_dota_le90_1x`, scores **74.42%**. I deploy it at **0.60**. It is the ResNet weight I finetune when I want throughput: about seven times the tiled speed of Oriented R-CNN on the same stitch. Oriented R-CNN 1× sits at **76.73%** when the box itself has to be right. The zoo peak since [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) is Rotated RTMDet-S at **77.60%**.
 
-1. **Sampled rIoU is a matching tool, not a loss.** It lets OrientedDet run fast GPU assignment without CUDA kernels, but it diverges from polygon IoU — especially at high overlap and on small or elongated boxes.
-2. **Exact metrics and surrogate losses compose well.** Official Task 1 + ProbIoU training gives Hub-grade numbers while keeping the training loop in portable PyTorch.
-3. **Box regression is the headroom versus MMRotate’s Rotated Faster R-CNN.** 1× ProbIoU reaches **74.42%** Task 1 versus MMRotate **73.40%** — larger than stretching the same Smooth L1 recipe to 3×.
-4. **Throughput is not the accuracy ranking.** Rotated Faster R-CNN is **~7× faster** tiled inference than Oriented R-CNN; Oriented R-CNN still leads this pair on Task 1 (**76.73%** vs **74.42%**). The zoo peak after [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) is Rotated RTMDet-S at **77.60%**. That stitch was not re-timed for RTMDet.
-5. **Training-time val mAP is a DOTA monitor.** Recipes train on trainval, so val is not held out. Publish **official Task 1**.
-6. **1× is the default.** Reach for 3× only when **AP75** (tight boxes) matters: 45.39 vs 41.90 on this architecture.
+On this architecture, the 1× weight is the one I start from. The 3× schedule is what I reach for when I want the boxes tighter (AP75 45.39 against 41.90).
 
 ```bash
 odet pretrained download rotated_faster_rcnn_dota_le90_1x
 ```
 
-Where sampled rIoU falls short, why the stack stays pure Python, and how ProbIoU stands in for polygon IoU, are below.
+How the two overlaps share the work is below.
 
 ---
 
