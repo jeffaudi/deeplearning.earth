@@ -20,9 +20,7 @@ I wanted a rotated detector I could train in ordinary PyTorch.
 
 [OrientedDet](https://github.com/DL4EO/oriented-det) does that. Matching on the GPU uses a sampled overlap, which is fast. The loss that actually moves the boxes is **ProbIoU**, a smooth stand-in for the real rotated overlap. The number I publish is still exact polygon IoU on the official DOTA Task 1 server.
 
-The Faster R-CNN weight from that recipe, `rotated_faster_rcnn_dota_le90_1x`, scores **74.42%**. I deploy it at **0.60**. It is the ResNet weight I finetune when I want throughput: about seven times the tiled speed of Oriented R-CNN on the same stitch. Oriented R-CNN 1× sits at **76.73%** when the box itself has to be right. The zoo peak since [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) is Rotated RTMDet-S at **77.60%**.
-
-On this architecture, the 1× weight is the one I start from. The 3× schedule is what I reach for when I want the boxes tighter (AP75 45.39 against 41.90).
+The Faster R-CNN weight from that recipe, `rotated_faster_rcnn_dota_le90_1x`, scores **74.42%** on official Task 1. I deploy it at **0.60**. The 1× weight is the one I start from. The 3× schedule is for tighter boxes: AP75 **45.39** against **41.90**.
 
 ```bash
 odet pretrained download rotated_faster_rcnn_dota_le90_1x

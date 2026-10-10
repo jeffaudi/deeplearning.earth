@@ -14,9 +14,9 @@ tags: ["oriented-det", "hrsid", "sar", "object-detection", "ship-detection"]
 subtitle: "78.55% rotated AP50 on the larger SAR ship set."
 ---
 
-[SSDD](/posts/2026-09-28_ssdd_sar_ship_finetune/) is the small radar check, around 90%. [HRSID](https://github.com/chaozhong2010/HRSID) is the larger one: 5,604 chips, finer resolution, harbours as well as open water.
+[HRSID](https://github.com/chaozhong2010/HRSID) is the large radar ship set: 5,604 chips, harbours as well as open water.
 
-A Faster R-CNN finetune from the optical DOTA Hub reached **78.55%** on the official held-out test. That is rotated overlap on the ship’s own rectangle, which is the number I want when the heading matters. A healthy run on this set lives in the high 70s to the mid 80s. Download the chips and run the recipe. The curves are below.
+A Faster R-CNN finetune reached **78.55%** on the official held-out test. The curves are below.
 
 ![HRSID test — dense harbour chip with COCO-polygon ground truth (research illustration)](/posts/img/2026-10-01_hrsid_dense_gt.png#layoutTextWidth)
 

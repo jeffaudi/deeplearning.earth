@@ -16,11 +16,13 @@ subtitle: "docker build. POST /api/v1/process. 100 oriented polygons."
 
 I wanted a tile to go in and polygons to come out, the way a GIS service already expects.
 
-[oriented-det](https://github.com/DL4EO/oriented-det) ships that as a container: [`deploy/example/`](https://github.com/DL4EO/oriented-det/tree/main/deploy/example). You bake a checkpoint, `docker build`, and `POST` a JPEG. GeoJSON comes back. Sliding windows, a healthcheck, a lock, and a GPU runtime are in the image, so a large scene is tiled for you.
+[oriented-det](https://github.com/DL4EO/oriented-det) ships that as a container: [`deploy/example/`](https://github.com/DL4EO/oriented-det/tree/main/deploy/example). You bake a checkpoint, `docker build`, and `POST` a JPEG. GeoJSON comes back. A large scene is tiled inside the image.
 
-I tried it with Oriented R-CNN on the bus-lot demo, score **0.55**. **100** boxes came back — 95 large vehicles, 5 small ones — the same picture the CLI has been drawing since June, now as polygons a map can store. FCOS on this service starts at **0.2**, because its scores sit lower.
+I tried it with Oriented R-CNN on the bus-lot demo, at score **0.55**. **100** boxes came back — 95 large vehicles and 5 small ones. It is the same picture the command line has been drawing since June, now as polygons a map can store.
 
-When the infer machine should stay small, the [ONNX graph](/posts/2026-10-08_onnx_export_without_pytorch/) is the next step: a fixed 1024 canvas, numpy and ONNX Runtime. The Dockerfile and the request are below. Apache 2.0 covers the recipe; train the weights on imagery your contract allows.
+The Dockerfile and the request are below.
+
+![A JPEG goes in. The container returns polygons.](/posts/img/2026-10-05_sketch_docker.jpg#layoutTextWidth)
 
 ![GeoJSON from POST /api/v1/process — Oriented R-CNN DOTA 1× Hub on demo/demo.jpg (score ≥ 0.55, NMS 0.1)](/posts/img/2026-10-05_docker_demo_overlay.jpg#layoutTextWidth)
 

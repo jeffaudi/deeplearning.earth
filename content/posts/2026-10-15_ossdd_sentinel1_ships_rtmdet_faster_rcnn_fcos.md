@@ -12,11 +12,11 @@ tags: ["oriented-det", "ossdd", "sar", "rtmdet", "rotated-fcos", "ship-detection
 subtitle: "88.49% rotated AP50 on held-out VH test. Their 0.70 is a different mAP."
 ---
 
-We took a detector that had learned ships in daylight, and taught it to find them in Sentinel-1 radar.
+We took a detector that had learned ships in daylight, and taught it Sentinel-1 radar.
 
-Twelve epochs of **RTMDet-S** on the VH chips of [OSSDD](https://arxiv.org/abs/2608.01963) reached **88.49%** on the held-out test, and it found **94%** of the ships, in 45 minutes. Faster R-CNN and FCOS, on the same chips and the same recipe, landed near **60%**. The head you start from matters.
+Twelve epochs of **RTMDet-S** on the VH chips of [OSSDD](https://arxiv.org/abs/2608.01963) reached **88.49%** on the held-out test. It found **94%** of the ships, in 45 minutes.
 
-OSSDD is Sentinel-1 ship chips with rotated boxes, cut from the scenes behind OpenSARShip. Download the set yourself — the annotations are CC-BY-NC-SA — and train the DOTA export. The split, the three runs, and how this number sits beside the paper are below.
+The same recipe with the other two heads is the table below.
 
 Three 12-epoch finetunes, same export, same 512 crop. Held-out test AP50 at score ≥ 0.3:
 

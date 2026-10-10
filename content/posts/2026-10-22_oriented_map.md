@@ -13,19 +13,17 @@ subtitle: "Say which images, which boxes, then the number."
 
 ---
 
-When I write a detector percentage down, I tell the story of the number first.
+**AP50** asks one question: do the rotated rectangles overlap by half?
 
-Which images. Whether those images were in the training set. Rotated boxes, exact polygon overlap, and the threshold. Then **AP50**: did the rotated rectangles overlap by half? If the heading has to be tight, I add **AP75**, three quarters of the area. On a long ship, a few degrees already fails the half-overlap. On a compact vehicle, the same error can still pass. The two numbers answer different questions, and both are useful.
+That is the number I quote for a DOTA pretrain, and it is the official Task 1 score. On the Hub the field is `eval_task1_map50`.
 
-For a DOTA pretrain, the number I quote is official Task 1. On the Hub that field is `eval_task1_map50`. For a finetune, I name the held-out split the recipe really has. Large-vehicle and harbor move a decision more than the average does.
+Say which images the number was measured on, then give the percentage. How a rotated box becomes that percentage is below.
 
-`odet preds` writes the boxes. `make metrics` can recompute the curves from `predictions.json` if you want another overlap without another forward.
-
-How a rotated box becomes that percentage is below.
+![AP50 counts a match when the rotated rectangles overlap by half.](/posts/img/2026-10-22_sketch_ap50.jpg#layoutTextWidth)
 
 ---
 
-Here is how that percentage is built, once the boxes are already in [le90](/posts/2026-10-19_le90_geometry/). The [DOTA lessons](/posts/2026-09-17_lessons_learned_on_dota_oriented_det_and_mmrotate_parity/) are the chapter on why the last mile was the box loss.
+Here is how that percentage is built.
 
 ## A match is a rotated overlap
 

@@ -31,9 +31,7 @@ aliases:
 
 ---
 
-A few epochs of YOLOX, untuned, already finds about **85%** of the large oil tanks on this SPOT sample, with precision over **80%**. The smaller tanks are harder: recall sits just above **55%**. The false alarms are mostly other round things, water-treatment tanks in particular. Tag those, train longer, and the precision moves.
-
-The Airbus sample is for learning, under [CC BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/). How the tiles were cut is below.
+A few epochs of YOLOX, untuned, already finds about **85%** of the large oil tanks on this SPOT sample, with precision over **80%**. The smaller tanks are harder: recall sits just above **55%**. Most false alarms are other round tanks, such as water treatment. How the tiles were cut is below.
 
 ### Introduction
 

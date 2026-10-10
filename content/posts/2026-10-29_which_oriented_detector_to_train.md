@@ -17,17 +17,15 @@ subtitle: "Start with RTMDet. Switch when the scene asks for it."
 
 If I were starting a train tomorrow, I would start with **Rotated RTMDet-S**.
 
-It is the weight that reached **77.60%** on official DOTA Task 1, and the boxes are tight: AP75 **52.01**. It is small, it trains on a 3090-class card, and I deploy it at score **0.45**. The slug is `rotated_rtmdet_dota_le90_3x`.
+It reached **77.60%** on official DOTA Task 1. The slug is `rotated_rtmdet_dota_le90_3x`, and I deploy it at **0.45**.
 
-When the picture is a tight diagonal row of long vehicles, I switch to **Oriented R-CNN** (`oriented_rcnn_dota_le90_1x`, score **0.55**). That head looks at each object along its own angle. On a 24 GB card I turn AMP on, raise the batch, and it fits.
+I switch only when the scene asks for it.
 
-When I care most about finding the object, and I am staying with a ResNet recipe, I use **Faster R-CNN** (`rotated_faster_rcnn_dota_le90_1x`). Aprons full of aircraft, and ordinary ship scenes, are happy there.
+- A tight diagonal row of long vehicles → **Oriented R-CNN**, score **0.55**.
+- Finding the object, on a ResNet recipe → **Faster R-CNN**.
+- That same diagonal row, on a shorter ResNet train → **FCOS**, score **0.20**.
 
-When that same diagonal row has to train on a shorter ResNet schedule, I use **FCOS** (`rotated_fcos_dota_le90_1x`) and I start the score at **0.20**. The boxes follow the row, and the train is the short one.
-
-The code is Apache 2.0. For a programme you will actually operate, train it on imagery your contract allows — [dl4eo.com](https://dl4eo.com).
-
-A held-out HRSC test orders the three ResNet families the same way Task 1 does. The [bus-lot check](/posts/2026-10-26_mmrotate_faster_rcnn_messy_boxes_on_dota_bus_demo/) is the scene where that order changes. Rotated RetinaNet stays in the zoo as the parity baseline, at Task 1 **71.72%**. The tables are the numbers behind the pick.
+Each choice has its own section below, with the number that justifies it.
 
 ## RTMDet-S, when you want the published peak
 

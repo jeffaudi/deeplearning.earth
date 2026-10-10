@@ -14,11 +14,9 @@ tags: ["oriented-det", "fair1m", "object-detection", "fine-grained"]
 subtitle: "Mid-30s mAP50 is in band for FAIR1M Faster R-CNN."
 ---
 
-[FAIR1M](https://arxiv.org/abs/2103.05569) asks the detector to tell a Boeing from a C919, a small car from a van, across **37** names. That is a different job from DOTA’s fifteen broad classes.
+[FAIR1M](https://arxiv.org/abs/2103.05569) asks the detector to name the object, not just find it: a Boeing or a C919, a small car or a van, **37** names in all.
 
-A 12-epoch Faster R-CNN finetune reached **36.70%** on the official val tiles. Published Faster R-CNN numbers on this set sit around 31–35%, and Oriented R-CNN papers around 39–42%, so this run is in the band. The boxes often land on the right object. The name is the hard part: small cars outnumber the rarest aircraft by about a thousand to one.
-
-[oriented-det](https://github.com/DL4EO/oriented-det) loads the set, tiles it, and finetunes a DOTA checkpoint. More epochs from this run, an Oriented R-CNN head, or class weights are the levers below. For a programme that needs subtypes, do that on imagery your contract allows.
+A 12-epoch Faster R-CNN finetune reached **36.70%** on the official val tiles. Published Faster R-CNN numbers on this set sit around 31–35%, so this run is in that band. The box often lands on the right object. The name is the hard part. How that shows up in the errors is below.
 
 ![FAIR1M val — ground-truth oriented boxes on a sports-field scene (research illustration; not a dataset mirror)](/posts/img/2026-09-24_fair1m_sports_gt.jpg#layoutTextWidth)
 

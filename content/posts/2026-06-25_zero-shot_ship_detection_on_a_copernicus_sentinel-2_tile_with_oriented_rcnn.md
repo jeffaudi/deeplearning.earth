@@ -14,11 +14,11 @@ tags: ["oriented-det", "sentinel-2", "ship-detection", "zero-shot"]
 subtitle: ""
 ---
 
-I took a public Oriented R-CNN, trained on aerial photos, and pointed it at one Copernicus Sentinel-2 tile. Ten metres a pixel. Ships at every heading. No new labels.
+I took a public Oriented R-CNN, trained on aerial photos, and pointed it at one Copernicus Sentinel-2 tile. No new labels.
 
-The rotated boxes came out with plausible headings. That part worked the first time. What moved the recall was scale: zooming the tile so the ships looked the size the detector expects. Lowering the score on the original tile barely changed anything. By eye, the zoomed pass finds something like a third to a half of the vessels you can see.
+The boxes came out with plausible headings. What found more ships was zooming the tile, so each vessel looked the size the detector expects. The pictures and the command are below.
 
-The next step is a finetune on labelled maritime tiles. The scene, the pictures, and the exact command are below.
+![Zoom the tile until each ship is the size the detector expects.](/posts/img/2026-06-25_sketch_zoom.jpg#layoutTextWidth)
 
 ---
 

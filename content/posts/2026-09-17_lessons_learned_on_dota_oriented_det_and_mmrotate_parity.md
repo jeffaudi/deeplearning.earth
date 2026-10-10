@@ -12,11 +12,9 @@ tags: ["oriented-det", "dota", "mmrotate"]
 subtitle: "Quote the official Task 1 number."
 ---
 
-After four months of training on DOTA, the number I trust is the one on the [official Task 1](https://captain-whu.github.io/DOTA/evaluation.html) server.
+After four months on DOTA, the number I publish is the [official Task 1](https://captain-whu.github.io/DOTA/evaluation.html) server score. The curve in the training log is only how I watch a run settle.
 
-The curve in the training log is how I watch a run settle. The server score is what I put in a sentence. [oriented-det](https://github.com/DL4EO/oriented-det) lands in the same band as [MMRotate](https://github.com/open-mmlab/mmrotate). When planes and tanks already look right, and ships are still a few degrees off, I change the **box loss** and I keep the detector.
-
-The weights I finetune from are `oriented_rcnn_dota_le90_1x`, `rotated_faster_rcnn_dota_le90_1x`, and `rotated_fcos_dota_le90_1x`. The table, and the story of how the loss closed the gap, are below.
+When ships are still a few degrees off, I change the box loss and I keep the detector. The table is below.
 
 ## Quote official Task 1
 

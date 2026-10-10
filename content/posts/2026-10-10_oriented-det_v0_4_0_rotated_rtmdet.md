@@ -14,11 +14,9 @@ subtitle: "pip install oriented-det==0.4.0"
 
 [**Oriented-Det v0.4.0**](https://github.com/DL4EO/oriented-det/releases/tag/v0.4.0) adds a detector I actually want to train: **Rotated RTMDet**.
 
-One stage, a small CSPNeXt backbone, and the best official DOTA Task 1 number in the zoo: **77.60%**, with tight boxes at AP75 **52.01**. The slug is `rotated_rtmdet_dota_le90_3x`. It trains on a 3090-class card. Deploy it at **0.45**.
+One stage, a small CSPNeXt backbone, and **77.60%** on official DOTA Task 1. The boxes are tight: AP75 **52.01**. The slug is `rotated_rtmdet_dota_le90_3x`. Deploy it at **0.45**.
 
-The [ResNet families](/posts/2026-10-29_which_oriented_detector_to_train/) are still there when the scene asks for them: Oriented R-CNN for a diagonal pack, Faster R-CNN or FCOS when you want a cheaper schedule. The same RTMDet weight, taught Sentinel-1 ships for twelve epochs, is the [OSSDD note](/posts/2026-10-15_ossdd_sentinel1_ships_rtmdet_faster_rcnn_fcos/) — **88.49%** on the held-out VH test, in 45 minutes.
-
-`pip install oriented-det==0.4.0` is below, with the speed and the head.
+How to install it, and how fast it trains, are below.
 
 ## Upgrade
 
@@ -116,6 +114,8 @@ Native YOLO-OBB is the following tag, **v0.4.1**. This tag is RTMDet.
 - Periodic val and `make eval-val` use `val_score_threshold`. `test_map` and `make eval-test` use `test_score_threshold` (null → **0.05**). Older key names still load.
 - `odet preds` / `make metrics` scores every ground truth and every detection (margin **0**). Deploy / `image_demo` still use `production.ignore_margin_pixels`. On this slug that margin is **0**.
 - `tools/bench_latency.py` for a same-canvas forward.
+
+Where this weight sits next to the other heads is [which detector to train](/posts/2026-10-29_which_oriented_detector_to_train/).
 
 ## Links
 

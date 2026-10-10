@@ -15,13 +15,13 @@ tags: ["oriented-det", "mmrotate", "rotated-faster-rcnn", "oriented-rcnn", "rota
 subtitle: "Same 1024 tile, same knobs, official zoo weights."
 ---
 
-There is a parking lot in the demo image. Buses sit in two chevron rows. **Oriented R-CNN** draws one box per bus, along the row. **Faster R-CNN** piles extra boxes on those same rows.
+There is a parking lot in the demo image. Buses sit in two diagonal rows.
 
-I ran the official [MMRotate](https://github.com/open-mmlab/mmrotate) 1× zoo weight on the same tile, same score, same NMS. It draws the same tangle. So I still train Faster R-CNN for most scenes. The vertical rows on the edge of this very picture come out tidy. The tangle shows up when long objects sit packed near 45°, because that head proposes a horizontal window and then has to invent the angle.
+**Oriented R-CNN** draws one box per bus, along the row. **Faster R-CNN** piles extra boxes on those same rows. I ran the official [MMRotate](https://github.com/open-mmlab/mmrotate) weight on the same tile, at the same score. It draws the same pile.
 
-When your scene looks like the chevron, **Oriented R-CNN** keeps the heading. It also takes about a day and a half on an L4, against about half a day for Faster R-CNN. **FCOS** follows the heading too, and finishes the same recipe in about eight hours — see the [macOS walkthrough](/posts/2026-09-02_rotated_fcos_vs_oriented_rcnn_on_macos/). [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) later put Rotated RTMDet-S at **77.60%** Task 1; the pictures below are the ResNet heads on this tile.
+The vertical rows at the edge of the picture come out tidy. The pile appears when long objects sit packed near 45°. The three overlays are below.
 
-The code is Apache 2.0. The tile is a DOTA image, so the [license note](/posts/2026-09-10_oriented_det_apache_license_versus_dota/) applies if you want to train on your own archive — [dl4eo.com](https://dl4eo.com). The overlays and the commands are below.
+![One box along the row. The other piles extra boxes on the same buses.](/posts/img/2026-10-26_sketch_bus_rows.jpg#layoutTextWidth)
 
 ---
 

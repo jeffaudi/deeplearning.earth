@@ -14,9 +14,9 @@ subtitle: "Sovereignty is the stack. The detector is your data."
 
 [oriented-det](https://github.com/DL4EO/oriented-det) is Apache 2.0. You can install it, read it, change it, and run it on your own machines.
 
-The detector you ship is the one you train on imagery your contract allows: you annotate your classes, you train, you keep the weights. That is the whole path. DOTA and HRSC are how we show the tooling works. Your archive is how you operate.
+The detector you ship is the one you train on imagery your contract allows. You annotate your classes, you train, you keep the weights. DOTA and HRSC are how the demos were made. Your archive is how you operate.
 
-This is how we treat the pieces at DL4EO. It is a practical note for engineers, and your counsel is the one who reads your contracts. The dataset terms, and a short table, are below.
+The dataset terms are below.
 
 ---
 

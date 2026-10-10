@@ -19,11 +19,9 @@ For current work on oriented and rotated object detection in aerial and satellit
 
 # Yes. Keep the pixels the size they are.
 
-YOLOv8 is a pleasure to train, and it is fast, which matters when you are paying for GPU time. On satellite imagery I change a few habits it learned from photographs.
+YOLOv8 trains quickly, which matters when you pay for GPU time. On these Pleiades extracts, test at **`imgsz` 2560**, the size of the image. Shrinking it hides the aircraft.
 
-Keep **`imgsz`** at the tile size. On these Pleiades extracts, test at **2560**. Raise **`max_det`** when a scene holds more than 300 objects. Turn **mosaic** off, skip the scaling that throws resolution away, and add up/down flips — a ship has no privileged “up.” Tile the big image, and keep every tile from one acquisition in the same split.
-
-On the small annotated test set, with the full image size kept, there were very few false alarms and few misses. The install and the log are below.
+With the full size kept, the small annotated test set showed very few false alarms and few misses. The other settings, and the log, are below.
 
 # The latest YOLO version has been published
 

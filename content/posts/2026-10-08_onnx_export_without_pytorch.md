@@ -16,9 +16,9 @@ subtitle: "Ship a graph. Run it with ONNX Runtime."
 
 Train on the GPU box. Send the infer box a small graph.
 
-[oriented-det](https://github.com/DL4EO/oriented-det) writes a **pre-NMS ONNX** file. Decode lives in the graph. A few lines of Python do the preprocess and the rotated NMS. The machine that runs it needs **numpy, Pillow, and ONNX Runtime**. For a tiled optical scene at 1024, that is enough to ship this week. [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) uses the same contract for Rotated RTMDet.
+[oriented-det](https://github.com/DL4EO/oriented-det) writes a **pre-NMS ONNX** file. The graph decodes the boxes. A few lines of Python prepare the image and run the rotated NMS. The machine that runs it needs **numpy, Pillow, and ONNX Runtime**.
 
-The [Docker post](/posts/2026-10-05_deploy_oriented_det_in_docker/) is the path that tiles a large scene and returns GeoJSON. The commands for the graph are below.
+For a tiled optical scene at 1024 pixels, that is enough to ship this week. The commands are below.
 
 ![ONNX Runtime overlay — Rotated FCOS DOTA 1× Hub on the export demo tile (score ≥ 0.20, NMS 0.1)](/posts/img/2026-10-05_onnx_ort_planes_overlay.jpg#layoutTextWidth)
 

@@ -19,9 +19,9 @@ For current work on oriented and rotated object detection in aerial and satellit
 
 # What worked on this aircraft sample
 
-I trained a handful of famous detectors for a few epochs on the same small set of Airbus airports. **EfficientDet** and **Faster R-CNN** are the ones that woke up. EfficientDet does it with about five times fewer parameters, which is the one I would serve: faster, and cheaper if you are paying for GPU time.
+I trained a handful of detectors for a few epochs on the same small set of Airbus airports. **EfficientDet** and **Faster R-CNN** are the ones that woke up. EfficientDet does it with about five times fewer parameters, so that is the one I would serve.
 
-A ResNet-34 backbone was already enough for Faster R-CNN here. IceVision made it easy to swap families on one dataset; the notebook is [here](https://github.com/jeffaudi/notebooks/blob/main/Aircraft_Detection_with_IceVision_and_Airbus_data.ipynb). Once you know which family fits your sensor, you can stay there or move to the library you will deploy. The setup and the pictures are below.
+The notebook is [here](https://github.com/jeffaudi/notebooks/blob/main/Aircraft_Detection_with_IceVision_and_Airbus_data.ipynb). The setup and the pictures are below.
 
 # Context
 

@@ -18,9 +18,15 @@ Open a browser. Pick a detector, pick a scene, move the slider.
 
 **[dl4eo.com/object-detection-optical-satellite](https://dl4eo.com/object-detection-optical-satellite/)**
 
-Three ResNet heads are on the page, the 3× Hub weights: **Oriented R-CNN**, **Faster R-CNN**, and **FCOS**. Oriented R-CNN is the one I look at first for a tight box. FCOS is the fast one. Give each its own starting score — **0.70**, **0.60**, and **0.20** — and the scenes line up. The same three sit comfortably next to an MMRotate Faster R-CNN run on these images.
+Three detectors are on the page. Give each its own starting score, or the comparison lies:
 
-The boxes are already computed. The page only chooses which ones to draw. Scene counts are below.
+| Detector | Start here |
+|---|---|
+| Oriented R-CNN | **0.70** |
+| Faster R-CNN | **0.60** |
+| FCOS | **0.20** |
+
+The boxes are already computed. The page only chooses which ones to draw.
 
 ![Pleiades airport — Rotated Faster R-CNN 3× at score ≥ 0.60, 27 aircraft](/posts/img/2026-09-06_oriented_det_optical_demo_airport_rfrcnn.jpg#layoutTextWidth)
 

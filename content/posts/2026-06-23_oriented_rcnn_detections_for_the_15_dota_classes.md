@@ -16,7 +16,7 @@ subtitle: ""
 
 A plane on a taxiway, a ship against a quay, a bus in a diagonal row: the interesting part of the box is the angle.
 
-These are Oriented R-CNN detections on the fifteen classes of [DOTA v1.0](https://captain-whu.github.io/DOTA/). The box follows the object, so a harbour stays a harbour and a vehicle stays a vehicle, even when they sit packed together. When you are choosing a head to finetune, the later note is [which detector to train](/posts/2026-10-29_which_oriented_detector_to_train/). The gallery is below.
+These are Oriented R-CNN detections on the fifteen classes of [DOTA v1.0](https://captain-whu.github.io/DOTA/). The box follows the object. The gallery is below.
 
 ---
 

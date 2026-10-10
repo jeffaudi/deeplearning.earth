@@ -21,7 +21,7 @@ For current work on oriented and rotated object detection in aerial and satellit
 
 Five years after the Airbus Kaggle, I can train a detector that draws the ship directly.
 
-**MMRotate** does that on this SPOT set. It is faster than the old U-Net pipeline, and ships moored side by side stay separate boxes. A classifier in front still helps on empty sea, and ship-shaped anchors still help. It is where I would start a study. The 2018 winning pattern, and the MMRotate setup, are below.
+**MMRotate** does that on this SPOT set. It is faster than the old U-Net pipeline, and ships moored side by side stay separate boxes. The 2018 pattern, and this setup, are below.
 
 # Context
 

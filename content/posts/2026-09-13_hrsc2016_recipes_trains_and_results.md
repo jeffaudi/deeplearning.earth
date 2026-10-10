@@ -14,9 +14,9 @@ tags: ["oriented-det", "hrsc2016", "object-detection", "pretrained-models"]
 subtitle: "Trainval in. Test out. Three 3× Hub weights."
 ---
 
-[HRSC2016](https://www.scitepress.org/Papers/2017/61206/) is the small ship set I use when I want a number I can trust. The test images stay out of training, and the score is on that holdout.
+[HRSC2016](https://www.scitepress.org/Papers/2017/61206/) is a small ship set whose test images stay out of training. The score below is on that holdout.
 
-Three Hub weights, all 3×: **Oriented R-CNN 90.41%**, **Faster R-CNN 88.77%**, **FCOS 88.34%**. Close enough that I would pick on speed and on how the boxes sit, then read the curves below. Apache 2.0 is the code. For ships you will operate, train on imagery your contract allows — the [license note](/posts/2026-09-10_oriented_det_apache_license_versus_dota/) is the longer version of that sentence.
+Three Hub weights, all 3×: **Oriented R-CNN 90.41%**, **Faster R-CNN 88.77%**, **FCOS 88.34%**. The curves, and how to download them, follow.
 
 ```bash
 odet pretrained download oriented_rcnn_hrsc2016_le90_3x

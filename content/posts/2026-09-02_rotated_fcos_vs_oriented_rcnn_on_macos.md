@@ -20,7 +20,7 @@ I put two detectors on the same MacBook and the same pictures.
 
 **Oriented R-CNN** is the one I reach for when the box has to be right. Task 1 is **76.73%**, and the score to start with is **0.55**. It takes about a day and a half to train.
 
-Since [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/), the published peak is Rotated RTMDet-S at **77.60%**. This note is the afternoon I spent comparing the two ResNet heads on an M1 Max. The pictures, the timings, and the commands are below.
+The pictures, the timings, and the commands are below.
 
 ---
 

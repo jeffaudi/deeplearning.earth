@@ -27,9 +27,9 @@ aliases:
 
 ---
 
-Ten epochs of YOLOv5, with the defaults left alone, already finds about **87%** of the aircraft on this Pleiades sample, at **96%** precision. Four detections in a hundred are false alarms. That is a pleasant surprise on a hundred airports and a weekend of training.
+Ten epochs of YOLOv5, with the defaults left alone, already finds about **87%** of the aircraft on this Pleiades sample, at **96%** precision. Four detections in a hundred are false alarms.
 
-Keep every tile from one satellite image in the same split, so the validation number is about a new image. The Airbus sample is shared for learning under [CC BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/). YOLOv5 itself is [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.en.html). The tiling and the notebook are below.
+Keep every tile from one satellite image in the same split, so the validation number is about a new image. The tiling and the notebook are below.
 
 ### Introduction
 
