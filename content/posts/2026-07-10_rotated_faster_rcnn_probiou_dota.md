@@ -20,12 +20,20 @@ Oriented object detection on satellite imagery lives or dies on **rotated IoU** 
 
 **[OrientedDet](https://github.com/DL4EO/oriented-det)** takes a different path for v1: a **full Python / PyTorch** detector with **no custom CUDA kernels** and **no MMCV runtime dependency**. For the hot paths that still need oriented geometry at scale — anchor matching, proposal assignment, optional GPU NMS — we use **sampled rIoU** on the GPU. For losses and for published metrics, we use **different tools** that better match what we actually want to optimize.
 
-This post explains:
+For DOTA-style **finetuning and throughput** on the ResNet zoo, use **`rotated_faster_rcnn_dota_le90_1x`** (official Task 1 **74.42%**, deploy `--score-thr 0.60`). For the highest official Task 1 accuracy, use **`rotated_rtmdet_dota_le90_3x`** (**77.60%**, [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/)). Oriented R-CNN 1× (**76.73%**) remains the pick when rotated RoIAlign behaviour matters for your domain.
 
-1. Where sampled rIoU falls short compared to exact polygon / CUDA IoU  
-2. Why we still want a pure-Python stack  
-3. How **ProbIoU** acts as a differentiable surrogate for box regression  
-4. What the published **1× DOTA le90** Rotated Faster R-CNN checkpoint scores on **official Task 1**, how that compares to MMRotate, and where to download the weights  
+1. **Sampled rIoU is a matching tool, not a loss.** It lets OrientedDet run fast GPU assignment without CUDA kernels, but it diverges from polygon IoU — especially at high overlap and on small or elongated boxes.
+2. **Exact metrics and surrogate losses compose well.** Official Task 1 + ProbIoU training gives Hub-grade numbers while keeping the training loop in portable PyTorch.
+3. **Box regression is the headroom versus MMRotate’s Rotated Faster R-CNN.** 1× ProbIoU reaches **74.42%** Task 1 versus MMRotate **73.40%** — larger than stretching the same Smooth L1 recipe to 3×.
+4. **Throughput is not the accuracy ranking.** Rotated Faster R-CNN is **~7× faster** tiled inference than Oriented R-CNN; Oriented R-CNN still leads this pair on Task 1 (**76.73%** vs **74.42%**). The zoo peak after [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) is Rotated RTMDet-S at **77.60%**. That stitch was not re-timed for RTMDet.
+5. **Training-time val mAP is a DOTA monitor.** Recipes train on trainval, so val is not held out. Publish **official Task 1**.
+6. **1× is the default.** Reach for 3× only when **AP75** (tight boxes) matters: 45.39 vs 41.90 on this architecture.
+
+```bash
+odet pretrained download rotated_faster_rcnn_dota_le90_1x
+```
+
+Where sampled rIoU falls short, why the stack stays pure Python, and how ProbIoU stands in for polygon IoU, are below.
 
 ---
 
@@ -208,19 +216,6 @@ odet pretrained download rotated_faster_rcnn_dota_le90_1x
 ```json
 "load_from_checkpoint": "hf://rotated_faster_rcnn_dota_le90_1x"
 ```
-
-**Recommendation:** for DOTA-style **finetuning and throughput** on the ResNet zoo, use **`rotated_faster_rcnn_dota_le90_1x`**. For the highest official Task 1 accuracy, use **`rotated_rtmdet_dota_le90_3x`** (**77.60%**, [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/)). Oriented R-CNN 1× (**76.73%**) remains the pick when rotated RoIAlign behaviour matters for your domain.
-
----
-
-## What we learned
-
-1. **Sampled rIoU is a matching tool, not a loss.** It lets OrientedDet run fast GPU assignment without CUDA kernels, but it diverges from polygon IoU — especially at high overlap and on small or elongated boxes.  
-2. **Exact metrics and surrogate losses compose well.** Official Task 1 + ProbIoU training gives Hub-grade numbers while keeping the training loop in portable PyTorch.  
-3. **Box regression is the headroom versus MMRotate’s Rotated Faster R-CNN.** 1× ProbIoU reaches **74.42%** Task 1 versus MMRotate **73.40%** — larger than stretching the same Smooth L1 recipe to 3×.  
-4. **Throughput is not the accuracy ranking.** Rotated Faster R-CNN is **~7× faster** tiled inference than Oriented R-CNN; Oriented R-CNN still leads this pair on Task 1 (**76.73%** vs **74.42%**). The zoo peak after [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) is Rotated RTMDet-S at **77.60%**. That stitch was not re-timed for RTMDet.  
-5. **Training-time val mAP is a DOTA monitor.** Recipes train on trainval, so val is not held out. Publish **official Task 1**.  
-6. **1× is the default.** Reach for 3× only when **AP75** (tight boxes) matters: 45.39 vs 41.90 on this architecture.
 
 ---
 

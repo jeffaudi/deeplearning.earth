@@ -31,6 +31,10 @@ aliases:
 
 ---
 
+After a few epochs and no special tuning, YOLOX already reaches about **85% recall** on large oil tanks and just over **55%** on the smaller ones. Average precision on the large tanks, across IoU 0.50 to 1.0, is over **80%**. The false alarms are mostly other round structures, such as water-treatment tanks. Good enough to see that the recipe works. Not good enough to stop.
+
+The Airbus sample is [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/): fine for learning, not for a commercial product. The obvious next step is more epochs, and to tag those lookalike tanks so the model stops calling them oil storage. How the tiles were cut, and the training setup, are below.
+
 ### Introduction
 
 Last year, Airbus Intelligence published a few [Machine Learning Datasets on the Kaggle platform](https://twitter.com/AirbusSpace/status/1438177534118670344). These datasets are samples from much larger and more comprehensive datasets provided by [Airbus](https://www.intelligence-airbusds.com/). Nevertheless, they are good datasets to start with and build upon if you wish to learn more about Earth Observation imagery and Deep Learning.

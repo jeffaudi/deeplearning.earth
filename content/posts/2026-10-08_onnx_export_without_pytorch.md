@@ -18,6 +18,10 @@ Training can stay on a GPU box. Inference does not have to. The [Docker Tile Geo
 
 [oriented-det](https://github.com/DL4EO/oriented-det) v0.3 ships **ONNX** export. The producer writes a **pre-NMS** graph plus Python preprocess and rotated NMS. Decode lives in ONNX. Final NMS stays numpy. Consumers need **numpy, Pillow, and ONNX Runtime** — not PyTorch, not oriented-det.
 
+Air-gapped and on-prem environments often will not take a PyTorch stack on the infer box. ONNX Runtime + three Python files is a smaller surface. If your deployment is tiled optical at 1024, you can ship a graph this week. If you need SAR whole-image `keep_ratio` or large-scene tiling in the exported graph, that is the next engineering slice — and a typical packaging engagement.
+
+[v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) adds the same pre-NMS contract for **Rotated RTMDet** (`rotated_rtmdet_pre_nms`). Native YOLO-OBB is **v0.4.1**. The producer and consumer commands are below.
+
 ![ONNX Runtime overlay — Rotated FCOS DOTA 1× Hub on the export demo tile (score ≥ 0.20, NMS 0.1)](/posts/img/2026-10-05_onnx_ort_planes_overlay.jpg#layoutTextWidth)
 
 ---
@@ -86,14 +90,6 @@ On this run both paths kept **6** boxes after NMS (4 plane, 2 helicopter) at sco
 | Decode inside ONNX; numpy rotated NMS | Sliding-window tiling |
 
 ONNX input is NCHW RGB, already mean/std-normalized — do not feed raw JPEGs into the graph. Sliding-window large scenes still go through PyTorch `odet image-demo` / `odet preds` until tiling lands in the export path.
-
----
-
-## Why this matters
-
-Air-gapped and on-prem environments often will not take a PyTorch stack on the infer box. ONNX Runtime + three Python files is a smaller surface. The honesty of v0.3 is the canvas: if your deployment is tiled optical at 1024, you can ship a graph this week. If you need SAR whole-image `keep_ratio` or large-scene tiling in the exported graph, that is the next engineering slice — and a typical packaging engagement.
-
-Closes the [v0.3](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/) chapter. [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) adds the same pre-NMS contract for **Rotated RTMDet** (`rotated_rtmdet_pre_nms`). Native YOLO-OBB is **v0.4.1**.
 
 ---
 

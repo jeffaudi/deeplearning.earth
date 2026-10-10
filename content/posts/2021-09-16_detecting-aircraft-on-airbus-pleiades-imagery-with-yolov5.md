@@ -27,6 +27,12 @@ aliases:
 
 ---
 
+After 10 epochs and no special tuning, YOLOv5 already finds about **87%** of the aircraft on this sample (13 in 100 missed) at **96%** precision (4 false alarms in 100 detections). That is a fine place to start. It is not a detector you can ship.
+
+Two limits sit on the result. The Airbus sample is civilian airports only, under a [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/) license: fine for learning, not for a commercial product. YOLOv5 is [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.en.html): you can use it commercially, and if you modify it you have to publish the modification.
+
+Split on the **source images**, not the tiles. Tiles from one image in both train and validation make the validation number useless. Tile size, overlap, and what to do next are below.
+
 ### Introduction
 
 Recently Airbus Intelligence has published a few [Machine Learning Datasets on the Kaggle platform](https://twitter.com/AirbusSpace/status/1438177534118670344). These datasets are samples from much larger and more comprehensive datasets provided by [Airbus](https://www.intelligence-airbusds.com/). Nevertheless, they are good datasets to start with and build upon if you wish to learn more about Earth Observation imagery and Deep Learning.

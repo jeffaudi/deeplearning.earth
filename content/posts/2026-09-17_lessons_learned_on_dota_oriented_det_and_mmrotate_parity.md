@@ -16,6 +16,12 @@ This is the DOTA chapter I promised in [Introducing oriented-det](/posts/2026-05
 
 I built [oriented-det](https://github.com/DL4EO/oriented-det) as a lightweight PyTorch stack next to [MMRotate](https://github.com/open-mmlab/mmrotate): Apache 2.0, JSON configs, no MMCV runtime. The goal was **parity**, not a new architecture. DOTA v1.0 is the honest benchmark. Four lessons survived.
 
+Quote **official Task 1**. Treat leaky eval-val as a convergence plot, not a paper number. Use MMRotate as a reference in the same band, not as a leaderboard to beat. When compact classes are already fine and ships still sit a few degrees off, change the **box loss**, not the detector name.
+
+Hub slugs to finetune: `oriented_rcnn_dota_le90_1x`, `rotated_faster_rcnn_dota_le90_1x`, `rotated_fcos_dota_le90_1x`. Reports: [`docs/eval-reports/`](https://github.com/DL4EO/oriented-det/tree/main/docs/eval-reports).
+
+Why those three sentences, and the table they sit on, are below.
+
 ## Quote official Task 1
 
 Published DOTA numbers in this series are **evaluation-server VOC Task 1** (hidden test). Recipes train on **trainval**. Local `make eval-val` is a monitor. It is not the zoo headline.
@@ -50,12 +56,6 @@ Architecture parity — same tiling (1024 / overlap 200), same trainval merge, s
 MMRotate trains that geometry with CUDA rotated IoU in the regression loss. Oriented-det stays in pure PyTorch. The recipes that closed the gap were **ProbIoU** on the Faster R-CNN ROI head and **decoded polygon rIoU** on FCOS — surrogates aligned with overlap, not another backbone. Smooth L1 on encoded le90 params is stable and leaves alignment slack. Details: [ProbIoU / Faster R-CNN](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/) and the [FCOS v0.2 note](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/).
 
 Visual quality on a harbor tile does not imply IoU ≥ 0.5. If the canary classes are ships and harbors, look at GT-alignment stats before you add an anchor scale.
-
-## Takeaway
-
-Quote **official Task 1**. Treat leaky eval-val as a convergence plot, not a paper number. Use MMRotate as a reference in the same band, not as a leaderboard to beat. When compact classes are already fine and ships still sit a few degrees off, change the **box loss**, not the detector name.
-
-Hub slugs: `oriented_rcnn_dota_le90_1x`, `rotated_faster_rcnn_dota_le90_1x`, `rotated_fcos_dota_le90_1x`. Reports: [`docs/eval-reports/`](https://github.com/DL4EO/oriented-det/tree/main/docs/eval-reports).
 
 - **Previous:** [HRSC2016](/posts/2026-09-13_hrsc2016_recipes_trains_and_results/) · [Oriented-Det v0.2.0](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/)
 - **Next:** [Oriented-Det v0.3.1](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/) (21 Sep)

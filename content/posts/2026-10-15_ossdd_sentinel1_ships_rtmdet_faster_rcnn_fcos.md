@@ -14,6 +14,14 @@ subtitle: "88.49% rotated AP50 on held-out VH test. Their 0.70 is a different mA
 
 [OSSDD](https://arxiv.org/abs/2608.01963) (Hammer et al., 2026) is Sentinel-1 GRD ship chips built from the scenes behind OpenSARShip. [oriented-det](https://github.com/DL4EO/oriented-det) does not load the zip. It trains the DOTA export: PNG chips, rotated-box labels, official train / val / test. VH is the polarization the paper found stronger, and it is the one we trained.
 
+The optical DOTA zoo transfers to this Sentinel-1 holdout, and the head you start from matters. RTMDet-S, twelve epochs, is the run I would repeat: **88.49%** test AP50, **94.4%** recall at IoU 0.5, 45 minutes. Faster R-CNN and FCOS land near **60%** on the same export and the same protocol.
+
+**88.49% AP50 is not a ranking against the paper’s 0.70 mAP.** Their number averages horizontal boxes from IoU 0.10 to 0.95, trained from scratch. Ours is one rotated-IoU point after an optical-DOTA finetune.
+
+We do not redistribute the chips and we do not ship an OSSDD zoo. Weather-independent ships on **your** SAR still need your license and your test set. SSDD and HRSID remain the other two research checks; they are not this dataset.
+
+There is **no OSSDD Hub slug**. Annotations are CC-BY-NC-SA-4.0. The pixels come from Copernicus. Download the dataset yourself.
+
 Three 12-epoch finetunes, same export, same 512 crop. Held-out test AP50 at score ≥ 0.3:
 
 | | Val AP50 | Test AP50 | Test precision | Test recall | Wall |
@@ -21,8 +29,6 @@ Three 12-epoch finetunes, same export, same 512 crop. Held-out test AP50 at scor
 | **RTMDet-S 1×** | 77.84% | **88.49%** | 87.0% (13,354 / 15,345) | 94.4% (13,354 / 14,145) | 45 min |
 | Rotated Faster R-CNN 1× | 40.28% | 60.10% | 85.5% (12,185 / 14,245) | 86.1% (12,185 / 14,145) | 2 h 55 min |
 | Rotated FCOS 1× | 27.58% | 58.21% | 82.5% (12,976 / 15,731) | 91.7% (12,976 / 14,145) | 1 h 29 min |
-
-There is **no OSSDD Hub slug**. Annotations are CC-BY-NC-SA-4.0. The pixels come from Copernicus. Download the dataset yourself.
 
 This sits next to the earlier SAR notes, and it is a different set. [SSDD](/posts/2026-09-28_ssdd_sar_ship_finetune/) is 1,160 mixed-sensor chips and a native loader. [HRSID](/posts/2026-10-01_hrsid_sar_ship_benchmark/) is 5,604 higher-resolution chips. OSSDD is Sentinel-1 only, float amplitude, and an official val that is not the test.
 
@@ -99,15 +105,7 @@ A 36-epoch RTMDet run with the same normalization scored **78.11%** val AP50 and
 | FCOS | 0.8424 | 0.8091 | 0.6961 |
 | DETR | 0.7444 | 0.8891 | 0.5999 |
 
-At score 0.3, our Faster R-CNN test precision is higher than theirs and our recall is a little lower, at IoU **0.5** rather than 0.2. Our FCOS test recall is higher than theirs at that stricter IoU. **88.49% AP50 is not a ranking against 0.70 mAP.** One is a single rotated-IoU point after an optical-DOTA finetune. The other is an average over eighteen IoU thresholds on horizontal boxes trained from scratch.
-
----
-
-## What this shows
-
-The optical DOTA zoo transfers to this Sentinel-1 holdout, and the head you start from matters. RTMDet-S, twelve epochs, is the run I would repeat: **88.49%** test AP50, **94.4%** recall at IoU 0.5, 45 minutes. Faster R-CNN and FCOS land near **60%** on the same export and the same protocol.
-
-We do not redistribute the chips and we do not ship an OSSDD zoo. Weather-independent ships on **your** SAR still need your license and your test set. SSDD and HRSID remain the other two research checks; they are not this dataset.
+At score 0.3, our Faster R-CNN test precision is higher than theirs and our recall is a little lower, at IoU **0.5** rather than 0.2. Our FCOS test recall is higher than theirs at that stricter IoU. One is a single rotated-IoU point after an optical-DOTA finetune. The other is an average over eighteen IoU thresholds on horizontal boxes trained from scratch.
 
 ---
 

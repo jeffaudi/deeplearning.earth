@@ -20,6 +20,18 @@ Two things get collapsed into one sentence far too often: **the software** and *
 
 This post draws that line. It is **not legal advice**. If you are shipping a detector, talk to counsel who can read your contracts and your jurisdiction. What follows is how we, DL4EO, treat the pieces so the Apache license is not asked to do a job it does not do.
 
+| Asset | License posture | Production? |
+|---|---|---|
+| oriented-det code, configs, docs | **Apache 2.0** | Yes — this is the stack |
+| DOTA images and annotations | Academic only; commercial use prohibited | **No** |
+| HRSC2016 images and annotations | Research set; Google Earth source; no commercial grant we rely on | **No** |
+| FAIR1M images and annotations | Research set; Kaggle dump is CC BY-NC-SA; no Hub zoo | **No** |
+| SSDD and HRSID images and annotations | Research SAR sets; not redistributed with oriented-det; no Hub zoo | **No** |
+| Hub checkpoints trained on DOTA or HRSC | Research / demo artifacts | **No** as a shipped product |
+| A model you train on imagery you licensed for ML | Yours, subject to *your* data contract | **Yes** — this is the path |
+
+The production path is imagery you licensed for training, annotated for your classes, then trained with oriented-det. The sections below are where each dataset’s terms actually stop.
+
 ---
 
 ## What Apache 2.0 covers
@@ -119,20 +131,6 @@ The solution is not a clever reading of DOTA. The solution is the one EO program
 That is sovereignty in the operational sense: **a framework you can keep, on data you can defend.**
 
 We help teams do exactly this — workshops, consulting, and project delivery around oriented-det, typically from two weeks to three months. The public zoo is how we show the tooling. Your archive is how you ship.
-
----
-
-## A short checklist
-
-| Asset | License posture | Production? |
-|---|---|---|
-| oriented-det code, configs, docs | **Apache 2.0** | Yes — this is the stack |
-| DOTA images and annotations | Academic only; commercial use prohibited | **No** |
-| HRSC2016 images and annotations | Research set; Google Earth source; no commercial grant we rely on | **No** |
-| FAIR1M images and annotations | Research set; Kaggle dump is CC BY-NC-SA; no Hub zoo | **No** |
-| SSDD and HRSID images and annotations | Research SAR sets; not redistributed with oriented-det; no Hub zoo | **No** |
-| Hub checkpoints trained on DOTA or HRSC | Research / demo artifacts | **No** as a shipped product |
-| A model you train on imagery you licensed for ML | Yours, subject to *your* data contract | **Yes** — this is the path |
 
 ---
 

@@ -20,6 +20,10 @@ Training can stay on a GPU box. Serving should be a container.
 
 I published the Oriented R-CNN DOTA **1×** Hub slug (`production.score_threshold` **0.55**, NMS **0.1**) and posted `demo/demo.jpg`. **100** boxes came back (95 `large-vehicle`, 5 `small-vehicle`). Same overlay the CLI has been drawing since June — as polygons a GIS client can store.
 
+Use the container when the service has to tile a large scene, speak GeoJSON, and sit behind a POST. It is the operational checkpoint: sliding windows, `keep_ratio` canvases, a healthcheck, a lock, and a GPU runtime. Teams that already run tile services can drop this image behind the same POST. Use [ONNX](/posts/2026-10-08_onnx_export_without_pytorch/) when the infer box cannot take PyTorch: numpy, Pillow, and ONNX Runtime, fixed **1024** canvas, no sliding window in the graph. Skipping Docker to jump to export skips the path that actually tiles a large scene today.
+
+Do not copy `0.55` onto FCOS (use **0.2**). Apache 2.0 covers the image recipe. It does not cover DOTA pixels — do not push Hub weights to a public registry without checking the dataset terms.
+
 ![GeoJSON from POST /api/v1/process — Oriented R-CNN DOTA 1× Hub on demo/demo.jpg (score ≥ 0.55, NMS 0.1)](/posts/img/2026-10-05_docker_demo_overlay.jpg#layoutTextWidth)
 
 ---
@@ -131,16 +135,6 @@ Deploy does **not** use the eval-val floor of 0.05. `InferenceEngine` reads `con
 `demo.jpg` is already 1024, so this run was **one forward**. `demo/large.jpg` (1299×1904) would slide — six windows at the default 200 px overlap, same tile as the [sliding-window note](/posts/2026-06-29_announcing_the_final_oriented_det_pretrained_model/). That path stays in this container. It is **out of the ONNX graph** in v0.3.
 
 DOTA deploy floors are eval-val global F1 − 0.05 (Oriented R-CNN **0.55**, Faster R-CNN **0.6**, FCOS **0.2**, RetinaNet OBB **0.25**). Do not copy `0.55` onto FCOS.
-
----
-
-## Why Docker first, ONNX second
-
-The container is the **operational** checkpoint: sliding windows, `keep_ratio` canvases, GeoJSON, a healthcheck, a lock, a GPU runtime. Teams that already run tile services can drop this image behind the same POST.
-
-[ONNX export](/posts/2026-10-08_onnx_export_without_pytorch/) is the **thinner** checkpoint: numpy + Pillow + ONNX Runtime, no `oriented-det` on the infer box, fixed **1024** canvas. If you skip Docker and jump to export, you skip the path that actually tiles a large scene today.
-
-Apache 2.0 covers the image recipe. It does not cover DOTA pixels. Do not push Hub weights to a public registry without checking the dataset terms — see [Apache vs DOTA](/posts/2026-09-10_oriented_det_apache_license_versus_dota/).
 
 ---
 

@@ -20,6 +20,8 @@ In this post we will walk through detections produced by **Oriented R-CNN** on t
 
 DOTA matters because it is not a neat toy dataset. Its images contain large scenes, dense object layouts, arbitrary object directions, and strong scale variation. Aircraft, ships, sports fields, bridges, harbors, storage tanks, vehicles, and helicopters do not line up with image axes just because our detectors prefer rectangles. DOTA forces the detector to care about orientation.
 
+Orientation is part of the visual signal. When objects are long, dense, rotated, or tightly packed, a horizontal rectangle often describes the image crop more than it describes the object. Oriented R-CNN makes that angle explicit, keeps detections readable in dense scenes, and gives downstream systems a geometry closer to the real footprint. When the job is choosing a head to finetune, the later note is [which detector to train](/posts/2026-10-29_which_oriented_detector_to_train/). The fifteen classes are below.
+
 ---
 
 ## What is DOTA?
@@ -133,14 +135,6 @@ Each illustration highlights one DOTA class. The goal is not to claim perfect pr
 ### Swimming pool
 
 ![Example of DOTA swimming pools class - a few unlabeled pools on the right side](/posts/img/2026-06-23_oriented_rcnn_detections_for_the_15_dota_classes_swimming_pool.jpg#layoutTextWidth)
-
----
-
-## Takeaway
-
-DOTA is a useful reminder that aerial object detection is not just object detection from above. Orientation is part of the visual signal. When objects are long, dense, rotated, or tightly packed, a horizontal rectangle often describes the image crop more than it describes the object.
-
-That is why Oriented R-CNN remains a strong baseline for EO work: it makes object angle explicit, keeps detections readable in dense scenes, and gives downstream systems a geometry closer to the real footprint. When the job is choosing a head to finetune, the later note is [which detector to train](/posts/2026-10-29_which_oriented_detector_to_train/).
 
 ---
 

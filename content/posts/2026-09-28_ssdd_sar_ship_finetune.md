@@ -18,6 +18,8 @@ Optical pretrain, SAR finetune, twelve epochs.
 
 [SSDD](https://github.com/TianwenZhang/Official-SSDD) (Zhang et al.) is **1,160** SAR ship chips (~190–688 px), RadarSat-2 / TerraSAR-X / Sentinel-1, 1–15 m. Official split: file numbers whose last digit is **1 or 9** are **test** (~232); the rest are **train** (~928). [oriented-det](https://github.com/DL4EO/oriented-det) v0.3 loads it natively (`dataset.format: ssdd`). A full Faster R-CNN 1× finetune from the DOTA Hub reached **90.34%** mAP50 on held-out test. There is **no SSDD Hub zoo**.
 
+You do not start SAR detection from random weights. You start from an oriented optical zoo, swap the head, and qualify on a real holdout. Literature Faster R-CNN on SSDD sits around **~89%**. Treat **under 80%** overall as a failed train. We do not redistribute the chips and we do not ship a SAR zoo. Weather-independent ships on **your** SAR still need your license and your test set.
+
 ![SSDD offshore test chip — official RBox ground truth (research illustration; chips stay with the authors)](/posts/img/2026-09-28_ssdd_offshore_gt.jpg#layoutTextWidth)
 
 ---
@@ -60,12 +62,6 @@ From `hf://rotated_faster_rcnn_dota_le90_1x` (1-way `ship` head re-init), RTX 30
 ![Threshold sweep (precision, recall, F1) on SSDD held-out test](/posts/img/2026-09-28_ssdd_threshold_metrics.png#layoutTextWidth)
 
 Literature Faster R-CNN on SSDD sits around **~89%** (Guo et al., *Sensors* 2021: 88.96% overall). Treat **&lt;80%** overall as a failed train. The notebook 1-epoch smoke will **not** hit 90%. Inshore / offshore subsets were **not** scored separately on this run — the pictures above are the contrast, not a split table.
-
----
-
-## What this shows
-
-You do not start SAR detection from random weights. You start from an oriented optical zoo, swap the head, and qualify on a real holdout. We do not redistribute the chips and we do not ship a SAR zoo. Weather-independent ships on **your** SAR still need your license and your test set.
 
 ---
 

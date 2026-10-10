@@ -18,7 +18,18 @@ DOTA is the pretrain zoo. [HRSC2016](https://www.scitepress.org/Papers/2017/6120
 
 Three [oriented-det](https://github.com/DL4EO/oriented-det) families now have native HRSC recipes and published 3× Hub weights: **Oriented R-CNN 90.41%**, **Rotated Faster R-CNN 88.77%**, **Rotated FCOS 88.34%** mAP50. Those numbers are `make eval-val` on ImageSets **test**. Test is **not** in training. That sentence is the whole point of this dataset in our stack — [DOTA eval-val is leaky](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/); HRSC eval-val is a real holdout.
 
-This post is the dataset, the recipes, the L4 trains, and the reports. It is a research benchmark. It is **not** a production ship detector — see [the licensing note](/posts/2026-09-10_oriented_det_apache_license_versus_dota/).
+This post is the dataset, the recipes, the L4 trains, and the reports. It is a research benchmark. It is **not** a production ship detector — see [the licensing note](/posts/2026-09-10_oriented_det_apache_license_versus_dota/). Apache 2.0 covers the code. It does not cover these Google Earth images, and it does not turn a 90% mAP weight file into a commercial detector. If you need ships in production, train on imagery you have licensed for that use.
+
+```bash
+odet pretrained download oriented_rcnn_hrsc2016_le90_3x
+odet pretrained download rotated_faster_rcnn_hrsc2016_le90_3x
+odet pretrained download rotated_fcos_hrsc2016_le90_3x
+
+odet image-demo path/to/test.bmp hf://oriented_rcnn_hrsc2016_le90_3x \
+  --score-thr 0.85 --nms-thr 0.1 --out-file out_orcnn.png
+```
+
+Faster R-CNN uses the same **0.85**. FCOS uses **0.20**. Keep **`--nms-thr 0.1`**. `make eval-val` still uses score ≥ **0.05** — do not mix that protocol with the deploy floor. Inference is one whole-image forward (`keep_ratio` / pad), not a sliding window.
 
 ![In-train val mAP50 every 4 epochs on the three HRSC 3× runs (non-empty ImageSets test)](/posts/img/2026-09-13_hrsc2016_train_map.png#layoutTextWidth)
 
@@ -155,31 +166,6 @@ Faster R-CNN and FCOS miss the same 120 ships. FCOS pays for its one-stage head 
 The PR plot is the calibration story in another shape. Two-stage curves live in a high-recall sliver because the scores are peaked. FCOS traces a long high-precision arc down to low recall — usable, just not at 0.85.
 
 Eval reports (per-class AP is one row: `ship`): [`oriented_rcnn_hrsc2016_le90_3x`](https://github.com/DL4EO/oriented-det/blob/main/docs/eval-reports/oriented_rcnn_hrsc2016_le90_3x/model_analysis.md), [`rotated_faster_rcnn_hrsc2016_le90_3x`](https://github.com/DL4EO/oriented-det/blob/main/docs/eval-reports/rotated_faster_rcnn_hrsc2016_le90_3x/model_analysis.md), [`rotated_fcos_hrsc2016_le90_3x`](https://github.com/DL4EO/oriented-det/blob/main/docs/eval-reports/rotated_fcos_hrsc2016_le90_3x/model_analysis.md).
-
----
-
-## What to download
-
-```bash
-odet pretrained download oriented_rcnn_hrsc2016_le90_3x
-odet pretrained download rotated_faster_rcnn_hrsc2016_le90_3x
-odet pretrained download rotated_fcos_hrsc2016_le90_3x
-
-odet image-demo path/to/test.bmp hf://oriented_rcnn_hrsc2016_le90_3x \
-  --score-thr 0.85 --nms-thr 0.1 --out-file out_orcnn.png
-```
-
-Swap the slug for Faster R-CNN (`0.85`) or FCOS (`0.20`). Keep **`--nms-thr 0.1`**. HRSC recipes use `resize_mode: keep_ratio` / `pad`, so inference is **one whole-image forward** — no sliding windows.
-
-`make eval-val` still uses score ≥ **0.05**. Do not mix that protocol with the deploy floor.
-
----
-
-## License, again
-
-HRSC2016 is a **research** ship set collected from Google Earth. The Hub weights are research checkpoints. Apache 2.0 covers oriented-det's code. It does not cover these images, and it does not turn a 90% mAP weight file into a commercial detector.
-
-If you need ships in production, train on imagery you have licensed for that use. The recipes above are the starting point; the pixels have to be yours.
 
 ---
 

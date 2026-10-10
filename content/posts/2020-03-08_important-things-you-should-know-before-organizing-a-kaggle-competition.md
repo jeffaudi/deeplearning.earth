@@ -23,6 +23,14 @@ aliases:
 
 ---
 
+The work that matters is **before** the competition and **after** it.
+
+Before: a dataset that matches what your users actually need, covers the variety you will see in operations, keeps an honest imbalance, and is scored by a metric you chose on purpose. Release it only after legal has agreed it can stay public.
+
+After: read the winning code, then retest it on imagery the leaderboard never saw. On our internal qualification set, the model that generalized — second on the public board, not first — raised precision from **70% to 90%** without losing recall. The separate speed prize was not worth running. Almost nobody entered, and our users would not accept a less accurate model. We scaled the accurate one on more GPUs instead.
+
+Expect a leak. Smart people will find it. Say so, and replace the data if you can. The story of how that went, including the month we lost, is below.
+
 ### Lessons Learned from the Airbus Ship Detection Challenge
 
 In 2018, my team at Airbus Defence and Space Intelligence and I organized a machine learning challenge on the well-known Kaggle platform (see [https://www.kaggle.com/c/airbus-ship-detection](https://www.kaggle.com/c/airbus-ship-detection)). At the time, there were discussions internally about the interest of such an initiative, the concrete benefits that we could gain from it, and the potential risks of open-sourcing our imagery.
@@ -94,8 +102,6 @@ While this is where the competition ended for the participants, it was just the 
 After analyzing the code, we had to rewrite portions of it in order to make it secure and create a standalone package (typically a Docker image). We were then able to run all three winning algorithms on yet another set of ground truth images — our secret, internal qualification dataset. This dataset contained real operational images, including some with difficult sea conditions and scattered clouds representative of our day-to-day activity. The validation process was interesting because we discovered that the second-place winners actually created the model that generalized the best for new, previously unseen images. This is the one that we selected for our internal production tool after having made sure that we could fully retrain it from scratch. Compared to the algorithm that we had created internally, we were able to increase precision from 70% to 90% without decreasing recall. This means that we were able to reduce false alarms without missing any extra ship — which is usually the tradeoff. And this was a true game changer for our clients. One year down the road, we have retrained it multiple times over a progressively larger training dataset so that it can suit the needs of our increasingly demanding customers.
 
 At this point, we realized that the particular ‘Speed Prize’ that we had created was rather impractical. Although the idea of getting an algorithm that was almost as good as the top 100 competitors but was also very fast was a good one, we could not achieve it with this competition. This was because, first of all, the number of participants who were willing to enroll in an extra part of the competition was very small; and second, because our users were not ready to accept an algorithm with reduced accuracy. Since we were able to scale the final algorithm in the cloud on multiple GPU processors, we simply decided to throw a little more money on computing power and get the processing done in the time that we wanted.
-
-As a main takeaway, remember that the most important work that you will have to do if you plan for such a competition comes before and after it. Before, you need to craft the perfect competition by creating a unique, balanced, global dataset and wisely selecting the unique metric that will capture all the needs of your stakeholders. Afterward, you need to analyze and benchmark all the solutions to find the one that generalizes the best and that you will be able to retrain to respond to the ever evolving needs of your customers.
 
 ### What are the next steps for us and you?
 

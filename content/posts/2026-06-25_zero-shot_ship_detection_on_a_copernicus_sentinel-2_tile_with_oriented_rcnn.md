@@ -20,6 +20,16 @@ We took a single 10 m true-colour crop from Copernicus Sentinel-2 — a busy pat
 
 The short version: oriented boxes are the right shape, but scale and domain shift still matter. A zero-shot model can find some ships, especially after zoomed sliding-window inference, but it is not a substitute for a detector tuned on maritime satellite data.
 
+**Oriented boxes are the right geometry.** Even zero-shot, the detected ships generally have plausible headings. For maritime imagery, the rotated box is not cosmetic; it carries information about footprint and orientation.
+
+**Scale beats threshold tuning alone.** Lowering the score threshold at 1× helped only marginally. Zoomed sliding-window inference helped more because the detector finally saw ships at a more familiar pixel size.
+
+**Domain shift remains the ceiling.** At 4× with ship-only filtering, the model still misses many visible vessels. Fine-tuning on labelled maritime satellite data is the path to production recall; upscaling is a useful diagnostic, not a replacement. Visual inspection suggests recall around **30–50%** here. That is not a measured metric.
+
+**Explicit tiling settings matter.** Overlap, ignore margin, score threshold, and merge NMS are part of the experiment. The reproduce command is the record of what worked on this tile.
+
+Next: fine-tune on labelled tiles from Sentinel-2, Airbus SPOT, or synthetic ship sets; score a held-out set with manual counts; and run larger Copernicus scenes through the same sliding-window path. If you run the same experiment on your own tiles, the result is useful reference material. The scene and the pictures are below.
+
 ---
 
 ## The scene
@@ -124,28 +134,6 @@ odet image-demo \
 ```
 
 The output is written at the original image size, even though inference runs on the zoomed image internally.
-
----
-
-## What we learned
-
-**Oriented boxes are the right geometry.** Even zero-shot, the detected ships generally have plausible headings. For maritime imagery, the rotated box is not cosmetic; it carries information about footprint and orientation.
-
-**Scale beats threshold tuning alone.** Lowering the score threshold at 1× helped only marginally. Zoomed sliding-window inference helped more because the detector finally saw ships at a more familiar pixel size.
-
-**Domain shift remains the ceiling.** At 4× with ship-only filtering, the model still misses many visible vessels. Fine-tuning on labelled maritime satellite data is the path to production recall; upscaling is a useful diagnostic, not a replacement.
-
-**Explicit tiling settings matter.** Overlap, ignore margin, score threshold, and merge NMS are part of the experiment. Keeping them in the command makes the result reproducible.
-
----
-
-## Next steps
-
-- Fine-tune on labelled maritime tiles from Sentinel-2, Airbus SPOT, or synthetic imagery ship datasets.
-- Evaluate on a held-out tile set with manual ship counts; visual inspection suggests recall around **30–50%** here, but that is not a measured metric.
-- Run larger Copernicus scenes through the same sliding-window path and export georeferenced detections.
-
-If you run the same experiment on your own tiles, please share the results. Domain-shift case studies are useful reference material for the project.
 
 ---
 

@@ -18,6 +18,8 @@ Two SAR ship benchmarks, two different jobs. [SSDD](/posts/2026-09-28_ssdd_sar_s
 
 [oriented-det](https://github.com/DL4EO/oriented-det) v0.3 loads it natively (`dataset.format: hrsid`). A full Faster R-CNN 1× finetune from the DOTA Hub reached **78.55%** mAP50 on official held-out test — **rotated** IoU on min-area rectangles. There is **no HRSID Hub slug**.
 
+Do not put that next to Wei et al. (IEEE Access 2020, Table 4). They report **horizontal** bbox AP on the same official split, with two-stage SOTA **above 84.7%** AP50. That protocol is COCO HBB, not rotated IoU on min-area rectangles. Oriented boxes are the stricter number when heading matters. Treat **under 70%** rotated eval-val as a failed train; a healthy run lives in the high 70s to mid 80s.
+
 ![HRSID test — dense harbour chip with COCO-polygon ground truth (research illustration)](/posts/img/2026-10-01_hrsid_dense_gt.png#layoutTextWidth)
 
 ---
@@ -60,14 +62,6 @@ From `hf://rotated_faster_rcnn_dota_le90_1x` (1-way `ship` head re-init), RTX 30
 ![Precision–recall on HRSID held-out test (Rotated Faster R-CNN 1×)](/posts/img/2026-10-01_hrsid_pr_curve.png#layoutTextWidth)
 
 ![Threshold sweep on HRSID held-out test](/posts/img/2026-10-01_hrsid_threshold_metrics.png#layoutTextWidth)
-
-Treat **&lt;70%** eval-val as a failed train. Healthy rotated AP50 lives in the high 70s–mid 80s.
-
----
-
-## Do not mix with Wei HBB
-
-Wei et al. (IEEE Access 2020, Table 4) report **horizontal** bbox AP on official 65/35 test: SOTA two-stage **&gt;84.7%** AP50. That protocol is COCO **HBB**, not OrientedDet rotated IoU on min-area rectangles. Oriented boxes are a stricter — and more operational — metric when heading matters.
 
 ---
 

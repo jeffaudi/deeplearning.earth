@@ -16,6 +16,10 @@ After [v0.3.1](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/) (2
 
 Native YOLO-OBB stays **v0.4.1**. This tag is RTMDet.
 
+Use `rotated_rtmdet_dota_le90_3x` when you want the highest Task 1 number on the Hub, in one stage, on a 3090-class card. The [pick among the ResNet families](/posts/2026-10-29_which_oriented_detector_to_train/) still stands for those three: Oriented R-CNN when you have checked oriented RoIAlign on a diagonal pack, Faster R-CNN or FCOS when recall and a cheaper L4 schedule matter more. RTMDet is the row above them on Task 1 AP50 and on AP75. There is no HRSC Hub weight for it, and the bus-lot tile in that note was not re-run with this checkpoint.
+
+A VH finetune of this same slug on OSSDD (Sentinel-1 ships) is the [OSSDD note](/posts/2026-10-15_ossdd_sentinel1_ships_rtmdet_faster_rcnn_fcos/): held-out test AP50 at score ≥ 0.3 is **88.49% / 60.10% / 58.21%**, walls **45 min / 2h 55m / 1h 29m**. That AP50 is one rotated IoU of 0.5. It is not Hammer et al.’s mAP. No OSSDD Hub slug.
+
 ## Upgrade
 
 ```bash
@@ -110,12 +114,6 @@ The [v0.3 ONNX post](/posts/2026-10-08_onnx_export_without_pytorch/) is FCOS, Or
 - Periodic val and `make eval-val` use `val_score_threshold`. `test_map` and `make eval-test` use `test_score_threshold` (null → **0.05**). Older key names still load.
 - `odet preds` / `make metrics` scores every ground truth and every detection (margin **0**). Deploy / `image_demo` still use `production.ignore_margin_pixels`. On this slug that margin is **0**.
 - `tools/bench_latency.py` for a same-canvas forward.
-
-## What to use it for
-
-Use `rotated_rtmdet_dota_le90_3x` when you want the highest Task 1 number on the Hub, in one stage, on a 3090-class card. The [pick among the ResNet families](/posts/2026-10-29_which_oriented_detector_to_train/) still stands for those three: Oriented R-CNN when you have checked oriented RoIAlign on a diagonal pack, Faster R-CNN or FCOS when recall and a cheaper L4 schedule matter more. RTMDet is the row above them on Task 1 AP50 and on AP75. There is no HRSC Hub weight for it, and the bus-lot tile in that note was not re-run with this checkpoint.
-
-A VH finetune of this same slug on OSSDD (Sentinel-1 ships) is the [OSSDD note](/posts/2026-10-15_ossdd_sentinel1_ships_rtmdet_faster_rcnn_fcos/): held-out test AP50 at score ≥ 0.3 is **88.49% / 60.10% / 58.21%**, walls **45 min / 2h 55m / 1h 29m**. That AP50 is one rotated IoU of 0.5. It is not Hammer et al.’s mAP. No OSSDD Hub slug.
 
 ## Links
 

@@ -22,6 +22,14 @@ They are on a static page you can open in a browser. No Python, no GPU, no uploa
 
 Pick a detector, pick a scene, then move the confidence slider. The boxes are precomputed; the page only filters what is drawn.
 
+Leave each model on its own threshold. Dragging all three to the same number is how you convince yourself FCOS is worse. FCOS is the fastest of the three; the two R-CNN heads sit in the same latency band. Those three 3× checkpoints are comparable to an MMRotate Rotated Faster R-CNN run on the same six images. Scene-by-scene counts are below.
+
+| Detector | Start here | Why |
+|---|---|---|
+| Oriented R-CNN | **0.70** | peaked two-stage scores; the page default |
+| Rotated Faster R-CNN | **0.60** | peaked two-stage scores |
+| FCOS | **0.20** | sigmoid head; 0.70 will hide most of the scene |
+
 ![Pleiades airport — Rotated Faster R-CNN 3× at score ≥ 0.60, 27 aircraft](/posts/img/2026-09-06_oriented_det_optical_demo_airport_rfrcnn.jpg#layoutTextWidth)
 
 The checkpoints were trained on [DOTA](https://captain-whu.github.io/DOTA/dataset.html) (academic-use). The six scenes are a mix of DOTA tiles and commercial optical rasters used as research illustration — not a commercial product. For production detectors on your own imagery, [contact DL4EO](mailto:contact@dl4eo.com).
@@ -128,18 +136,6 @@ The short version: the three Oriented-Det 3× checkpoints are **comparable to** 
 These numbers are inference duration stored in the prediction JSON — useful as a rough ordering, not as a benchmark. FCOS is the fastest of the three Oriented-Det heads; the two R-CNN heads sit in the same latency band. The MMRotate reference run is in the same order of magnitude.
 
 For a proper Apple Silicon timing table, the [FCOS vs Oriented R-CNN macOS note](/posts/2026-09-02_rotated_fcos_vs_oriented_rcnn_on_macos/) is the better source. The demo page does not re-run the models.
-
----
-
-## How to read the slider
-
-| Detector | Start here | Why |
-|---|---|---|
-| Oriented R-CNN | **0.70** | peaked two-stage scores; the page default |
-| Rotated Faster R-CNN | **0.60** | peaked two-stage scores |
-| FCOS | **0.20** | sigmoid head; 0.70 will hide most of the scene |
-
-If you want a fair visual comparison, leave each model on its default threshold, then switch the radio buttons. Dragging all three to the same number is how you convince yourself FCOS is “worse.”
 
 ---
 

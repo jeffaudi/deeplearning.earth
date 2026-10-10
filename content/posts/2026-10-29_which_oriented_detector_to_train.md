@@ -15,6 +15,19 @@ tags: ["oriented-det", "rtmdet", "oriented-rcnn", "rotated-faster-rcnn", "rotate
 subtitle: "RTMDet on Task 1, then the ResNet three."
 ---
 
+## What I would actually train
+
+- The published Task 1 peak, one stage, on a 3090-class card → **`rotated_rtmdet_dota_le90_3x`**, score **0.45**. This is the 3× weight. There is no 1× slug.
+- A diagonal pack of long objects, and you want the head checked on that tile → **`oriented_rcnn_dota_le90_1x`**. On a 24 GB card, turn **AMP** on and raise the batch before you decide it will not fit. RTMDet was not run on the bus lot.
+- Recall matters more than mAP, or the card is a 3090 and you are staying on ResNet → **`rotated_faster_rcnn_dota_le90_1x`**, unless the objects are long, dense, and near 45°.
+- That pack on a cheaper ResNet train → **`rotated_fcos_dota_le90_1x`**, score **0.20**.
+
+Mean mAP is the wrong tie-break once the ResNet numbers sit inside a few points. The tie-break is whether a miss is worse than a loose box, whether the scene looks like the apron or the bus lot, and whether the card can hold oriented RoIAlign. When none of those constraints bite, the Hub peak is RTMDet-S.
+
+Apache 2.0 is the code. DOTA and HRSC pixels stay research. Production still needs imagery you are allowed to train on — [dl4eo.com](https://dl4eo.com).
+
+The tables below are why those four lines look like that.
+
 The zoo numbers are in, including [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/). Official DOTA Task 1 puts **Rotated RTMDet-S** first. A held-out HRSC test still orders the three ResNet families the same way Task 1 does, and the [bus-lot check](/posts/2026-10-26_mmrotate_faster_rcnn_messy_boxes_on_dota_bus_demo/) shows the one scene where that ResNet order flips. RTMDet was not in the HRSC zoo and was not re-run on that tile.
 
 **Rotated RetinaNet** stays in the zoo as the MMRotate-parity baseline (Task 1 **71.72%** at 1×). It is not in this decision.
@@ -102,19 +115,6 @@ Two reasons to pick **Rotated FCOS**, and they are different. RTMDet is also one
 **The L4 schedule.** No RPN, no RoIAlign, one dense head over P3–P7. Training wall on the L4 recipe is **7 h 59 m**, against 11 h 30 m for Faster R-CNN and a day and a half for Oriented R-CNN. HRSC 3× is the same ratio: **34 m** vs 1 h 5 m vs 2 h 34 m. RTMDet’s **8h 58m** is a 36-epoch run on a 3090 Ti, not this card.
 
 Scores are the other operational difference. FCOS is a sigmoid head. Copying `--score-thr 0.60` onto it hides the scene. Start at **0.20**.
-
----
-
-## What I would actually train
-
-- The published Task 1 peak, one stage, on a 3090-class card → **`rotated_rtmdet_dota_le90_3x`**, score **0.45**. This is the 3× weight. There is no 1× slug.
-- A diagonal pack of long objects, and you want the head checked on that tile → **`oriented_rcnn_dota_le90_1x`**. On a 24 GB card, turn **AMP** on and raise the batch before you decide it will not fit. RTMDet was not run on the bus lot.
-- Recall matters more than mAP, or the card is a 3090 and you are staying on ResNet → **`rotated_faster_rcnn_dota_le90_1x`**, unless the objects are long, dense, and near 45°.
-- That pack on a cheaper ResNet train → **`rotated_fcos_dota_le90_1x`**, score **0.20**.
-
-Mean mAP is the wrong tie-break once the ResNet numbers sit inside a few points. The tie-break is whether a miss is worse than a loose box, whether the scene looks like the apron or the bus lot, and whether the card can hold oriented RoIAlign. When none of those constraints bite, the Hub peak is RTMDet-S.
-
-Apache 2.0 is the code. DOTA and HRSC pixels stay research. Production still needs imagery you are allowed to train on — [dl4eo.com](https://dl4eo.com).
 
 ---
 

@@ -16,7 +16,11 @@ subtitle: "Mid-30s mAP50 is in band for FAIR1M Faster R-CNN."
 
 DOTA is the pretrain zoo. [FAIR1M](https://arxiv.org/abs/2103.05569) is the fine-grained optical set — **37** classes under five coarse groups. [oriented-det](https://github.com/DL4EO/oriented-det) v0.3 loads it natively, converts to DOTA folders, tiles 1024/200, and finetunes the matching DOTA 1× Hub checkpoint. There is **no FAIR1M Hub zoo**.
 
-A full 12-epoch Rotated Faster R-CNN finetune reached **36.70%** mAP50 on official val tiles. That looks terrible next to DOTA ~74% Task 1. It is **in band** for FAIR1M Faster R-CNN (literature ~31–35%; Oriented R-CNN papers ~39–42%).
+A full 12-epoch Rotated Faster R-CNN finetune reached **36.70%** mAP50 on official val tiles. That looks terrible next to DOTA ~74% Task 1. It is **in band** for FAIR1M Faster R-CNN (literature ~31–35%; Oriented R-CNN papers ~39–42%). Do **not** compare 36.70% to DOTA Hub tables.
+
+The bottleneck is class identity, not the boxes. About **32.6k** ground truths had IoU ≥ 0.5 with a **wrong-class** box, and train imbalance is **1038×** (Small Car vs C919). The usual dump is CC BY-NC-SA, and the official test is closed. If your programme needs aircraft or vehicle subtypes, pretrain on a public oriented zoo, re-init the head, and watch imbalance — on **your** licensed imagery.
+
+The levers that target the class problem (more epochs from this checkpoint, Oriented R-CNN, coarse-to-fine groups, class weights or focal loss) are below. None of them has a published FAIR1M number in this series.
 
 ![FAIR1M val — ground-truth oriented boxes on a sports-field scene (research illustration; not a dataset mirror)](/posts/img/2026-09-24_fair1m_sports_gt.jpg#layoutTextWidth)
 
@@ -82,14 +86,6 @@ The 1× recipe uses unweighted cross-entropy. Loss and mAP were still moving at 
 **Coarse-to-fine groups** (`loss.roi_grouped_ce_*`). FAIR1M’s five groups are ship, vehicle, airplane, court, and road (`FAIR1M_GROUPS`). Early epochs can train those coarse labels while the head stays 37-way: a Boeing737 called a C919 is not an error while both are “airplane.” A `step` or `linear_ramp` schedule then hands the loss back to the fine names. This needs `loss_type` `cross_entropy` or `class_weighted`.
 
 **Class weights, or focal loss, for the 1038× imbalance.** Inverse-frequency weights (`class_weighted`, or `class_weight_*`) stop Small Car (143,249) from owning the gradient over C919 (138). Focal loss (`loss_type: focal`) does the same job a different way: easy, frequent boxes contribute less, so rare subtypes are not washed out. `focal_weighted` applies the class weights on top of focal. Focal does **not** combine with grouped CE — the trainer ignores `roi_grouped_ce_*` when the loss is focal. Pick a curriculum (groups, then fine labels) or a reweighting (class weights and/or focal), not both at once.
-
-Do **not** compare 36.70% to DOTA Hub tables.
-
----
-
-## Why no Hub weights
-
-The usual Kaggle dump is **CC BY-NC-SA**. The official test is closed. oriented-det supports FAIR1M for local train/metrics only. If your programme needs aircraft or vehicle subtypes, pretrain on a public oriented zoo, re-init the head, watch imbalance — on **your** licensed imagery.
 
 ---
 

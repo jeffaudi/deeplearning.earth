@@ -13,6 +13,44 @@ subtitle: "Rotated IoU. AP50 for the headline. AP75 when the box has to be tight
 
 ---
 
+Write the protocol in one sentence, then the number. Two percentages that were not measured the same way are not a comparison.
+
+## What goes in a report
+
+One sentence, then the numbers. The sentence has to carry:
+
+- dataset and split, and whether that split was in training
+- canvas (1024 tile, or keep-ratio for HRSC / SSDD / HRSID)
+- rotated IoU, exact polygon, and the threshold
+- 11-point at one IoU, or area-under-PR over a list
+- NMS IoU and the score floor
+- the class set the mean is over
+
+Then AP50. Add AP75 when the product cares about heading or about a tight footprint. Add the per-class row for the classes you will actually ship — large-vehicle and harbor move the decision more than the mean does. For a DOTA pretrain, the sentence ends with “official Task 1.” For a finetune, it ends with the held-out split the recipe really has.
+
+`odet preds` writes the boxes; `make metrics` recomputes the curves from `predictions.json` if you need another IoU without another forward. The Hub field to quote for DOTA is `eval_task1_map50`, not the leaky `eval_map50` sitting next to it in the same manifest.
+
+## Pairs I will not subtract
+
+| If the left number is | and the right number is | they differ in |
+|---|---|---|
+| DOTA Task 1 AP50 | leaky `make eval-val` | which images were in training |
+| Rotated AP50 | horizontal AP (Wei et al. on HRSID, **>84.7%** HBB vs **78.55%** rotated) | the box that is matched |
+| 11-point AP at IoU 0.5 | area-under-PR averaged from 0.10 to 0.95 | both the integral and the thresholds |
+| AP50 | AP75 | how wrong the heading is allowed to be |
+| mAP at IoU 0.1 | mAP at IoU 0.5 | the match itself |
+| Tiled-val mAP | full-scene mAP after merge NMS | where duplicate tiles can vote |
+| Boxes drawn at score 0.55 | AP | an operating point vs the whole curve |
+| One demo tile | mAP | a picture vs a dataset |
+
+The HRSID row is the one that looks most like a leaderboard. [That post](/posts/2026-10-01_hrsid_sar_ship_benchmark/) already says the Wei number is COCO horizontal AP. Putting 78.55 next to 84.7 without the box type is how a rotated model gets described as behind on a metric it did not enter.
+
+**AP50** asks whether the rotated boxes overlap by half. **AP75** asks for three quarters. On a long ship, a few degrees of heading error fails 0.5. On a compact vehicle, the same angular error can still pass 0.5 and fail 0.75. Quote Task 1 for a DOTA pretrain. A training-log `eval-val` on DOTA is a convergence plot: the model was trained on those tiles.
+
+How a rotated box becomes a true positive, and how that walk becomes the percentage, is below.
+
+---
+
 A detector percentage is a protocol with the number left on. [oriented-det](https://github.com/DL4EO/oriented-det) has spent the series quoting **official DOTA Task 1**, and warning when a local log is something else. This post is the metric those quotes use: how a rotated box becomes a true positive, how that becomes AP, and which pairs of numbers are not allowed to be subtracted.
 
 The [DOTA lessons](/posts/2026-09-17_lessons_learned_on_dota_oriented_det_and_mmrotate_parity/) cover the leaky eval-val trap and why the last mile was the box loss. The [le90 note](/posts/2026-10-19_le90_geometry/) covers the box those IoUs are computed on. Here the question is only: given two sets of le90 boxes, what does the percentage mean?
@@ -63,36 +101,6 @@ Read the ResNet columns in pairs. For Oriented R-CNN, Faster R-CNN, and FCOS, an
 DOTA zoo recipes train on **trainval**. Official Task 1 is the hidden test. Local `make eval-val` scores val tiles that were in that train. On Faster R-CNN 3× that log says **83.46%** and the server says **74.48%**. The gap is memorized tiles. Quote the server number for DOTA. Keep eval-val as a convergence plot.
 
 That word is DOTA-only. HRSC eval-val is the ImageSets test. SSDD and HRSID eval-val are the official test splits. FAIR1M eval-val is official val, and the 36.70% Faster R-CNN figure is tiled val, not a hidden Gaofen test. Those are held-out. They are also not Task 1, and they are not comparable to 76.73% just because the detector family is the same.
-
-## Pairs I will not subtract
-
-| If the left number is | and the right number is | they differ in |
-|---|---|---|
-| DOTA Task 1 AP50 | leaky `make eval-val` | which images were in training |
-| Rotated AP50 | horizontal AP (Wei et al. on HRSID, **>84.7%** HBB vs **78.55%** rotated) | the box that is matched |
-| 11-point AP at IoU 0.5 | area-under-PR averaged from 0.10 to 0.95 | both the integral and the thresholds |
-| AP50 | AP75 | how wrong the heading is allowed to be |
-| mAP at IoU 0.1 | mAP at IoU 0.5 | the match itself |
-| Tiled-val mAP | full-scene mAP after merge NMS | where duplicate tiles can vote |
-| Boxes drawn at score 0.55 | AP | an operating point vs the whole curve |
-| One demo tile | mAP | a picture vs a dataset |
-
-The HRSID row is the one that looks most like a leaderboard. [That post](/posts/2026-10-01_hrsid_sar_ship_benchmark/) already says the Wei number is COCO horizontal AP. Putting 78.55 next to 84.7 without the box type is how a rotated model gets described as behind on a metric it did not enter.
-
-## What goes in a report
-
-One sentence, then the numbers. The sentence has to carry:
-
-- dataset and split, and whether that split was in training
-- canvas (1024 tile, or keep-ratio for HRSC / SSDD / HRSID)
-- rotated IoU, exact polygon, and the threshold
-- 11-point at one IoU, or area-under-PR over a list
-- NMS IoU and the score floor
-- the class set the mean is over
-
-Then AP50. Add AP75 when the product cares about heading or about a tight footprint. Add the per-class row for the classes you will actually ship — large-vehicle and harbor move the decision more than the mean does. For a DOTA pretrain, the sentence ends with “official Task 1.” For a finetune, it ends with the held-out split the recipe really has.
-
-`odet preds` writes the boxes; `make metrics` recomputes the curves from `predictions.json` if you need another IoU without another forward. The Hub field to quote for DOTA is `eval_task1_map50`, not the leaky `eval_map50` sitting next to it in the same manifest.
 
 ## Links
 

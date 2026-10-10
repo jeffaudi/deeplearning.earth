@@ -17,6 +17,14 @@ subtitle: ""
 For current work on oriented and rotated object detection in aerial and satellite images, see **[oriented-det](https://github.com/DL4EO/oriented-det)** and the overview of [oriented detection in aerial and satellite images](/oriented-detection-in-satellite-images/).
 {{< /notice >}}
 
+# Start with oriented boxes
+
+Five years after the Airbus Kaggle, you do not have to predict a mask and then turn it into a ship. **MMRotate** trains a rotated-box detector on this SPOT set, runs faster than the 2018 U-Net pipeline, and handles ships that sit next to each other.
+
+It is not a copy of the old leaderboard winners. A classifier in front still helps on empty sea, ship-shaped anchors still help, and test-time augmentation still helps. It is the tool I would start an R&D study with. The learning curve is real, and it is worth it.
+
+The 2018 winning pattern — classifier, then U-Net, then a trick for ships moored side by side — and the MMRotate setup, are below.
+
 # Context
 
 In 2018, when I was still working at Airbus Defence and Space, I organised a challenge on Kaggle to detect ships in Airbus SPOT satellite imagery (@ 1.5 meters resolution).
@@ -476,12 +484,6 @@ Of course, this is not directly an exceptional model like the ones which were on
 - Increase the dataset by doing pseudo-labelling on the test data
 
 **But globally it is very easy to apply MMRotate to this dataset and the OpenMMLab framework should have its place in most R&D work for object detection on satellite and aerial imagery.**
-
-# Conclusion
-
-If you have not already experimented with OpenMMLab and MMRotate, I hope that this blog post will motivate you to test it. I am using it in many of my projects and I am impressed. It requires somewhat of a learning curve but it definitely worth it as it is a powerful yet flexible tool.
-
-
 
 * * *
 #### Written on November 16, 2023 by Jeff Faudi.

@@ -17,6 +17,14 @@ subtitle: ""
 For current work on oriented and rotated object detection in aerial and satellite images, see **[oriented-det](https://github.com/DL4EO/oriented-det)** and the overview of [oriented detection in aerial and satellite images](/oriented-detection-in-satellite-images/).
 {{< /notice >}}
 
+# What worked on this aircraft sample
+
+**EfficientDet** and **Faster R-CNN** are the ones that work after a few epochs on this small Airbus aircraft set. **EfficientDet has about five times fewer parameters** and is the one I would put in production: fewer parameters means faster inference, and a lower cloud bill.
+
+That ranking is for this task and this sensor. Aircraft, vehicles, and crops are different problems, and this sample is not a qualification set. A **ResNet-34** backbone was already enough for Faster R-CNN here. **RetinaNet** looked poor because many boxes landed on the same aircraft. A missing label in the validation set penalizes every architecture, so the qualification set has to be clean before you trust the ranking.
+
+**IceVision** is a good way to run that comparison on your own data. Once a family wins, stay in IceVision or move to the source library (Torchvision, Ultralytics, MMLab) for deployment. Hyper-parameters, the schedule, and the dataset are still most of the work. The notebook is [here](https://github.com/jeffaudi/notebooks/blob/main/Aircraft_Detection_with_IceVision_and_Airbus_data.ipynb). The setup and the pictures are below.
+
 # Context
 
 In recent years,  **artificial intelligence has made great strides in the field of computer vision**. One area that has seen particularly impressive progress is object detection, with a variety of deep learning models achieving high levels of accuracy. However, this abundance of choice can be overwhelming for practitioners who are looking to implement an object detection system.
@@ -434,16 +442,6 @@ Finally, the above example is clearly showing the difficulties of the model to d
 *Predictions for YOLOv5-m after 10 epochs*
 
 With YOLOv5-m, the model is still confused with sky bridges and even airport buildings after 10 epochs. This is probably due to non optimal anchor sizes and smaller objects than usually in the COCO dataset. I am definitely surprised by this as I have used YOLOv3 and YOLOv5 successfully for this task. I have even written  [an article on this topic](https://medium.com/artificialis/detecting-aircrafts-on-airbus-pleiades-imagery-with-yolov5-5f3d464b75ad)  in 2021. In the article, I only do 10 epochs as well and get good results. Maybe we should dig into the integration of YOLOv5 in IceVision?
-
-# Conclusion
-
-We just showed that  **EfficientDet**  and  **Faster-RCNN**  are performing well after a few epochs of training when qualified over this small sample Airbus Aircraft detection dataset.  **EfficientDet has 5 times less parameters**  and should be preferred for production since less parameters means faster inference time (and lower cost if you are using it on the cloud).
-
-It does not mean that they will always be the best models. Each task and each sensor is different (especially with regard to resolution and spectral bands). And let me also remind here that the dataset that we used is by no means a good qualification dataset.
-
-> My main objective here was to demonstrate that  **IceVision**  is a very nice framework to check on your specific dataset and your specific task  **which are the most promising models**.
-
-Once your model and architecture selected, you might want to continue to use IceVision or switch to the source implementation (i.e.  **Torchvision, Ultralytics, MMLab**, etc.) for production and deployment. There will still be a lot of work to be done on the hyper-parameters, the training process and on the dataset itself to produce a  **final high performance detector**.
 
 If you like this post, please  **clap**  for it,  **follow**  me and  **read**  my other articles:
 

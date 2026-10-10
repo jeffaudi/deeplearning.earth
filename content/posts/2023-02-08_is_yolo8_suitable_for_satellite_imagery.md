@@ -17,6 +17,19 @@ subtitle: ""
 For current work on oriented and rotated object detection in aerial and satellite images, see **[oriented-det](https://github.com/DL4EO/oriented-det)** and the overview of [oriented detection in aerial and satellite images](/oriented-detection-in-satellite-images/).
 {{< /notice >}}
 
+# Yes — if you stop treating the image like a photograph
+
+**YOLOv8 is a very good framework** for object detection in satellite imagery. It is built for COCO photographs, so it trades some accuracy for speed. Use it when inference cost matters. It is not the automatic winner for every sensor.
+
+The defaults that hurt on satellite imagery:
+
+- Keep **`imgsz`** at the tile size. Do not let the model shrink the image. At test time on these Pleiades extracts that means **2560**, not 640.
+- Raise **`max_det`** if a scene can hold more than the default 300 objects.
+- Turn **mosaic** off, and skip scaling augmentations that throw away resolution. Add up/down flips. Satellite objects have no privileged “up.”
+- Tile large images, and keep every tile from one source image in the **same** train or validation split.
+
+On the small annotated test set, with `imgsz` kept at the full image size, there were very few false alarms and few misses. The install, the tiling, and the training log are below.
+
 # The latest YOLO version has been published
 
 [YOLOv8](https://github.com/ultralytics/ultralytics) is the latest version of the YOLO object detection and image segmentation models developed by [Ultralytics](https://ultralytics.com/). YOLOv8 is a cutting-edge, state-of-the-art (SOTA) model that builds upon the success of previous YOLO versions and introduces new features and improvements to further boost performance and flexibility.
@@ -358,13 +371,6 @@ Here are the exact number of aircrafts per image in our test dataset.
 ![](/posts/img/2023-02-08_yolo8_10.webp "{width='800px'}")
 
 We can see that we have very few false alarms and few missed.
-
-# Conclusions
-
-**YOLOv8 from Ultralytics is a very good framework** for object detection in satellite imagery. As YOLOv8 is mostly used for detection of common objects in photographs (COCO dataset), a few parameters need to be tweaked to suit satellite images.
-
-You also need to be aware that YOLOv8 compromise accuracy for speed so it might not be the best candidate for all use cases, but it will definitely be a must when you want to very **high performance with speed of inference. GPU time, be it your own servers or on cloud computing, is a costly ressource and faster inference means lower costs.**
-
 
 * * *
 #### Written on February 8, 2023 by Jeff Faudi.
