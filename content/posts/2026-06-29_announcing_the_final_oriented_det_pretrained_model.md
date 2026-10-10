@@ -12,8 +12,6 @@ series: ["oriented-det"]
 tags: ["oriented-det", "pretrained-models", "dota", "oriented-rcnn", "inference"]
 
 subtitle: "pad/tile, merge NMS, Hub slug `oriented_rcnn_dota_le90_1x`"
-
-draft: false
 ---
 
 DOTA recipes train on a **1024×1024** canvas. Real scenes are often larger. When the input exceeds that canvas, `odet image-demo` switches to **pad/tile** automatically: overlapping 1024×1024 windows, detections mapped back to full-image coordinates, then merge NMS.

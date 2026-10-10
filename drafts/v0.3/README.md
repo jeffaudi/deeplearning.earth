@@ -9,4 +9,4 @@ Pin **0.3.1** (`pip install oriented-det==0.3.1`). Rotated RetinaNet Hub is OBB 
 
 Posts under `content/posts/` use the planned publish dates (Mon/Thu at **06:00 +07**). Hugo omits them until that timestamp unless you build with `--buildFuture`. On each publish day, after 06:00: `make publish` (Netlify rebuild from `main`) so the dated post appears, then send LinkedIn the next morning.
 
-Schedule (v0.3 tail): HRSID 1 Oct, **Docker 5 Oct**, **ONNX 8 Oct**. Later: bus-lot check 2 Nov, **which detector to train 5 Nov** (LinkedIn 6 Nov).
+Schedule (v0.3 tail): HRSID 1 Oct, **Docker 5 Oct**, **ONNX 8 Oct**. Later: **OSSDD 15 Oct**, le90 19 Oct, mAP 22 Oct, bus lot 26 Oct, **which detector to train 29 Oct** (LinkedIn 30 Oct).

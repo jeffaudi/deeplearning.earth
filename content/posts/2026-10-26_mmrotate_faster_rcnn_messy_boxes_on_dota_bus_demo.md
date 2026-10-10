@@ -1,10 +1,11 @@
 ---
 title: "Does MMRotate Faster R-CNN also mess up the bus lot?"
 author: "Jeff Faudi"
-date: 2026-11-02T06:00:00+07:00
-lastmod: 2026-11-02T06:00:00+07:00
+date: 2026-10-26T06:00:00+07:00
+lastmod: 2026-10-26T06:00:00+07:00
 
-description: "Official MMRotate Rotated Faster R-CNN 1× is as messy as OrientedDet Faster R-CNN on the DOTA bus-lot demo tile. The failure is architectural and rare (dense ~45° objects). Oriented R-CNN is clean but heavy to finetune; that pushes toward FCOS."
+description: "Official MMRotate Rotated Faster R-CNN 1× is as messy as OrientedDet Faster R-CNN on the DOTA bus-lot demo tile. The failure is architectural and rare (dense ~45° objects). Oriented R-CNN is clean but heavy to finetune; FCOS follows the heading on this tile. RTMDet was not re-run here."
+
 
 image: "/posts/img/2026-11-02_mmrotate_frcnn_score0.6.jpg"
 
@@ -112,7 +113,9 @@ Do not throw out Rotated Faster R-CNN because of one bus lot. The failure is **r
 
 When the scene *does* look like this, **Oriented R-CNN** is the two-stage that stays clean. The cost is real: oriented RoIAlign is slower to train and hungrier on GPU (about **1 d 12 h** for 1× on an L4 versus ~11.5 h for Faster R-CNN). That is why the README hero uses it, and why we do not default every finetune to it.
 
-**Rotated FCOS** is the practical middle: one-stage, no RPN, about **8 h** 1× on the same L4, and boxes that follow heading on this tile — see the [macOS FCOS walkthrough](/posts/2026-09-02_rotated_fcos_vs_oriented_rcnn_on_macos/). Official Task 1 is a bit lower (**73.07%** vs Oriented R-CNN **76.73%** and Faster R-CNN **74.42%**). If you are choosing a head to finetune on your own imagery, that paper gap is usually the wrong number to optimize; training wall and box tightness on hard headings matter more.
+**Rotated FCOS** is the practical middle among the ResNet heads: one-stage, no RPN, about **8 h** 1× on the same L4, and boxes that follow heading on this tile — see the [macOS FCOS walkthrough](/posts/2026-09-02_rotated_fcos_vs_oriented_rcnn_on_macos/). Official Task 1 is a bit lower (**73.07%** vs Oriented R-CNN **76.73%** and Faster R-CNN **74.42%**). If you are choosing a head to finetune on your own imagery, that paper gap is usually the wrong number to optimize; training wall and box tightness on hard headings matter more.
+
+[v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) put **Rotated RTMDet-S** at **77.60%** Task 1 (AP75 **52.01**), one stage, above both of those ResNet numbers. This bus tile was not re-run with that checkpoint. The clutter above is still the horizontal-RoI failure. It is not a claim about RTMDet.
 
 ---
 
@@ -122,6 +125,8 @@ When the scene *does* look like this, **Oriented R-CNN** is the two-stage that s
 - [MMRotate](https://github.com/open-mmlab/mmrotate)
 - [Pretrained zoo](https://huggingface.co/dl4eo/oriented-det-pretrained)
 - **Related:** [ProbIoU / Faster R-CNN Task 1](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/) · [v0.1.1 / MMRotate parity](/posts/2026-07-11_oriented-det_v0_1_1_prob_iou_mmrotate_parity_and_the_updated_zoo/) · [optical satellite demo](/posts/2026-09-06_oriented_det_optical_satellite_demo/) · [FCOS vs Oriented R-CNN on the same tile](/posts/2026-09-02_rotated_fcos_vs_oriented_rcnn_on_macos/)
+- **Previous:** [Oriented mAP](/posts/2026-10-22_oriented_map/)
+- **Next:** [Which oriented detector should you train?](/posts/2026-10-29_which_oriented_detector_to_train/) (29 Oct)
 
 * * *
-#### Written on November 2, 2026 by Jeff Faudi.
+#### Written on October 26, 2026 by Jeff Faudi.

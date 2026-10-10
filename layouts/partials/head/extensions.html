@@ -1,0 +1,31 @@
+{{/*
+  Site override of the theme head extensions hook.
+  Emits SoftwareApplication JSON-LD when the page sets softwareSchema: true.
+*/}}
+{{ if .Params.softwareSchema }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "oriented-det",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Linux, macOS, Windows",
+  "description": "Open-source PyTorch framework for oriented and rotated object detection in aerial and satellite images.",
+  "url": {{ .Permalink | jsonify }},
+  "license": "https://www.apache.org/licenses/LICENSE-2.0",
+  "author": {
+    "@type": "Organization",
+    "name": "DL4EO",
+    "url": "https://dl4eo.com/"
+  },
+  "sameAs": [
+    "https://github.com/DL4EO/oriented-det",
+    "https://pypi.org/project/oriented-det/",
+    "https://dl4eo.github.io/oriented-det/",
+    "https://huggingface.co/dl4eo/oriented-det-pretrained",
+    "https://deeplearning.earth/series/oriented-det/",
+    "https://dl4eo.com/"
+  ]
+}
+</script>
+{{ end }}

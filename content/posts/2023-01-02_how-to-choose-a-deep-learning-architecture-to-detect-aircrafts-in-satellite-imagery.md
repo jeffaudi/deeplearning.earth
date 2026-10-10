@@ -2,7 +2,7 @@
 title: "How to choose a deep learning architecture to detect aircrafts in satellite imagery?"
 author: "Jeff Faudi"
 date: 2023-01-02T15:11:48.457Z
-lastmod: 2023-01-02T15:11:48.457Z
+lastmod: 2026-10-10T00:00:00.000Z
 
 description: "Comparing deep learning architectures for aircraft detection in satellite imagery."
 
@@ -12,6 +12,11 @@ tags: ["object detection", "aircraft", "architecture"]
 subtitle: ""
 
 ---
+
+{{< notice info >}}
+For current work on oriented and rotated object detection in aerial and satellite images, see **[oriented-det](https://github.com/DL4EO/oriented-det)** and the overview of [oriented detection in aerial and satellite images](/oriented-detection-in-satellite-images/).
+{{< /notice >}}
+
 # Context
 
 In recent years,  **artificial intelligence has made great strides in the field of computer vision**. One area that has seen particularly impressive progress is object detection, with a variety of deep learning models achieving high levels of accuracy. However, this abundance of choice can be overwhelming for practitioners who are looking to implement an object detection system.

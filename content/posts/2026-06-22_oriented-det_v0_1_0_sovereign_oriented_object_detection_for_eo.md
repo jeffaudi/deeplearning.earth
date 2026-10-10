@@ -2,7 +2,7 @@
 title: "Oriented-Det v0.1.0 is out — sovereign oriented object detection for EO"
 author: "Jeff Faudi"
 date: 2026-06-22T09:00:00+07:00
-lastmod: 2026-06-22T09:00:00+07:00
+lastmod: 2026-10-09T08:30:00+07:00
 
 description: "Oriented-det v0.1.0 is on PyPI under Apache 2.0 — a lightweight PyTorch library for rotated object detection in aerial and satellite imagery, with DOTA baselines and pretrained weights."
 
@@ -20,7 +20,7 @@ In [May I announced that Oriented-det was coming](/posts/2026-05-28_introducing_
 
 Oriented-det is a lightweight PyTorch library for **rotated object detection in aerial and satellite imagery**. It targets the workflows where orientation actually matters — ships in a harbor, aircraft on an apron, vehicles in a dense parking lot — and where axis-aligned boxes simply miss the point.
 
-The framework covers the full detection loop: geometry primitives, rotated IoU and NMS, DOTA dataset loading, three baseline models, and a clean training pipeline with mixed precision, checkpointing, and TensorBoard support.
+The framework covers the full detection loop: geometry primitives, rotated IoU and NMS, DOTA dataset loading, the detector families, and a clean training pipeline with mixed precision, checkpointing, and TensorBoard support.
 
 Install in one line (Python 3.10+; PyTorch is installed separately for your platform):
 
@@ -58,7 +58,7 @@ Oriented-det v0.1.0 ships three detectors, all trained on DOTA:
 
 **Rotated RetinaNet** — single-stage detector with oriented anchors and focal loss, useful as a fast baseline.
 
-All three produce true oriented boxes: the angle is a predicted output, not zero-initialized and ignored.
+All three produce true oriented boxes: the angle is a predicted output, not zero-initialized and ignored. [v0.2.0](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/) added **Rotated FCOS** as the fourth family. [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) added **Rotated RTMDet** as the fifth, at **77.60%** official Task 1. The current pick among them is [which detector to train](/posts/2026-10-29_which_oriented_detector_to_train/).
 
 Pretrained weights are hosted on the Hugging Face Hub and can be downloaded with:
 
@@ -89,16 +89,14 @@ The full workflow — tiling, training, prediction, evaluation — is covered in
 
 ## What's next
 
-The next post in the series is a hands-on walkthrough — **[oriented object detection on macOS, in pure Python](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/)** — bus detection on the bundled DOTA demo image using the pretrained Oriented R-CNN, from `uv pip install` to `result.jpg` on Apple Silicon (`--device mps`). The [sliding-window inference note](/posts/2026-06-29_announcing_the_final_oriented_det_pretrained_model/) covers running the Oriented R-CNN 1× Hub weight on images larger than the 1024×1024 canvas.
+Next in the series: the [15-class DOTA gallery](/posts/2026-06-23_oriented_rcnn_detections_for_the_15_dota_classes/), then **[oriented object detection on macOS, in pure Python](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/)** — bus detection on the bundled DOTA demo image using the pretrained Oriented R-CNN, from `uv pip install` to `result.jpg` on Apple Silicon (`--device mps`). The [sliding-window inference note](/posts/2026-06-29_announcing_the_final_oriented_det_pretrained_model/) covers running the Oriented R-CNN 1× Hub weight on images larger than the 1024×1024 canvas.
 
-Beyond that, the series will cover:
+Later in this series:
 
-- Technical deep-dive: geometry conventions, angle normalization, and the le90 convention on DOTA
-- Lessons learned on DOTA baselines: what transfers to production EO, what doesn't
-- Splitting large EO images without label leakage
-- Oriented mAP: what to report and how to read it
-- Post-processing strategies for dense harbor scenes
-- Packaging a sovereign detector for production
+- [Lessons learned on DOTA](/posts/2026-09-17_lessons_learned_on_dota_oriented_det_and_mmrotate_parity/) — official Task 1, the leaky eval-val trap, and what transfers to production EO
+- [Deploy in Docker](/posts/2026-10-05_deploy_oriented_det_in_docker/) — a Tile Geo Process service, GeoJSON out
+- [ONNX export without PyTorch](/posts/2026-10-08_onnx_export_without_pytorch/) — inference without a PyTorch stack on the infer box
+- [Oriented-Det v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) — Rotated RTMDet-S, official Task 1 **77.60%**
 
 ## Links
 

@@ -2,7 +2,7 @@
 title: "Oriented-Det v0.3.1 — four datasets, ONNX, and RetinaNet OBB"
 author: "Jeff Faudi"
 date: 2026-09-21T09:00:00+07:00
-lastmod: 2026-09-21T22:30:00+07:00
+lastmod: 2026-10-12T06:30:00+07:00
 
 description: "Oriented-det v0.3.1 is on PyPI — native HRSC2016, FAIR1M, SSDD, and HRSID loaders, HRSC Hub 3× zoo, DOTA advertised from 1×, RetinaNet Hub OBB, and ONNX export."
 
@@ -37,7 +37,7 @@ PyTorch is still installed separately for your platform ([pytorch.org](https://p
 | **SSDD** | SAR ships | Native VOC / COCO / DOTA | **No** | Local Faster R-CNN 1× held-out **90.34%** |
 | **HRSID** | SAR ships | Native COCO polygons | **No** | Local Faster R-CNN 1× held-out **78.55%** |
 
-DOTA remains the pretrain zoo. HRSC is the published small-data ship zoo. FAIR1M / SSDD / HRSID are **train locally** from the matching DOTA 1× Hub checkpoint. Full write-ups: [HRSC already live](/posts/2026-09-13_hrsc2016_recipes_trains_and_results/), FAIR1M **24 Sep**, SSDD **28 Sep**, HRSID **1 Oct**, Docker **5 Oct**, ONNX **8 Oct**.
+DOTA remains the pretrain zoo. HRSC is the published small-data ship zoo. FAIR1M / SSDD / HRSID are **train locally** from the matching DOTA 1× Hub checkpoint. Full write-ups: [HRSC](/posts/2026-09-13_hrsc2016_recipes_trains_and_results/), [FAIR1M](/posts/2026-09-24_fair1m_fine_grained_oriented_detection/), [SSDD](/posts/2026-09-28_ssdd_sar_ship_finetune/), [HRSID](/posts/2026-10-01_hrsid_sar_ship_benchmark/), [Docker](/posts/2026-10-05_deploy_oriented_det_in_docker/), [ONNX](/posts/2026-10-08_onnx_export_without_pytorch/).
 
 ![HRSC2016 — Oriented R-CNN 3× Hub on a Google Earth ship scene (score ≥ 0.85, NMS 0.1)](/posts/img/2026-09-21_hrsc_harbour_orcnn.png#layoutTextWidth)
 
@@ -71,7 +71,7 @@ make export-onnx   # default: Rotated FCOS DOTA 1× Hub
 odet export demo   # same CLI as python -m export
 ```
 
-Pre-NMS ONNX plus Python preprocess / rotated NMS for **Rotated FCOS**, **Oriented R-CNN**, and **Rotated Faster R-CNN**. Consumers need numpy, Pillow, and ONNX Runtime — no PyTorch, no oriented-det. Supported canvas is **fixed 1024×1024** (DOTA tiles). Out of this graph: `keep_ratio` (HRSC / SSDD / HRSID), sliding-window tiling, RetinaNet detect. Docker Tile Geo Process walkthrough on **5 Oct**; ONNX walkthrough on **8 Oct**.
+Pre-NMS ONNX plus Python preprocess / rotated NMS for **Rotated FCOS**, **Oriented R-CNN**, and **Rotated Faster R-CNN**. Consumers need numpy, Pillow, and ONNX Runtime — no PyTorch, no oriented-det. Supported canvas is **fixed 1024×1024** (DOTA tiles). Out of this graph: `keep_ratio` (HRSC / SSDD / HRSID), sliding-window tiling, RetinaNet detect. Walkthroughs: [Docker Tile Geo Process](/posts/2026-10-05_deploy_oriented_det_in_docker/) and [ONNX export without PyTorch](/posts/2026-10-08_onnx_export_without_pytorch/).
 
 ## Also shipped
 
@@ -86,17 +86,17 @@ Pre-NMS ONNX plus Python preprocess / rotated NMS for **Rotated FCOS**, **Orient
 
 Apache 2.0 covers oriented-det’s code. It does not cover DOTA, HRSC, FAIR1M, SSDD, or HRSID pixels. See [the licensing note](/posts/2026-09-10_oriented_det_apache_license_versus_dota/). Production detectors still need imagery you are allowed to train on.
 
-## What’s next (this series)
+## Write-ups in this series
 
 | Date | Post |
 |---|---|
-| **Thu 24 Sep** | FAIR1M — why 36.70% is in band |
-| **Mon 28 Sep** | SSDD — optical DOTA → SAR in 12 epochs |
-| **Thu 1 Oct** | HRSID — 78.55% rotated AP50 vs Wei HBB |
-| **Mon 5 Oct** | Docker — Tile Geo Process, GeoJSON out |
-| **Thu 8 Oct** | ONNX — export without PyTorch on the infer box |
+| **Thu 24 Sep** | [FAIR1M — why 36.70% is in band](/posts/2026-09-24_fair1m_fine_grained_oriented_detection/) |
+| **Mon 28 Sep** | [SSDD — optical DOTA → SAR in 12 epochs](/posts/2026-09-28_ssdd_sar_ship_finetune/) |
+| **Thu 1 Oct** | [HRSID — 78.55% rotated AP50 vs Wei HBB](/posts/2026-10-01_hrsid_sar_ship_benchmark/) |
+| **Mon 5 Oct** | [Docker — Tile Geo Process, GeoJSON out](/posts/2026-10-05_deploy_oriented_det_in_docker/) |
+| **Thu 8 Oct** | [ONNX — export without PyTorch on the infer box](/posts/2026-10-08_onnx_export_without_pytorch/) |
 
-Public [roadmap](https://github.com/DL4EO/oriented-det/blob/main/docs/roadmap.md) after that: **v0.4** speed tier (RTMDet-R, native YOLO-OBB).
+The speed-tier follow-up shipped as [**Oriented-Det v0.4.0**](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) — Rotated RTMDet-S, official Task 1 **77.60%**. Native YOLO-OBB is **v0.4.1** on the [roadmap](https://github.com/DL4EO/oriented-det/blob/main/docs/roadmap.md).
 
 ## Links
 
@@ -105,7 +105,7 @@ Public [roadmap](https://github.com/DL4EO/oriented-det/blob/main/docs/roadmap.md
 - **Documentation**: [dl4eo.github.io/oriented-det](https://dl4eo.github.io/oriented-det/)
 - **Pretrained zoo**: [huggingface.co/dl4eo/oriented-det-pretrained](https://huggingface.co/dl4eo/oriented-det-pretrained)
 - **Previous:** [Lessons learned on DOTA](/posts/2026-09-17_lessons_learned_on_dota_oriented_det_and_mmrotate_parity/) · [HRSC2016](/posts/2026-09-13_hrsc2016_recipes_trains_and_results/) · [v0.2.0](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/)
-- **Next:** FAIR1M (24 Sep)
+- **Next:** [FAIR1M](/posts/2026-09-24_fair1m_fine_grained_oriented_detection/) (24 Sep)
 
 * * *
 #### Written on September 21, 2026 by Jeff Faudi.

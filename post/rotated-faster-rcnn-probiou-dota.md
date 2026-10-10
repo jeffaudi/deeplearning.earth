@@ -12,8 +12,6 @@ series: ["oriented-det"]
 tags: ["oriented-det", "dota", "probiou", "rotated-faster-rcnn", "pretrained-models"]
 
 subtitle: "74.42% official Task 1 vs MMRotate 73.40% — Hub slug `rotated_faster_rcnn_dota_le90_1x`"
-
-draft: false
 ---
 
 ![Satellite scene with oriented bounding boxes](/posts/img/2026-07-10_rotated_faster_rcnn_probiou_dota.png)

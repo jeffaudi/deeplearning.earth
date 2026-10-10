@@ -31,6 +31,8 @@ MMRotate is the research reference I matched against. Oriented-det 1× sits in t
 
 **Advertise and finetune from 1×** for Oriented R-CNN, Faster R-CNN, and FCOS. 3× Task 1 AP50 is a drop or a wash; the 3× gain is box tightness (AP75). RetinaNet 3× is the AP50 exception. Full table: [v0.2.0 zoo](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/).
 
+[v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) added a fifth family. Rotated RTMDet-S 3× is **77.60%** Task 1 (AP75 52.01). MMRotate’s RTMDet-s with random rotate and no multi-scale is **76.93%**. That slug’s only Hub weight is the 3×, so the 1× finetune rule above does not apply to it. Its leaky eval-val is **82.75%** (gap **5.15**). Quote the server number.
+
 ## The leaky-eval trap
 
 DOTA zoo recipes union train and val tiles. `make eval-val` then scores the **same val tiles that were in training**. That number looks like a held-out mAP. It is not.

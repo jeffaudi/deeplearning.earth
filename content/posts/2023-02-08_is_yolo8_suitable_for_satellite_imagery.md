@@ -2,7 +2,7 @@
 title: "Is YOLOv8 suitable for satellite imagery?"
 author: "Jeff Faudi"
 date: 2023-02-08T15:11:48.457Z
-lastmod: 2023-02-08T15:11:48.457Z
+lastmod: 2026-10-10T00:00:00.000Z
 
 description: "Tuning YOLOv8 for satellite imagery — what works and what to change."
 
@@ -12,6 +12,11 @@ tags: ["yolo", "object detection", "satellite imagery"]
 subtitle: ""
 
 ---
+
+{{< notice info >}}
+For current work on oriented and rotated object detection in aerial and satellite images, see **[oriented-det](https://github.com/DL4EO/oriented-det)** and the overview of [oriented detection in aerial and satellite images](/oriented-detection-in-satellite-images/).
+{{< /notice >}}
+
 # The latest YOLO version has been published
 
 [YOLOv8](https://github.com/ultralytics/ultralytics) is the latest version of the YOLO object detection and image segmentation models developed by [Ultralytics](https://ultralytics.com/). YOLOv8 is a cutting-edge, state-of-the-art (SOTA) model that builds upon the success of previous YOLO versions and introduces new features and improvements to further boost performance and flexibility.

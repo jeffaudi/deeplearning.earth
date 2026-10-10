@@ -2,7 +2,7 @@
 title: "A static demo of three oriented detectors on optical satellite imagery"
 author: "Jeff Faudi"
 date: 2026-09-06T15:00:00+07:00
-lastmod: 2026-09-21T22:30:00+07:00
+lastmod: 2026-10-12T06:30:00+07:00
 
 description: "A browser demo of Oriented-Det’s three 3× DOTA checkpoints — Oriented R-CNN, Rotated Faster R-CNN, and Rotated FCOS — on six optical satellite scenes, with a side by side comparison that lands in parity with state of the art frameworks."
 
@@ -14,7 +14,7 @@ tags: ["oriented-det", "object-detection", "satellite-imagery", "mmrotate", "inf
 subtitle: "Pick a detector. Move the slider."
 ---
 
-The [oriented-det](https://github.com/DL4EO/oriented-det) zoo now has four detector families. Three of them are on the same canvas: **Oriented R-CNN 3×**, **Rotated Faster R-CNN 3×**, and **Rotated FCOS 3×** — the Hub weights served by the [optical demo](https://dl4eo.com/object-detection-optical-satellite/). All **eight** DOTA slugs (1× and 3×) now quote **official Task 1**. The fourth family, **Rotated RetinaNet 3×**, is **73.89%** Task 1 (OBB); it is not on this page. The accuracy pick remains Oriented R-CNN **1× at 76.73%** — this page serves 3× weights for tighter boxes.
+The [oriented-det](https://github.com/DL4EO/oriented-det) zoo now has five detector families. Three ResNet heads are on the same canvas: **Oriented R-CNN 3×**, **Rotated Faster R-CNN 3×**, and **Rotated FCOS 3×** — the Hub weights served by the [optical demo](https://dl4eo.com/object-detection-optical-satellite/). **Rotated RetinaNet 3×** is **73.89%** Task 1 (OBB); it is not on this page. [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) added **Rotated RTMDet-S** at **77.60%** Task 1; that weight is not on this page either. Among the three weights the page does serve, the accuracy pick remains Oriented R-CNN, and the page uses the **3×** slugs for tighter boxes (1× Task 1 for that family is **76.73%**).
 
 They are on a static page you can open in a browser. No Python, no GPU, no upload:
 
@@ -38,7 +38,7 @@ Three Hub **3×** slugs, ResNet-50 + FPN, DOTA le90. Predictions were inferred a
 | Rotated Faster R-CNN | two-stage, horizontal RPN | **74.48%** | **0.60** | `rotated_faster_rcnn_dota_le90_3x` |
 | Rotated FCOS | one-stage, anchor-free | **72.91%** | **0.20** | `rotated_fcos_dota_le90_3x` |
 
-1× Task 1 for the same three families is **76.73% / 74.42% / 73.07%**. Finetune from 1×; 3× AP50 is a drop or a wash. The 3× gain is AP75 (51.23 / 45.39 / 45.39). RetinaNet is **71.72% → 73.89%** (OBB; HBB is `*_hbb`). Full table: [v0.2.0 zoo](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/).
+1× Task 1 for the same three families is **76.73% / 74.42% / 73.07%**. Finetune those from 1×; 3× AP50 is a drop or a wash. The 3× gain is AP75 (51.23 / 45.39 / 45.39). RetinaNet is **71.72% → 73.89%** (OBB; HBB is `*_hbb`). Full ResNet table: [v0.2.0 zoo](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/). The zoo peak is [RTMDet-S 3× at 77.60%](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/), which this page does not serve.
 
 The page default is Oriented R-CNN. Switching models also resets the slider to that checkpoint’s deploy floor. That is the same trick as the [macOS FCOS walkthrough](/posts/2026-09-02_rotated_fcos_vs_oriented_rcnn_on_macos/): do not copy `0.70` onto FCOS, or you will drop half the boxes.
 
@@ -63,7 +63,7 @@ The large DOTA bus depot is a packed lot of school buses and cars. At each model
 
 ![DOTA vehicles large — Rotated FCOS 3×, 117 boxes at score ≥ 0.20](/posts/img/2026-09-06_oriented_det_optical_demo_vehicles_fcos.jpg#layoutTextWidth)
 
-If you only look at that DOTA-like tile, you could believe the three detectors are interchangeable. The other five images are there to stop that.
+Counts and headings on this 3× tile sit together. The other five images on the page are the ones that split the heads. The 1× `demo.jpg` bus lot is a separate case: Rotated Faster R-CNN stays messy on the diagonal rows, in OrientedDet and in official MMRotate — see [that check](/posts/2026-10-26_mmrotate_faster_rcnn_messy_boxes_on_dota_bus_demo/).
 
 ---
 
@@ -83,7 +83,7 @@ If you only look at that DOTA-like tile, you could believe the three detectors a
 
 ![NZ marina — Rotated Faster R-CNN 3×, 323 ships](/posts/img/2026-09-06_oriented_det_optical_demo_nz_marina_rfrcnn.jpg#layoutTextWidth)
 
-**SPOT storage.** Compact circular tanks are close (**88 / 92 / 96**). On official Task 1, FCOS is **not** ahead of Faster R-CNN on tanks (84.06 vs 84.91).
+**SPOT storage.** Compact circular tanks are close (**88 / 92 / 96**). On official Task 1 for these **3×** weights, FCOS storage-tank is **84.06** and Faster R-CNN is **84.91**. The 1× pair in the [zoo table](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/) is 84.28 and 84.41.
 
 ![SPOT storage — Rotated Faster R-CNN 3×](/posts/img/2026-09-06_oriented_det_optical_demo_storage_rfrcnn.jpg#layoutTextWidth)
 

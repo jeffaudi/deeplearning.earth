@@ -2,7 +2,7 @@
 title: "ONNX export in oriented-det — inference without PyTorch"
 author: "Jeff Faudi"
 date: 2026-10-08T06:00:00+07:00
-lastmod: 2026-10-08T06:00:00+07:00
+lastmod: 2026-10-12T06:30:00+07:00
 
 description: "oriented-det v0.3 ships pre-NMS ONNX export for Rotated FCOS, Oriented R-CNN, and Faster R-CNN. Consumers run ONNX Runtime + numpy + Pillow. Fixed 1024 canvas; keep_ratio and sliding windows stay out of graph."
 
@@ -93,7 +93,7 @@ ONNX input is NCHW RGB, already mean/std-normalized — do not feed raw JPEGs in
 
 Air-gapped and on-prem environments often will not take a PyTorch stack on the infer box. ONNX Runtime + three Python files is a smaller surface. The honesty of v0.3 is the canvas: if your deployment is tiled optical at 1024, you can ship a graph this week. If you need SAR whole-image `keep_ratio` or large-scene tiling in the exported graph, that is the next engineering slice — and a typical packaging engagement.
 
-Closes the [v0.3](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/) chapter. Public roadmap next: **v0.4** speed tier (RTMDet-R, native YOLO-OBB).
+Closes the [v0.3](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/) chapter. [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) adds the same pre-NMS contract for **Rotated RTMDet** (`rotated_rtmdet_pre_nms`). Native YOLO-OBB is **v0.4.1**.
 
 ---
 
@@ -102,6 +102,7 @@ Closes the [v0.3](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/)
 - [docs — ONNX export](https://dl4eo.github.io/oriented-det/examples/export/) · [`export/README.md`](https://github.com/DL4EO/oriented-det/blob/main/export/README.md)
 - [v0.3 release note](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/)
 - **Previous:** [Docker deploy](/posts/2026-10-05_deploy_oriented_det_in_docker/) · [HRSID](/posts/2026-10-01_hrsid_sar_ship_benchmark/)
+- **Next:** [Oriented-Det v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) (10 Oct) · [OSSDD](/posts/2026-10-15_ossdd_sentinel1_ships_rtmdet_faster_rcnn_fcos/) (15 Oct) · [le90](/posts/2026-10-19_le90_geometry/) (19 Oct) · [Oriented mAP](/posts/2026-10-22_oriented_map/) (22 Oct) · [bus lot](/posts/2026-10-26_mmrotate_faster_rcnn_messy_boxes_on_dota_bus_demo/) (26 Oct) · [which detector](/posts/2026-10-29_which_oriented_detector_to_train/) (29 Oct)
 
 * * *
 #### Written on October 8, 2026 by Jeff Faudi.

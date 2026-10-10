@@ -1,5 +1,7 @@
 # Zero-shot ship detection on a Copernicus Sentinel-2 tile with Oriented R-CNN
 
+> Superseded. The reference note is [`content/posts/2026-06-25_zero-shot_ship_detection_on_a_copernicus_sentinel-2_tile_with_oriented_rcnn.md`](content/posts/2026-06-25_zero-shot_ship_detection_on_a_copernicus_sentinel-2_tile_with_oriented_rcnn.md). Quote that file: official Task 1 **76.73%**, and **9 / 49** windows at 2× / 4× with 512 px overlap. Do not quote the older val-mAP line or the 16 / 64 window counts from earlier drafts of this file.
+
 We took a single 10 m true-colour tile from Copernicus Sentinel-2 — a busy patch of open water with dozens of ships at arbitrary headings — and ran it through the DOTA-pretrained **Oriented R-CNN** model shipped with [oriented-det](https://github.com/DL4EO/oriented-det). No fine-tuning, no maritime labels, no changes to the weights. The goal was simple: see how far an off-the-shelf oriented detector gets on real satellite data, and what knobs matter when it does not.
 
 This post walks through what we tried, what worked, and what did not. For commands and file names, see [README.md](./README.md).
@@ -18,9 +20,9 @@ DOTA's **ship** class is a reasonable semantic match. The hard part is not the c
 
 The Oriented R-CNN DOTA recipe uses a **1024×1024** model canvas. Our tile already matches that size, so inference takes a **single forward pass** — no tiling, no resize stretch.
 
-We used the published checkpoint `oriented_rcnn_dota_le90_1x` (~75% mAP50 on DOTA val tiles) with the sidecar config so class names resolve correctly (`ship`, not `Class 10`).
+We used the published checkpoint `oriented_rcnn_dota_le90_1x` (**76.73%** official DOTA v1.0 Task 1) with the sidecar config so class names resolve correctly (`ship`, not `Class 10`).
 
-At a permissive score threshold (0.05) and merge NMS IoU 0.2, we saw on the order of **~20 detections**. Several were genuine ships with oriented boxes aligned to vessel heading. Many visible ships had **no box at all**. A few false positives crept in as **harbor** or other DOTA categories — plausible confusions for pier-like structures and bright linear features on water.
+At a permissive score threshold (0.05) and merge NMS IoU 0.2, we saw on the order of **~20 detections**. Several were genuine ships with oriented boxes aligned to vessel heading. Many visible ships had **no box at all**. A few false positives crept in as **swimming pool** or other DOTA categories — plausible confusions for bright linear structures and pier-like features on water.
 
 **Takeaway:** the model "knows" what a ship looks like in principle, but native 10 m resolution leaves most targets near or below the effective scale the detector was trained on.
 
@@ -35,10 +37,10 @@ If ships are too small, one cheap experiment is to **upscale the image** before 
 | Variant | Image size | Inference mode | Windows | Detections (typical run) |
 |---------|------------|----------------|---------|--------------------------|
 | 1× | 1024×1024 | Single forward | 1 | ~21 @ score ≥ 0.05 |
-| 2× | 2048×2048 | Sliding window | 16 | 24 ships @ score ≥ 0.15 |
-| 4× | 4096×4096 | Sliding window | 64 | 28 ships @ score ≥ 0.15 |
+| 2× | 2048×2048 | Sliding window | 9 | 21 ships @ score ≥ 0.15 |
+| 4× | 4096×4096 | Sliding window | 49 | 28 ships @ score ≥ 0.15 |
 
-Recall improved with zoom. High-confidence boxes (0.8–0.97) appeared on 2× and 4× runs where 1× had missed the same vessels entirely. Runtime grows with window count: **~2 min on CPU** for the 4× tile (64 windows).
+Recall improved with zoom. High-confidence boxes (0.8–0.97) appeared on 2× and 4× runs where 1× had missed the same vessels entirely. Runtime grows with window count: **~2 min on CPU** for the 4× tile (49 windows).
 
 Outputs:
 
@@ -66,8 +68,8 @@ The overlap is not just a throughput knob. It should be tied to the physical/pix
 
 For the latest ship-only runs at **score ≥ 0.15**:
 
-- **2×:** 16 windows, 24 ship detections
-- **4×:** 64 windows, 29 detections above threshold, 28 retained after `--classes ship` (one non-ship removed)
+- **2×:** 9 windows, 21 ship detections
+- **4×:** 49 windows, 28 ships at score ≥ 0.15 after `--classes ship`
 
 That is a modest but real gain over 1×, with cleaner visuals once false positives are stripped.
 
@@ -89,7 +91,7 @@ Three different "thresholds" show up in this workflow; conflating them is a comm
 
 **Oriented boxes are the right shape.** Even zero-shot, headings on detected ships look plausible — the LE90 oriented R-CNN head earns its keep on maritime scatter plots.
 
-**Scale beats threshold tuning alone.** Lowering the score floor on the 1× tile helped marginally; 2× and 4× zoom helped more, because the detector finally "sees" targets at a familiar pixel size. The model was trained on DOTA and DOTA does not contains Sentinel-2 imagery. 
+**Scale beats threshold tuning alone.** Lowering the score floor on the 1× tile helped marginally; 2× and 4× zoom helped more, because the detector finally "sees" targets at a familiar pixel size. The model was trained on DOTA, and DOTA does not contain Sentinel-2 imagery. 
 
 **Domain shift remains the ceiling.** At 4× with ship-only filtering we still miss a large fraction of visible vessels. Fine-tuning on maritime satellite data (or SAR with a dedicated pipeline) is the path to production recall; upscaling is a useful diagnostic, not a substitute.
 
@@ -105,7 +107,7 @@ From the repo root:
 odet pretrained download oriented_rcnn_dota_le90_1x
 
 # 4× zoomed inference, ships only, score 0.15; output remains original size
-python tools/image_demo.py \
+odet image-demo \
   demo/copernicus/T30NZM_20260616T101021_TCI_10m_2976_7936.png \
   hf://oriented_rcnn_dota_le90_1x \
   --out-file demo/copernicus/T30NZM_20260616T101021_TCI_10m_2976_7936_4x_detections.png \

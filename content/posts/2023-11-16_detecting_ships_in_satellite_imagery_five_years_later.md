@@ -2,7 +2,7 @@
 title: "Detecting ships in satellite imagery: five years later…"
 author: "Jeff Faudi"
 date: 2023-11-16T15:11:48.457Z
-lastmod: 2023-11-16T15:11:48.457Z
+lastmod: 2026-10-10T00:00:00.000Z
 
 description: "Revisiting ship detection in SPOT imagery — from Kaggle to MMRotate."
 
@@ -12,6 +12,11 @@ tags: ["ships", "mmrotate", "object detection"]
 subtitle: ""
 
 ---
+
+{{< notice info >}}
+For current work on oriented and rotated object detection in aerial and satellite images, see **[oriented-det](https://github.com/DL4EO/oriented-det)** and the overview of [oriented detection in aerial and satellite images](/oriented-detection-in-satellite-images/).
+{{< /notice >}}
+
 # Context
 
 In 2018, when I was still working at Airbus Defence and Space, I organised a challenge on Kaggle to detect ships in Airbus SPOT satellite imagery (@ 1.5 meters resolution).

@@ -2,7 +2,7 @@
 title: "Oriented object detection on macOS, in pure Python"
 author: "Jeff Faudi"
 date: 2026-06-24T09:00:00+07:00
-lastmod: 2026-06-24T09:00:00+07:00
+lastmod: 2026-10-09T08:30:00+07:00
 
 description: "Run Oriented R-CNN on Apple Silicon with pip, uv, and the odet CLI — no CUDA toolchain, from demo.jpg to result.jpg in minutes."
 
@@ -40,7 +40,7 @@ We feed a DOTA-style aerial scene through **Oriented R-CNN** (ResNet-50 + FPN), 
 
 ### Why Oriented R-CNN?
 
-Oriented-det ships three DOTA baselines — Oriented R-CNN, Rotated Faster R-CNN, and Rotated RetinaNet. This walkthrough uses **Oriented R-CNN**, the accuracy default on the Hub and a clean macOS demo: no CUDA toolchain, one CLI command. Rotated Faster R-CNN is the faster two-stage option (see the [July ProbIoU post](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/)); Rotated RetinaNet is the one-stage legacy baseline.
+The zoo has five DOTA families. This walkthrough uses **Oriented R-CNN**: a clean macOS demo, no CUDA toolchain, one CLI command. The Task 1 peak is now [Rotated RTMDet-S at 77.60%](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/). Rotated Faster R-CNN is the faster two-stage option ([ProbIoU](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/)). Rotated FCOS is the anchor-free ResNet one-stage pick ([FCOS vs Oriented R-CNN](/posts/2026-09-02_rotated_fcos_vs_oriented_rcnn_on_macos/)). Rotated RetinaNet stays as the MMRotate-parity baseline. The later note on [which head to train](/posts/2026-10-29_which_oriented_detector_to_train/) is the current pick.
 
 ---
 
@@ -149,7 +149,7 @@ The model knows the 15 DOTA classes (planes, ships, harbors, storage tanks, …)
 
 ## What's next
 
-The oriented-det series continues with a technical deep-dive on fine-tuning models on Airbus datasets, then [lessons learned on DOTA](/posts/2026-09-17_lessons_learned_on_dota_oriented_det_and_mmrotate_parity/) (official Task 1, not a leaky DOTA val monitor).
+Next: [zero-shot ships on a Sentinel-2 tile](/posts/2026-06-25_zero-shot_ship_detection_on_a_copernicus_sentinel-2_tile_with_oriented_rcnn/). Later, [lessons learned on DOTA](/posts/2026-09-17_lessons_learned_on_dota_oriented_det_and_mmrotate_parity/) — official Task 1, and why a local DOTA val log is not that number.
 
 ---
 
@@ -159,7 +159,7 @@ The oriented-det series continues with a technical deep-dive on fine-tuning mode
 - [Pretrained weights on Hugging Face](https://huggingface.co/dl4eo/oriented-det-pretrained)
 - [DOTA dataset](https://captain-whu.github.io/DOTA/)
 - [MMRotate](https://github.com/open-mmlab/mmrotate) — the earlier generation this simplifies away
-- **Previous post**: [Oriented-Det v0.1.0 is out](/posts/2026-06-22_oriented-det_v0_1_0_sovereign_oriented_object_detection_for_eo/)
+- **Previous post**: [Oriented R-CNN detections for the 15 DOTA classes](/posts/2026-06-23_oriented_rcnn_detections_for_the_15_dota_classes/) · [Oriented-Det v0.1.0 is out](/posts/2026-06-22_oriented-det_v0_1_0_sovereign_oriented_object_detection_for_eo/)
 
 * * *
 #### Written on June 24, 2026 by Jeff Faudi.

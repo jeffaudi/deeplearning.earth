@@ -1,8 +1,8 @@
 ---
-title: "Zero-shot Ship detection on a Copernicus Sentinel-2 tile with Oriented R-CNN"
+title: "Zero-shot ship detection on a Copernicus Sentinel-2 tile with Oriented R-CNN"
 author: "Jeff Faudi"
 date: 2026-06-25T09:00:00+07:00
-lastmod: 2026-06-25T09:00:00+07:00
+lastmod: 2026-10-09T08:30:00+07:00
 
 description: "A practical zero-shot experiment with a DOTA-pretrained Oriented R-CNN model on a 10 m Copernicus Sentinel-2 tile, including zoomed sliding-window inference and ship-only filtering."
 
@@ -52,7 +52,7 @@ If the ships are too small, a cheap diagnostic is to upscale the image before in
 
 LANCZOS interpolation does not create new information. It cannot recover detail that Sentinel-2 did not capture. But it does present each vessel as a larger footprint to the detector, which can help a DOTA-trained model operate closer to its familiar pixel scale.
 
-The `image_demo.py --zoom` path does this in memory, runs inference on the zoomed image, then maps boxes back to the original image before visualization.
+`odet image-demo --zoom` does this in memory, runs inference on the zoomed image, then maps boxes back to the original image before visualization.
 
 | Variant | Image size | Inference mode | Windows | Typical detections |
 |---|---:|---|---:|---:|
@@ -74,7 +74,7 @@ Runtime grows with the number of windows. On CPU, the 4× tile took about two mi
 
 Once the image exceeds the model canvas, oriented-det switches to padded sliding-window inference: 1024×1024 crops, zero padding at the edges, detections merged back into full-image coordinates, then NMS.
 
-The final demo does not need a Copernicus-specific config file. We pass the registered pretrained checkpoint, let `image_demo.py` resolve its sidecar config automatically, and keep the tiling settings explicit in the command.
+The final demo does not need a Copernicus-specific config file. We pass the registered pretrained checkpoint, let `odet image-demo` resolve its sidecar config automatically, and keep the tiling settings explicit in the command.
 
 | CLI setting | Value | Role |
 |---|---:|---|
@@ -110,7 +110,7 @@ From the oriented-det repository root:
 ```bash
 odet pretrained download oriented_rcnn_dota_le90_1x
 
-python tools/image_demo.py \
+odet image-demo \
   demo/copernicus/T30NZM_20260616T101021_TCI_10m_2976_7936.png \
   hf://oriented_rcnn_dota_le90_1x \
   --out-file demo/copernicus/T30NZM_20260616T101021_TCI_10m_2976_7936_4x_detections.png \
@@ -156,6 +156,7 @@ If you run the same experiment on your own tiles, please share the results. Doma
 - [DOTA dataset](https://captain-whu.github.io/DOTA/)
 - [Copernicus Sentinel-2](https://www.copernicus.eu/en/copernicus-services/land)
 - **Previous post**: [Oriented object detection on macOS, in pure Python](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/)
+- **Next:** [Sliding-window inference](/posts/2026-06-29_announcing_the_final_oriented_det_pretrained_model/)
 
 * * *
 #### Written on June 25, 2026 by Jeff Faudi.

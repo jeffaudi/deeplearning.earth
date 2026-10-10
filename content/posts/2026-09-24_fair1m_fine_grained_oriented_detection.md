@@ -2,7 +2,7 @@
 title: "FAIR1M in oriented-det — 37 classes, and why 36.70% is not a failed train"
 author: "Jeff Faudi"
 date: 2026-09-24T06:00:00+07:00
-lastmod: 2026-09-24T06:00:00+07:00
+lastmod: 2026-10-09T08:30:00+07:00
 
 description: "Native FAIR1M support in oriented-det v0.3: convert + tile, finetune DOTA 1× Faster R-CNN, tiled-val 36.70% mAP50. The bottleneck is class ID, not boxes. No Hub zoo — CC BY-NC-SA dump."
 
@@ -67,7 +67,7 @@ From `hf://rotated_faster_rcnn_dota_le90_1x`, NVIDIA L4, ~24.5 h (`runs/rotated_
 
 ## The bottleneck is class ID, not boxes
 
-Epoch 12 mean best IoU vs any detection was **0.62**, same-class **0.50**, GT cover **62%** (DOTA ~88%). About **32.6k** ground truths had IoU ≥ 0.5 with a **wrong-class** box. Train imbalance is **1038×** (Small Car 143,249 vs C919 138). Rare subtypes stay near 0 AP. Sports fields are easy (Baseball Field 88.5%, Tennis Court 81% on this run).
+Epoch 12 mean best IoU vs any detection was **0.62**, same-class **0.50**, GT cover **62%**. On DOTA, Faster R-CNN’s in-train GT-cover is about **88.6%** ([which detector to train](/posts/2026-10-29_which_oriented_detector_to_train/)). About **32.6k** ground truths had IoU ≥ 0.5 with a **wrong-class** box. Train imbalance is **1038×** (Small Car 143,249 vs C919 138). Rare subtypes stay near 0 AP. Sports fields are easy (Baseball Field 88.5%, Tennis Court 81% on this run).
 
 ![FAIR1M val — rare airplane subtypes including Boeing747 / other-airplane (GT)](/posts/img/2026-09-24_fair1m_rare_gt.jpg#layoutTextWidth)
 
@@ -98,7 +98,7 @@ The usual Kaggle dump is **CC BY-NC-SA**. The official test is closed. oriented-
 - [oriented-det docs — FAIR1M](https://dl4eo.github.io/oriented-det/user-guide/data/#fair1m) · [v0.3 release note](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/)
 - [FAIR1M paper (arXiv)](https://arxiv.org/abs/2103.05569)
 - **Previous:** [Oriented-Det v0.3.1](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/) · [HRSC2016](/posts/2026-09-13_hrsc2016_recipes_trains_and_results/)
-- **Next:** SSDD (28 Sep)
+- **Next:** [SSDD](/posts/2026-09-28_ssdd_sar_ship_finetune/) (28 Sep)
 
 * * *
 #### Written on September 24, 2026 by Jeff Faudi.

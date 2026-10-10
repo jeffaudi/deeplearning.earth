@@ -2,7 +2,7 @@
 title: "Rotated FCOS vs Oriented R-CNN on macOS"
 author: "Jeff Faudi"
 date: 2026-09-02T15:00:00+07:00
-lastmod: 2026-09-02T15:45:00+07:00
+lastmod: 2026-10-09T08:30:00+07:00
 
 description: "Hands-on Apple Silicon comparison of Hub 1× DOTA checkpoints — Rotated FCOS (73.07% official Task 1) vs Oriented R-CNN (76.73%) — MPS latency, 1× training wall on NVIDIA L4, score thresholds, and side-by-side detections."
 
@@ -163,12 +163,13 @@ On official Task 1, FCOS is **not** ahead of Faster R-CNN on tanks (84.28 vs 84.
 |---|---|
 | Fast macOS / MPS demo, one-stage stack | **`rotated_fcos_dota_le90_1x`** |
 | Fast 1× training iteration on a single L4 | **`rotated_fcos_dota_le90_1x`** (~8 h vs ~1.5 days) |
-| Highest official Task 1 accuracy | **`oriented_rcnn_dota_le90_1x`** (76.73%) |
+| Highest official Task 1 accuracy | **`rotated_rtmdet_dota_le90_3x`** (77.60%, [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/)) |
+| Highest Task 1 in this two-model comparison | **`oriented_rcnn_dota_le90_1x`** (76.73%) |
 | Throughput / finetune default | `rotated_faster_rcnn_dota_le90_1x` (74.42%) |
 | Rotated RoIAlign behaviour / continuity with June tutorials | `oriented_rcnn_dota_le90_1x` |
-| Ships / elongated classes as the product | Prefer Faster R-CNN ProbIoU or Oriented R-CNN; FCOS trails on GTF (59.88 vs 71.39 / 74.61) |
+| Ships / elongated classes as the product | Prefer Faster R-CNN ProbIoU or Oriented R-CNN. Ground-track-field Task 1 1× is FCOS **59.88**, Faster R-CNN **71.39**, Oriented R-CNN **74.61** |
 
-For laptop demos after v0.2, **Rotated FCOS 1×** is the better **speed** default than Oriented R-CNN: fewer parameters, faster MPS inference, cheaper 1× training, and no RPN. Oriented R-CNN still **wins Task 1**. Keep FCOS at **0.20** and Oriented R-CNN at **0.55**, NMS **0.1**.
+For laptop demos after v0.2, **Rotated FCOS 1×** is the better **speed** default than Oriented R-CNN: fewer parameters, faster MPS inference, cheaper 1× training, and no RPN. Oriented R-CNN still **wins this pair** on Task 1. The zoo peak after [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) is Rotated RTMDet-S at **77.60%**; it was not timed on this Mac. Keep FCOS at **0.20** and Oriented R-CNN at **0.55**, NMS **0.1**.
 
 ---
 

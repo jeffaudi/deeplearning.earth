@@ -2,9 +2,9 @@
 title: "Deploy oriented-det in Docker — Tile Geo Process, GeoJSON out"
 author: "Jeff Faudi"
 date: 2026-10-05T06:00:00+07:00
-lastmod: 2026-10-05T06:00:00+07:00
+lastmod: 2026-10-09T08:30:00+07:00
 
-description: "oriented-det v0.3 ships a Sanic Tile Geo Process example: bake a DOTA checkpoint into an NVIDIA CUDA image, POST a base64 tile, get oriented GeoJSON. PyTorch stays in the container. ONNX is next."
+description: "oriented-det v0.3 ships a Sanic Tile Geo Process example: bake a DOTA checkpoint into an NVIDIA CUDA image, POST a base64 tile, get oriented GeoJSON. PyTorch stays in the container. ONNX export is the thinner infer path."
 
 image: "/posts/img/2026-10-05_docker_demo_overlay.jpg"
 
@@ -16,7 +16,7 @@ subtitle: "docker build. POST /api/v1/process. 100 oriented polygons."
 
 Training can stay on a GPU box. Serving should be a container.
 
-[oriented-det](https://github.com/DL4EO/oriented-det) v0.3 ships [`deploy/example/`](https://github.com/DL4EO/oriented-det/tree/main/deploy/example): a **Sanic** service that speaks a **Tile Geo Process** contract — base64 JPEG/PNG in, **GeoJSON** polygons out. No OpenMMLab. No MMCV. Bake a checkpoint, `docker build`, `POST /api/v1/process`. This is still **PyTorch** in an NVIDIA CUDA image. The [ONNX walkthrough](/posts/2026-10-08_onnx_export_without_pytorch/) is the next post, when the infer box cannot take that stack.
+[oriented-det](https://github.com/DL4EO/oriented-det) v0.3 ships [`deploy/example/`](https://github.com/DL4EO/oriented-det/tree/main/deploy/example): a **Sanic** service that speaks a **Tile Geo Process** contract — base64 JPEG/PNG in, **GeoJSON** polygons out. No OpenMMLab. No MMCV. Bake a checkpoint, `docker build`, `POST /api/v1/process`. This is still **PyTorch** in an NVIDIA CUDA image. The [ONNX walkthrough](/posts/2026-10-08_onnx_export_without_pytorch/) is the path when the infer box cannot take that stack.
 
 I published the Oriented R-CNN DOTA **1×** Hub slug (`production.score_threshold` **0.55**, NMS **0.1**) and posted `demo/demo.jpg`. **100** boxes came back (95 `large-vehicle`, 5 `small-vehicle`). Same overlay the CLI has been drawing since June — as polygons a GIS client can store.
 
@@ -110,7 +110,7 @@ On this Hub checkpoint that printed `100` and:
 
 ![Input — demo/demo.jpg, 1024×1024 (single forward, no sliding window)](/posts/img/2026-10-05_docker_demo_input.jpg#layoutTextWidth)
 
-The same publish on the Pleiades Neo export tile (`export/demo/planes_pleiades_neo.jpg`, `resolution=0.3`) returned **6** boxes: 4 `plane`, 2 `helicopter`. That is the tile the ONNX post will reuse.
+The same publish on the Pleiades Neo export tile (`export/demo/planes_pleiades_neo.jpg`, `resolution=0.3`) returned **6** boxes: 4 `plane`, 2 `helicopter`. That is the tile the [ONNX post](/posts/2026-10-08_onnx_export_without_pytorch/) reuses.
 
 ![Same engine, planes tile — 4 plane + 2 helicopter at score ≥ 0.55](/posts/img/2026-10-05_docker_planes_overlay.jpg#layoutTextWidth)
 
@@ -128,7 +128,7 @@ Deploy does **not** use the eval-val floor of 0.05. `InferenceEngine` reads `con
 | `overlap_pixels` | 200 | sliding-window overlap |
 | `ignore_margin_pixels` | 0 | full-image centroid edge filter (0 = off) |
 
-`demo.jpg` is already 1024, so this run was **one forward**. `demo/large.jpg` (1904×1299) would slide. That path stays in this container. It is **out of the ONNX graph** in v0.3.
+`demo.jpg` is already 1024, so this run was **one forward**. `demo/large.jpg` (1299×1904) would slide — six windows at the default 200 px overlap, same tile as the [sliding-window note](/posts/2026-06-29_announcing_the_final_oriented_det_pretrained_model/). That path stays in this container. It is **out of the ONNX graph** in v0.3.
 
 DOTA deploy floors are eval-val global F1 − 0.05 (Oriented R-CNN **0.55**, Faster R-CNN **0.6**, FCOS **0.2**, RetinaNet OBB **0.25**). Do not copy `0.55` onto FCOS.
 
@@ -138,7 +138,7 @@ DOTA deploy floors are eval-val global F1 − 0.05 (Oriented R-CNN **0.55**, Fas
 
 The container is the **operational** checkpoint: sliding windows, `keep_ratio` canvases, GeoJSON, a healthcheck, a lock, a GPU runtime. Teams that already run tile services can drop this image behind the same POST.
 
-ONNX is the **thinner** checkpoint: numpy + Pillow + ONNX Runtime, no `oriented-det` on the infer box, fixed **1024** canvas. If you skip Docker and jump to export, you skip the path that actually tiles a large scene today.
+[ONNX export](/posts/2026-10-08_onnx_export_without_pytorch/) is the **thinner** checkpoint: numpy + Pillow + ONNX Runtime, no `oriented-det` on the infer box, fixed **1024** canvas. If you skip Docker and jump to export, you skip the path that actually tiles a large scene today.
 
 Apache 2.0 covers the image recipe. It does not cover DOTA pixels. Do not push Hub weights to a public registry without checking the dataset terms — see [Apache vs DOTA](/posts/2026-09-10_oriented_det_apache_license_versus_dota/).
 
@@ -149,7 +149,7 @@ Apache 2.0 covers the image recipe. It does not cover DOTA pixels. Do not push H
 - [docs — Docker deploy](https://dl4eo.github.io/oriented-det/examples/deploy/) · [`deploy/example/README.md`](https://github.com/DL4EO/oriented-det/blob/main/deploy/example/README.md)
 - [v0.3 release note](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/)
 - **Previous:** [HRSID](/posts/2026-10-01_hrsid_sar_ship_benchmark/) · [v0.3](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/)
-- **Next:** ONNX export (8 Oct)
+- **Next:** [ONNX export](/posts/2026-10-08_onnx_export_without_pytorch/) (8 Oct)
 
 * * *
 #### Written on October 5, 2026 by Jeff Faudi.

@@ -176,9 +176,9 @@ https://deeplearning.earth/posts/2026-10-08_onnx_export_without_pytorch/
 
 ---
 
-## Fri 6 Nov — which detector to train
+## Fri 30 Oct — which detector to train
 
-**URL:** https://deeplearning.earth/posts/2026-11-05_which_oriented_detector_to_train/  
+**URL:** https://deeplearning.earth/posts/2026-10-29_which_oriented_detector_to_train/  
 **Image:** `2026-11-02_odet_orcnn_score0.6.png` (clean Oriented R-CNN on the bus lot; pair with the FRCNN overlay if the post is a carousel)
 
 ### Technical (personal)
@@ -195,7 +195,7 @@ Oriented R-CNN’s published 1× wall is AMP off, batch 2, mAP every 4 epochs �
 
 Finetune from **1×**. RetinaNet is the parity baseline, not this decision.
 
-https://deeplearning.earth/posts/2026-11-05_which_oriented_detector_to_train/
+https://deeplearning.earth/posts/2026-10-29_which_oriented_detector_to_train/
 
 ### Business (DL4EO)
 
@@ -205,4 +205,4 @@ Oriented R-CNN is the pick when the box has to be tight and the GPU can take it.
 
 A few points of DOTA mAP is the wrong tie-break. The tie-break is your imagery and whether the card in the rack can hold an oriented second stage. Workshops and custom training: dl4eo.com
 
-https://deeplearning.earth/posts/2026-11-05_which_oriented_detector_to_train/
+https://deeplearning.earth/posts/2026-10-29_which_oriented_detector_to_train/

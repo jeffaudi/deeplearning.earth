@@ -2,7 +2,7 @@
 title: "SSDD in oriented-det — optical DOTA to SAR ships in twelve epochs"
 author: "Jeff Faudi"
 date: 2026-09-28T06:00:00+07:00
-lastmod: 2026-09-28T06:00:00+07:00
+lastmod: 2026-10-08T07:30:00+07:00
 
 description: "Native SSDD SAR ship loader in oriented-det v0.3: keep-ratio 608, finetune DOTA Faster R-CNN 1×, held-out last-digit test 90.34% mAP50. No SSDD Hub zoo."
 
@@ -74,7 +74,7 @@ You do not start SAR detection from random weights. You start from an oriented o
 - [Official-SSDD](https://github.com/TianwenZhang/Official-SSDD) · [docs — SSDD](https://dl4eo.github.io/oriented-det/user-guide/data/#ssdd)
 - [v0.3 release note](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/)
 - **Previous:** [FAIR1M](/posts/2026-09-24_fair1m_fine_grained_oriented_detection/) · [v0.3](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/)
-- **Next:** HRSID (1 Oct)
+- **Next:** [HRSID](/posts/2026-10-01_hrsid_sar_ship_benchmark/) (1 Oct)
 
 * * *
 #### Written on September 28, 2026 by Jeff Faudi.

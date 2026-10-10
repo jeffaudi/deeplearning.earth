@@ -12,8 +12,6 @@ series: ["oriented-det"]
 tags: ["oriented-det", "dota", "probiou", "rotated-faster-rcnn", "pretrained-models"]
 
 subtitle: "74.42% official Task 1 vs MMRotate 73.40% — Hub slug `rotated_faster_rcnn_dota_le90_1x`"
-
-draft: false
 ---
 
 ![Satellite scene with oriented bounding boxes](/posts/img/2026-07-10_rotated_faster_rcnn_probiou_dota.png)
@@ -124,7 +122,7 @@ At **metric time**, official scores come from the DOTA evaluation server (VOC Ta
 **Schedule:** 12 epochs (1×), LR milestones at epochs 8 and 11, ProbIoU main + Smooth L1 aux  
 **Wall time:** **11h 30m** on a single NVIDIA L4 (FP32)  
 
-This article is the **throughput / finetune** chapter, not the zoo-leader post. The accuracy leader on official Task 1 is [Oriented R-CNN 1× at 76.73%](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/) (MMRotate Oriented R-CNN 1×: 75.69%). Here the claim is narrower: ProbIoU Rotated Faster R-CNN **beats MMRotate’s Rotated Faster R-CNN** on the hidden test.
+This article is the **throughput / finetune** chapter, not the zoo-leader post. Among the ResNet families, the Task 1 leader is [Oriented R-CNN 1× at 76.73%](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/) (MMRotate Oriented R-CNN 1×: 75.69%). [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) later put Rotated RTMDet-S at **77.60%**. Here the claim is narrower: ProbIoU Rotated Faster R-CNN **beats MMRotate’s Rotated Faster R-CNN** on the hidden test.
 
 ### Official DOTA v1.0 Task 1 (VOC)
 
@@ -134,7 +132,7 @@ Published DOTA numbers are **evaluation-server VOC Task 1**. DOTA recipes train 
 |-------|----------|----------------|------------:|------------:|
 | **Rotated Faster R-CNN 1×** (this checkpoint) | 12 epochs | ProbIoU + aux | **74.42%** | 41.90 |
 | MMRotate Rotated Faster R-CNN 1× | 12 epochs | Smooth L1 | 73.40% | — |
-| Oriented R-CNN 1× (zoo accuracy leader) | 12 epochs | Smooth L1 | **76.73%** | 50.24 |
+| Oriented R-CNN 1× (ResNet-family leader) | 12 epochs | Smooth L1 | **76.73%** | 50.24 |
 
 **+1.02** AP50 versus MMRotate’s Rotated Faster R-CNN 1× zoo number, from changing the box-regression objective — not from a longer schedule.
 
@@ -159,7 +157,7 @@ Oriented R-CNN still leads on **large-vehicle** (82.54 vs 75.25) and **harbor** 
 
 ### When 3× is worth it
 
-Official Task 1 is on the Hub for all four DOTA families at 1× and 3×. **AP50:** Oriented R-CNN **drops** (76.73 → 74.88), Faster R-CNN is a **wash** (74.42 vs 74.48), FCOS **drops** slightly (73.07 → 72.91). **RetinaNet 3×** is the exception (**73.89%** vs 1× **71.72%**, OBB from 0.3.1). **AP75** is the 3× tightness gain (Oriented R-CNN 51.23 vs 50.24, Faster R-CNN 45.39 vs 41.90, FCOS 45.39 vs 40.40, RetinaNet 47.11 vs 43.46). Finetune two-stage and FCOS from **1×**. Reach for a 3× slug only if you need tighter boxes, or if you want RetinaNet’s Task 1 peak (`rotated_retinanet_dota_le90_3x`). Circum-HBB is `*_hbb`.
+Official Task 1 is on the Hub for all four ResNet DOTA families at 1× and 3×. **AP50:** Oriented R-CNN **drops** (76.73 → 74.88), Faster R-CNN is a **wash** (74.42 vs 74.48), FCOS **drops** slightly (73.07 → 72.91). **RetinaNet 3×** is the exception (**73.89%** vs 1× **71.72%**, OBB from 0.3.1). **AP75** is the 3× tightness gain (Oriented R-CNN 51.23 vs 50.24, Faster R-CNN 45.39 vs 41.90, FCOS 45.39 vs 40.40, RetinaNet 47.11 vs 43.46). Finetune two-stage and FCOS from **1×**. Reach for a 3× slug only if you need tighter boxes, or if you want RetinaNet’s Task 1 peak (`rotated_retinanet_dota_le90_3x`). Circum-HBB is `*_hbb`. [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) is outside this pair: RTMDet-S has one Hub weight, the 3×, at **77.60%** AP50 and **52.01** AP75.
 
 ---
 
@@ -211,7 +209,7 @@ odet pretrained download rotated_faster_rcnn_dota_le90_1x
 "load_from_checkpoint": "hf://rotated_faster_rcnn_dota_le90_1x"
 ```
 
-**Recommendation:** for DOTA-style **finetuning and throughput**, use **`rotated_faster_rcnn_dota_le90_1x`**. For highest official Task 1 accuracy, use **`oriented_rcnn_dota_le90_1x`** (76.73%). Oriented R-CNN remains the pick when rotated RoIAlign behaviour matters for your domain.
+**Recommendation:** for DOTA-style **finetuning and throughput** on the ResNet zoo, use **`rotated_faster_rcnn_dota_le90_1x`**. For the highest official Task 1 accuracy, use **`rotated_rtmdet_dota_le90_3x`** (**77.60%**, [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/)). Oriented R-CNN 1× (**76.73%**) remains the pick when rotated RoIAlign behaviour matters for your domain.
 
 ---
 
@@ -220,7 +218,7 @@ odet pretrained download rotated_faster_rcnn_dota_le90_1x
 1. **Sampled rIoU is a matching tool, not a loss.** It lets OrientedDet run fast GPU assignment without CUDA kernels, but it diverges from polygon IoU — especially at high overlap and on small or elongated boxes.  
 2. **Exact metrics and surrogate losses compose well.** Official Task 1 + ProbIoU training gives Hub-grade numbers while keeping the training loop in portable PyTorch.  
 3. **Box regression is the headroom versus MMRotate’s Rotated Faster R-CNN.** 1× ProbIoU reaches **74.42%** Task 1 versus MMRotate **73.40%** — larger than stretching the same Smooth L1 recipe to 3×.  
-4. **Throughput is not the accuracy ranking.** Rotated Faster R-CNN is **~7× faster** tiled inference than Oriented R-CNN; Oriented R-CNN still leads Task 1 (**76.73%** vs **74.42%**).  
+4. **Throughput is not the accuracy ranking.** Rotated Faster R-CNN is **~7× faster** tiled inference than Oriented R-CNN; Oriented R-CNN still leads this pair on Task 1 (**76.73%** vs **74.42%**). The zoo peak after [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) is Rotated RTMDet-S at **77.60%**. That stitch was not re-timed for RTMDet.  
 5. **Training-time val mAP is a DOTA monitor.** Recipes train on trainval, so val is not held out. Publish **official Task 1**.  
 6. **1× is the default.** Reach for 3× only when **AP75** (tight boxes) matters: 45.39 vs 41.90 on this architecture.
 

@@ -17,7 +17,7 @@ hugo server -D
 
 Open [http://localhost:1313/](http://localhost:1313/).
 
-Posts dated in the future (the v0.3 Mon/Thu series) are omitted from a default `hugo` / Netlify build until their `date:` timestamp. New posts publish at **06:00 +07**. Preview them locally with:
+Posts dated in the future are omitted from a default `hugo` / Netlify build until their `date:` timestamp. New posts publish at **06:00 +07**, on Monday or Thursday. The v0.4.0 note is dated **10 October 2026** so it is included from that morning. Preview later posts locally with:
 
 ```bash
 hugo server -D -F

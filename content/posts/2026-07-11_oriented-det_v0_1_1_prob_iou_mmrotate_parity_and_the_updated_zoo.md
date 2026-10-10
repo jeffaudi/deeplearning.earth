@@ -2,7 +2,7 @@
 title: "Oriented-Det v0.1.1 — ProbIoU, MMRotate parity, and the updated zoo"
 author: "Jeff Faudi"
 date: 2026-07-11T09:00:00+07:00
-lastmod: 2026-09-21T22:30:00+07:00
+lastmod: 2026-10-09T08:30:00+07:00
 
 description: "Oriented-det v0.1.1 is on PyPI — ProbIoU ROI regression, MMRotate-aligned training fixes, a DOTA le90 zoo on official Task 1 led by Oriented R-CNN 1× at 76.73%, and a hands-on harbor-scene demo of the Faster R-CNN throughput pick."
 
@@ -56,7 +56,7 @@ Official Task 1 is now on the Hub for **all four** DOTA families at both schedul
 
 **Finetune from 1×** for Oriented R-CNN, Faster R-CNN, and FCOS (3× AP50 drops or washes; AP75 is the tightness gain). **RetinaNet 3×** is the AP50 exception (+2.17). Circum-HBB is `*_hbb`. FCOS 1×/3× lives in the [v0.2.0 zoo note](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/).
 
-In [June we recommended Oriented R-CNN](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/) for quick macOS demos because it behaved well without CUDA rotated-IoU kernels. That remains the **accuracy** default. Use Faster R-CNN 1× when you want the throughput story from July without giving up a competitive Task 1 score.
+In [June we recommended Oriented R-CNN](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/) for quick macOS demos because it behaved well without CUDA rotated-IoU kernels. At this release it is the **accuracy** default among the ResNet families. Use Faster R-CNN 1× when you want the throughput story from July without giving up a competitive Task 1 score. [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) later put Rotated RTMDet-S at **77.60%** Task 1.
 
 ## Accuracy and speed vs Oriented R-CNN
 
@@ -117,7 +117,7 @@ Useful inference knobs: **`--score-thr`** balances recall vs clutter on dense sc
 
 Beyond ProbIoU, v0.1.1 aligns several training details with MMRotate / MMDetection behaviour — the kind of small differences that show up as a few degrees on ships rather than a leaderboard headline.
 
-**ROI regression loss.** All three two-stage detectors now use encoded-space Smooth L1 on all five channels (MMRotate default), replacing a radian periodic angle loss that under-weighted angle gradients relative to MMRotate.
+**ROI regression loss.** The radian periodic angle loss is gone. Oriented R-CNN uses encoded-space Smooth L1 on all five channels (MMRotate default). Rotated Faster R-CNN uses **ProbIoU** as the main ROI loss, with a small Smooth L1 auxiliary on the same encoded targets.
 
 **Oriented R-CNN.** Midpoint RPN and oriented ROI losses use MMDet-style `avg_factor` normalization. Training RPN proposals are no longer score-filtered. ROI matching defaults to rotated IoU (`roi_use_hbb_for_matching: false`). Oriented RoIAlign uses the first four FPN levels only.
 

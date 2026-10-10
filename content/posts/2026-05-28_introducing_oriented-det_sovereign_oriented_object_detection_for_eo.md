@@ -2,9 +2,9 @@
 title: "Oriented-det is coming: sovereign oriented detection for EO"
 author: "Jeff Faudi"
 date: 2026-05-28T09:00:00+07:00
-lastmod: 2026-05-28T09:00:00+07:00
+lastmod: 2026-10-09T08:30:00+07:00
 
-description: "A sovereign, Apache-licensed oriented detection stack for EO, targeting an official release in June 2026."
+description: "A sovereign, Apache-licensed oriented detection stack for EO. The June 2026 release shipped as v0.1.0; this note is the motivation, and the series index is the map."
 
 series: ["oriented-det"]
 tags: ["oriented-det", "announcement"]
@@ -16,7 +16,7 @@ subtitle: ""
 
 Oriented-det is a new offering for teams who need **oriented object detection** in Earth Observation (ships, aircrafts, vehicles) with a strong focus on **sovereignty**, **license clarity**, and **time‑to‑deployment**.
 
-I’m planning an official release for **June 2026**.
+I’m planning an official release for **June 2026**. It shipped as [Oriented-Det v0.1.0](/posts/2026-06-22_oriented-det_v0_1_0_sovereign_oriented_object_detection_for_eo/) on 22 June. The [series index](/series/oriented-det/) is the map from there.
 
 ## Key selling points
 
@@ -85,24 +85,29 @@ Oriented-det is not “yet another research codebase”. It is meant to sit in t
 
 That is the rationale for building it — and for targeting a disciplined **June 2026** release once DOTA baselines prove the approach.
 
-## Where we are right now (pre-release)
+## What the first release had to clear
 
-This release is being prepared with a clear quality bar. In particular:
+The bar for calling it official was:
 
-- **DOTA baseline validation is ongoing**, and I want at least two solid baselines trained and evaluated before calling this “official”.
-- The focus is on a **clean first release**: stable configuration, reproducible training/evaluation, and practical inference outputs.
+- At least two solid DOTA baselines, trained and evaluated.
+- A clean first release: stable configuration, reproducible training and evaluation, and practical inference outputs.
+
+Those baselines are the [v0.1.0 zoo](/posts/2026-06-22_oriented-det_v0_1_0_sovereign_oriented_object_detection_for_eo/), later quoted as official Task 1 in the [v0.2.0 note](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/).
 
 ## What’s next on this blog (the release series)
 
-Once the release is out, I’ll publish a short series:
+The series that followed this note:
 
-- **Getting started**: install, first training, first predictions.
-- **Technical deep dive**: architecture choices, geometry conventions, evaluation, post-processing.
-- **Lessons learned on DOTA**: what transfers to EO production, what doesn’t, and the pitfalls to avoid.
-- **EO datasets for OBB training**: splitting/tiling without leakage.
-- **Oriented metrics**: what to report and how to interpret results.
-- **Post-processing for dense scenes**: practical strategies that matter in harbors and airports.
-- **Deploying a sovereign detector**: reproducible packaging and operations.
+- **Getting started**: [v0.1.0](/posts/2026-06-22_oriented-det_v0_1_0_sovereign_oriented_object_detection_for_eo/) and [macOS inference](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/).
+- **Geometry**: [le90](/posts/2026-10-19_le90_geometry/) — one heading for a rotated box.
+- **Lessons learned on DOTA**: [official Task 1, leaky val, and the box loss](/posts/2026-09-17_lessons_learned_on_dota_oriented_det_and_mmrotate_parity/).
+- **EO datasets**: [HRSC2016](/posts/2026-09-13_hrsc2016_recipes_trains_and_results/), [FAIR1M](/posts/2026-09-24_fair1m_fine_grained_oriented_detection/), [SSDD](/posts/2026-09-28_ssdd_sar_ship_finetune/), [HRSID](/posts/2026-10-01_hrsid_sar_ship_benchmark/).
+- **Oriented metrics**: [what to report, and how to read it](/posts/2026-10-22_oriented_map/).
+- **v0.4.0**: [Rotated RTMDet, 77.60% Task 1](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/).
+- **Which head to train**: [RTMDet, Oriented R-CNN, Faster R-CNN, or FCOS](/posts/2026-10-29_which_oriented_detector_to_train/).
+- **Deploying**: [Docker](/posts/2026-10-05_deploy_oriented_det_in_docker/) and [ONNX](/posts/2026-10-08_onnx_export_without_pytorch/).
+
+The full list is the [oriented-det series](/series/oriented-det/).
 
 If you’re evaluating oriented detection for an EO product in the meantime, feel free to reach out — I’m happy to discuss requirements and constraints so the first release matches real operational needs.
 

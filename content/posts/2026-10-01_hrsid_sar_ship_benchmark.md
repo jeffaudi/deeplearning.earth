@@ -2,7 +2,7 @@
 title: "HRSID in oriented-det — the larger SAR ship benchmark at 78.55%"
 author: "Jeff Faudi"
 date: 2026-10-01T06:00:00+07:00
-lastmod: 2026-10-01T06:00:00+07:00
+lastmod: 2026-10-08T07:30:00+07:00
 
 description: "Native HRSID loader in oriented-det v0.3: COCO polygons to le90, keep-ratio 800, Faster R-CNN 1× from DOTA Hub at 78.55% held-out rotated mAP50. Do not compare to Wei HBB >84.7%."
 
@@ -76,7 +76,7 @@ Wei et al. (IEEE Access 2020, Table 4) report **horizontal** bbox AP on official
 - [HRSID](https://github.com/chaozhong2010/HRSID) · [docs — HRSID](https://dl4eo.github.io/oriented-det/user-guide/data/#hrsid)
 - [v0.3 release note](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/) · [SSDD](/posts/2026-09-28_ssdd_sar_ship_finetune/)
 - **Previous:** [SSDD](/posts/2026-09-28_ssdd_sar_ship_finetune/)
-- **Next:** Docker deploy (5 Oct)
+- **Next:** [Docker deploy](/posts/2026-10-05_deploy_oriented_det_in_docker/) (5 Oct)
 
 * * *
 #### Written on October 1, 2026 by Jeff Faudi.

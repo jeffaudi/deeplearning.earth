@@ -23,9 +23,9 @@ mainSections = ["posts"]
 
 [params]
     author = "Jeff Faudi"
-    info = "Oriented object detection for Earth Observation — notes on the **oriented-det** package and related work."
-    description = "Technical blog on oriented object detection for Earth Observation and the oriented-det package."
-    keywords = "oriented detection, earth observation, satellite imagery, oriented-det, deep learning, object detection"
+    info = "Oriented and rotated object detection in aerial and satellite images — notes on the **oriented-det** package and related work."
+    description = "Technical blog on oriented and rotated object detection in aerial and satellite images, and the oriented-det package."
+    keywords = "oriented detection, rotated object detection, aerial imagery, satellite images, earth observation, oriented-det, deep learning, object detection"
     avatarurl = "images/JEFFAUDI_SQ.jpg"
     #logoURL = "images/logo-black.png"
 
@@ -68,12 +68,16 @@ mainSections = ["posts"]
     weight = 1
     url  = "/"
 [[menu.main]]
-    name = "About"
+    name = "Overview"
     weight = 2
+    url  = "/oriented-detection-in-satellite-images/"
+[[menu.main]]
+    name = "About"
+    weight = 3
     url  = "/about/"
 [[menu.main]]
     name = "Demo"
-    weight = 3
+    weight = 4
     url  = "https://dl4eo.com/object-detection-optical-satellite/"
     [menu.main.params]
         target = "_blank"

@@ -2,7 +2,7 @@
 title: "Apache 2.0 covers oriented-det. It does not cover DOTA or HRSC."
 author: "Jeff Faudi"
 date: 2026-09-10T09:00:00+07:00
-lastmod: 2026-09-10T09:00:00+07:00
+lastmod: 2026-10-09T08:30:00+07:00
 
 description: "The oriented-det framework is Apache 2.0. DOTA and HRSC are research datasets with no commercial grant. Production detectors are trained on your own licensed imagery — this is not legal advice."
 
@@ -77,13 +77,24 @@ If your counsel reaches a different conclusion on HRSC than on DOTA, that is the
 
 ---
 
+## FAIR1M, SSDD, and HRSID are the same line
+
+[v0.3.1](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/) added loaders for three more research sets. Apache 2.0 still does not cover their pixels, and none of them has a Hub zoo.
+
+- **FAIR1M.** The Kaggle dump in the [FAIR1M note](/posts/2026-09-24_fair1m_fine_grained_oriented_detection/) is CC BY-NC-SA. The official Gaofen test is closed.
+- **SSDD** and **HRSID.** Research SAR chips. The [SSDD](/posts/2026-09-28_ssdd_sar_ship_finetune/) and [HRSID](/posts/2026-10-01_hrsid_sar_ship_benchmark/) notes train locally and do not redistribute the images.
+
+Same posture as DOTA and HRSC: fine for a benchmark, not a production training set.
+
+---
+
 ## What the Hub weights are for
 
 The [pretrained zoo](https://huggingface.co/dl4eo/oriented-det-pretrained) exists so you can:
 
 - reproduce published zoo numbers (DOTA: official Task 1; other datasets: held-out val when train does not include it),
 - try `odet image-demo` on a laptop,
-- compare Rotated Faster R-CNN, Oriented R-CNN, FCOS, and RetinaNet,
+- compare Rotated RTMDet, Rotated Faster R-CNN, Oriented R-CNN, FCOS, and RetinaNet,
 - start **academic** fine-tuning experiments.
 
 It does **not** exist so you can skip buying imagery.
@@ -118,6 +129,8 @@ We help teams do exactly this — workshops, consulting, and project delivery ar
 | oriented-det code, configs, docs | **Apache 2.0** | Yes — this is the stack |
 | DOTA images and annotations | Academic only; commercial use prohibited | **No** |
 | HRSC2016 images and annotations | Research set; Google Earth source; no commercial grant we rely on | **No** |
+| FAIR1M images and annotations | Research set; Kaggle dump is CC BY-NC-SA; no Hub zoo | **No** |
+| SSDD and HRSID images and annotations | Research SAR sets; not redistributed with oriented-det; no Hub zoo | **No** |
 | Hub checkpoints trained on DOTA or HRSC | Research / demo artifacts | **No** as a shipped product |
 | A model you train on imagery you licensed for ML | Yours, subject to *your* data contract | **Yes** — this is the path |
 
@@ -129,7 +142,7 @@ This article describes how DL4EO draws the line between **our software license**
 
 If you are unsure, **seek counsel** before you train, fine-tune, or deploy.
 
-What we can state without hedging: **oriented-det’s Apache 2.0 license is the right license for using the framework and for retraining it on data you own or have licensed.** DOTA and HRSC do not become that data because they are famous, public, or convenient.
+What we can state without hedging: **oriented-det’s Apache 2.0 license is the right license for using the framework and for retraining it on data you own or have licensed.** DOTA, HRSC, FAIR1M, SSDD, and HRSID do not become that data because they are famous, public, or convenient.
 
 ---
 

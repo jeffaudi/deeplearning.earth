@@ -2,7 +2,7 @@
 title: "Oriented R-CNN detections for the 15 DOTA classes"
 author: "Jeff Faudi"
 date: 2026-06-23T09:00:00+07:00
-lastmod: 2026-06-23T09:00:00+07:00
+lastmod: 2026-10-09T08:30:00+07:00
 
 description: "A visual tour of Oriented R-CNN detections across the 15 original DOTA v1.0 aerial object classes."
 
@@ -76,23 +76,23 @@ Each illustration highlights one DOTA class. The goal is not to claim perfect pr
 
 ### Plane
 
-![Exampled of a DOTA plane class - Various shapes and sizes with a lot of overlaps](/posts/img/2026-06-23_oriented_rcnn_detections_for_the_15_dota_classes_plane.jpg#layoutTextWidth)
+![Example of a DOTA plane class - Various shapes and sizes with a lot of overlaps](/posts/img/2026-06-23_oriented_rcnn_detections_for_the_15_dota_classes_plane.jpg#layoutTextWidth)
 
 ### Ship
 
-![Exampled of a DOTA ship class - A lot of boats in a marina - not too many missed](/posts/img/2026-06-23_oriented_rcnn_detections_for_the_15_dota_classes_ship.jpg#layoutTextWidth)
+![Example of a DOTA ship class - A lot of boats in a marina - not too many missed](/posts/img/2026-06-23_oriented_rcnn_detections_for_the_15_dota_classes_ship.jpg#layoutTextWidth)
 
 ### Storage tank
 
-![Exampled of DOTA storage tank class - Diverse size but no real orientation](/posts/img/2026-06-23_oriented_rcnn_detections_for_the_15_dota_classes_storage_tank.jpg#layoutTextWidth)
+![Example of DOTA storage tank class - Diverse size but no real orientation](/posts/img/2026-06-23_oriented_rcnn_detections_for_the_15_dota_classes_storage_tank.jpg#layoutTextWidth)
 
 ### Baseball diamond
 
-![Exampled of DOTA baseball diamond class](/posts/img/2026-06-23_oriented_rcnn_detections_for_the_15_dota_classes_baseball_diamond.jpg#layoutTextWidth)
+![Example of DOTA baseball diamond class](/posts/img/2026-06-23_oriented_rcnn_detections_for_the_15_dota_classes_baseball_diamond.jpg#layoutTextWidth)
 
 ### Tennis court
 
-![Exampled of DOTA tennis court class](/posts/img/2026-06-23_oriented_rcnn_detections_for_the_15_dota_classes_tennis_court.jpg#layoutTextWidth)
+![Example of DOTA tennis court class](/posts/img/2026-06-23_oriented_rcnn_detections_for_the_15_dota_classes_tennis_court.jpg#layoutTextWidth)
 
 ### Basketball court
 
@@ -132,7 +132,7 @@ Each illustration highlights one DOTA class. The goal is not to claim perfect pr
 
 ### Swimming pool
 
-![Example of DOTA swimming pools class - A few unlabeled pool on the right side](/posts/img/2026-06-23_oriented_rcnn_detections_for_the_15_dota_classes_swimming_pool.jpg#layoutTextWidth)
+![Example of DOTA swimming pools class - a few unlabeled pools on the right side](/posts/img/2026-06-23_oriented_rcnn_detections_for_the_15_dota_classes_swimming_pool.jpg#layoutTextWidth)
 
 ---
 
@@ -140,7 +140,7 @@ Each illustration highlights one DOTA class. The goal is not to claim perfect pr
 
 DOTA is a useful reminder that aerial object detection is not just object detection from above. Orientation is part of the visual signal. When objects are long, dense, rotated, or tightly packed, a horizontal rectangle often describes the image crop more than it describes the object.
 
-That is why Oriented R-CNN remains a strong baseline for EO work: it makes object angle explicit, keeps detections readable in dense scenes, and gives downstream systems a geometry closer to the real footprint.
+That is why Oriented R-CNN remains a strong baseline for EO work: it makes object angle explicit, keeps detections readable in dense scenes, and gives downstream systems a geometry closer to the real footprint. When the job is choosing a head to finetune, the later note is [which detector to train](/posts/2026-10-29_which_oriented_detector_to_train/).
 
 ---
 
@@ -151,6 +151,7 @@ That is why Oriented R-CNN remains a strong baseline for EO work: it makes objec
 - [Google Earth terms of use](https://www.google.com/permissions/geoguidelines.html)
 - [oriented-det on GitHub](https://github.com/DL4EO/oriented-det)
 - **Previous post**: [Oriented-Det v0.1.0 is out](/posts/2026-06-22_oriented-det_v0_1_0_sovereign_oriented_object_detection_for_eo/)
+- **Next:** [Oriented object detection on macOS, in pure Python](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/)
 
 * * *
 #### Written on June 23, 2026 by Jeff Faudi.

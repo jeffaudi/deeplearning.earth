@@ -2,7 +2,7 @@
 title: "Oriented-Det v0.2.0 — Rotated FCOS, decoded rIoU, and a four-family zoo"
 author: "Jeff Faudi"
 date: 2026-08-28T09:00:00+07:00
-lastmod: 2026-09-21T22:30:00+07:00
+lastmod: 2026-10-12T06:30:00+07:00
 
 description: "Oriented-det v0.2.0 is on PyPI — Rotated FCOS joins the zoo as the balanced one-stage detector, with a decoded rIoU 1× Hub checkpoint at 73.07% official DOTA Task 1, and the same Apache 2.0 stack."
 
@@ -57,7 +57,7 @@ Slugs are `oriented_rcnn_dota_le90_{1x,3x}`, `rotated_faster_rcnn_dota_le90_{1x,
 
 **Advertise and finetune from 1×** for Oriented R-CNN, Faster R-CNN, and FCOS. 3× Task 1 AP50 is a drop or a wash; the 3× gain is **box tightness** (AP75). **RetinaNet 3×** is the AP50 exception: **+2.17** on the hidden test versus 1×. 1× versus MMRotate 1×: Oriented R-CNN +1.04 vs 75.69, Faster R-CNN +1.02 vs 73.40, FCOS +1.79 vs 71.28, RetinaNet +3.30 vs OBB 68.42.
 
-**Default pick.** Use **`oriented_rcnn_dota_le90_1x`** when you want the highest official Task 1 accuracy. Use **`rotated_faster_rcnn_dota_le90_1x`** when you want the throughput / finetune story from [July](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/). Use **`rotated_fcos_dota_le90_1x`** when you want a one-stage, anchor-free detector in the same Apache 2.0 stack — the roadmap’s **balanced** tier. RetinaNet stays as the MMRotate-parity legacy baseline; reach for `rotated_retinanet_dota_le90_3x` if you want that family’s Task 1 peak.
+**Default pick, at this release.** Use **`oriented_rcnn_dota_le90_1x`** when you want the highest official Task 1 accuracy among these four ResNet families. Use **`rotated_faster_rcnn_dota_le90_1x`** when you want the throughput / finetune story from [July](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/). Use **`rotated_fcos_dota_le90_1x`** when you want a one-stage, anchor-free detector in the same Apache 2.0 stack — the roadmap’s **balanced** tier. RetinaNet stays as the MMRotate-parity legacy baseline; reach for `rotated_retinanet_dota_le90_3x` if you want that family’s Task 1 peak. [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) later put **Rotated RTMDet-S** at **77.60%** Task 1, above this table.
 
 ## Why decoded rIoU, not another L1 run
 
@@ -131,7 +131,7 @@ Apache 2.0, no MMCV runtime, no custom CUDA kernels required to train or evaluat
 
 ## What’s next
 
-v0.2 closed the “four ResNet-FPN detectors on DOTA” chapter. That chapter’s follow-up shipped as [**Oriented-Det v0.3.1**](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/) — HRSC / FAIR1M / SSDD / HRSID loaders, HRSC Hub 3×, RetinaNet OBB, and ONNX export. The public [roadmap](https://github.com/DL4EO/oriented-det/blob/main/docs/roadmap.md) next is **v0.4**: a speed tier (RTMDet-R, native YOLO-OBB) without AGPL dependencies.
+v0.2 closed the “four ResNet-FPN detectors on DOTA” chapter. That chapter’s follow-up shipped as [**Oriented-Det v0.3.1**](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/) — HRSC / FAIR1M / SSDD / HRSID loaders, HRSC Hub 3×, RetinaNet OBB, and ONNX export. The speed tier shipped as [**Oriented-Det v0.4.0**](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) — Rotated RTMDet-S at **77.60%** Task 1. Native YOLO-OBB is **v0.4.1**.
 
 ## Links
 
