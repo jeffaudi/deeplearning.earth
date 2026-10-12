@@ -1,8 +1,8 @@
 ---
 title: "OSSDD — Sentinel-1 ships, finetuned with RTMDet, Faster R-CNN, and FCOS"
 author: "Jeff Faudi"
-date: 2026-10-15T06:00:00+07:00
-lastmod: 2026-10-15T06:00:00+07:00
+date: 2026-10-12T06:00:00+07:00
+lastmod: 2026-10-12T06:00:00+07:00
 
 description: "OSSDD is Sentinel-1 GRD ship chips with rotated boxes. VH 1× finetunes from the DOTA hubs: RTMDet-S test AP50 88.49%, Rotated Faster R-CNN 60.10%, Rotated FCOS 58.21%. Those are rotated IoU 0.5. Hammer et al. report a different mAP. No OSSDD Hub."
 
@@ -113,4 +113,4 @@ At score 0.3, our Faster R-CNN test precision is higher than theirs and our reca
 - **Next:** [le90](/posts/2026-10-19_le90_geometry/) (19 Oct)
 
 * * *
-#### Written on October 15, 2026 by Jeff Faudi.
+#### Written on October 12, 2026 by Jeff Faudi.

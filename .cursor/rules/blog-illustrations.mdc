@@ -1,0 +1,25 @@
+---
+description: Stick-figure concept drawings for deeplearning.earth posts. Use when illustrating a blog post.
+globs: content/posts/**/*.md, content/posts/img/**/*.jpg
+alwaysApply: false
+---
+
+# Concept drawings
+
+When a concept is easier to see than to read, add one fine-line stick-figure drawing under the opening, before the technical sections. Photos, overlays, and charts stay where they are.
+
+Style, every time: white background, thin black pen, no shading, no gray fill, no color, no logos. One idea. Labels must match the facts.
+
+```markdown
+# ❌ The label invents a geometry
+A ship in DOTA is eight corners.
+
+# ✅ Four points, eight numbers
+A ship in DOTA is four corners, written as eight coordinates.
+```
+
+Save the file in `content/posts/img/` and embed it so the alt text is the one-line caption the theme prints underneath:
+
+```markdown
+![Four corners, eight coordinates, become a center, a long side, a short side, and one angle.](/posts/img/2026-10-19_sketch_le90.jpg#layoutTextWidth)
+```

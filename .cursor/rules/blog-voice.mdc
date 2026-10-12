@@ -1,0 +1,21 @@
+---
+description: Voice for deeplearning.earth posts. Use when writing or editing any blog post.
+globs: content/posts/**/*.md
+alwaysApply: false
+---
+
+# Blog voice
+
+Write the way you would explain the result to a colleague. Short connected sentences. First person when the post already says "I".
+
+Say what the thing does. The opening is a scene, the number, and the action.
+
+```markdown
+# ❌ A second caveat in the first screen
+I tried Oriented R-CNN at 0.55. FCOS starts at 0.2, because its scores sit lower. This is not the ONNX path.
+
+# ✅ The result, then where the rest lives
+I tried it with Oriented R-CNN on the bus-lot demo, at score 0.55. 100 boxes came back. The Dockerfile and the request are below.
+```
+
+In new prose, skip contrastive negation ("X, not Y", "do not", "there is no", "it is not"). A limit that is the subject of its own section can stay there.

@@ -1,0 +1,21 @@
+---
+description: One idea per deeplearning.earth post. Use when writing or editing any blog post.
+globs: content/posts/**/*.md
+alwaysApply: false
+---
+
+# One idea per post
+
+The opening answers the post's question. One concrete picture, the number, the action, then "the rest is below." Commands, tables, and notebooks stay under that.
+
+A second model, a second tool, or a license note is another post, or one link at the end. It does not appear in the opening.
+
+```markdown
+# ❌ Doors opened before the point
+Oriented R-CNN returned 100 boxes. FCOS on this service starts at 0.2. The ONNX graph is the next step. Apache 2.0 covers the recipe.
+
+# ✅ One path
+A JPEG goes in. GeoJSON polygons come out. Oriented R-CNN on the bus-lot demo, at score 0.55, returned 100 boxes. The Dockerfile and the request follow.
+```
+
+Use numbers already established in the post. Do not invent measurements. Leave the title, the URL slug, `date`, and `lastmod` unchanged unless the user asks.
