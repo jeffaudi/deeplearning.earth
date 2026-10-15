@@ -126,7 +126,7 @@ Where this weight sits next to the other heads is [which detector to train](/pos
 - [RTMDet](https://arxiv.org/abs/2212.07784) (Lyu et al.) · [recipe](https://github.com/DL4EO/oriented-det/blob/main/configs/rotated_rtmdet/README.md)
 - [Lessons on DOTA](/posts/2026-09-17_lessons_learned_on_dota_oriented_det_and_mmrotate_parity/) — quote Task 1, treat leaky eval-val as a monitor
 - **Previous:** [ONNX export without PyTorch](/posts/2026-10-08_onnx_export_without_pytorch/)
-- **Next:** [OSSDD — Sentinel-1 ships](/posts/2026-10-15_ossdd_sentinel1_ships_rtmdet_faster_rcnn_fcos/) (12 Oct)
+- **Next:** [OSSDD — Sentinel-1 ships](/posts/2026-10-15_ossdd_sentinel1_ships_rtmdet_faster_rcnn_fcos/) (15 Oct)
 
 * * *
 #### Written on October 10, 2026 by Jeff Faudi.

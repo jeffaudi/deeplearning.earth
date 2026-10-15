@@ -96,7 +96,7 @@ ONNX input is NCHW RGB, already mean/std-normalized — do not feed raw JPEGs in
 - [docs — ONNX export](https://dl4eo.github.io/oriented-det/examples/export/) · [`export/README.md`](https://github.com/DL4EO/oriented-det/blob/main/export/README.md)
 - [v0.3 release note](/posts/2026-09-21_oriented-det_v0_3_0_four_datasets_and_onnx/)
 - **Previous:** [Docker deploy](/posts/2026-10-05_deploy_oriented_det_in_docker/) · [HRSID](/posts/2026-10-01_hrsid_sar_ship_benchmark/)
-- **Next:** [Oriented-Det v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) (10 Oct) · [OSSDD](/posts/2026-10-15_ossdd_sentinel1_ships_rtmdet_faster_rcnn_fcos/) (12 Oct) · [le90](/posts/2026-10-19_le90_geometry/) (19 Oct) · [Oriented mAP](/posts/2026-10-22_oriented_map/) (22 Oct) · [bus lot](/posts/2026-10-26_mmrotate_faster_rcnn_messy_boxes_on_dota_bus_demo/) (26 Oct) · [which detector](/posts/2026-10-29_which_oriented_detector_to_train/) (29 Oct)
+- **Next:** [Oriented-Det v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) (10 Oct) · [OSSDD](/posts/2026-10-15_ossdd_sentinel1_ships_rtmdet_faster_rcnn_fcos/) (15 Oct) · [le90](/posts/2026-10-19_le90_geometry/) (19 Oct) · [Oriented mAP](/posts/2026-10-22_oriented_map/) (22 Oct) · [bus lot](/posts/2026-10-26_mmrotate_faster_rcnn_messy_boxes_on_dota_bus_demo/) (26 Oct) · [which detector](/posts/2026-10-29_which_oriented_detector_to_train/) (29 Oct)
 
 * * *
 #### Written on October 8, 2026 by Jeff Faudi.
