@@ -33,17 +33,11 @@ Rotated boxes, exact polygon IoU. 11-point AP at IoU 0.5. Boxes below score 0.3 
 | **RTMDet-S** | 90.1% (13,831 / 15,345) | 97.8% (13,831 / 14,145) | **69.09%** | 68.08% |
 | Rotated Faster R-CNN | 93.8% (11,320 / 12,072) | 80.0% (11,320 / 14,145) | 60.10% | 54.60% |
 | Rotated FCOS | 94.3% (8,070 / 8,560) | 57.1% (8,070 / 14,145) | 62.65% | 39.24% |
-| Hammer Faster R-CNN | 0.7442 | 0.8942 | 0.7018 | |
-| Hammer FCOS | 0.8424 | 0.8091 | 0.6961 | |
-| Hammer DETR | 0.7444 | 0.8891 | 0.5999 | |
+| Hammer Faster R-CNN | 74.42% | 89.42% | 70.18% | |
+| Hammer FCOS | 84.24% | 80.91% | 69.61% | |
+| Hammer DETR | 74.44% | 88.91% | 59.99% | |
 
 Rotated boxes, exact polygon IoU, for our three rows. The paper rows are axis-aligned ResNet-50 models trained from scratch. The AP50 table is one IoU. This table is the paper’s average over eighteen IoUs.
-
-Area under the curve at each rotated IoU, score ≥ 0.05:
-
-- RTMDet-S: 0.10:0.973 0.15:0.973 0.20:0.973 0.25:0.972 0.30:0.969 0.35:0.966 0.40:0.961 0.45:0.954 0.50:0.942 0.55:0.922 0.60:0.869 0.65:0.772 0.70:0.611 0.75:0.389 0.80:0.161 0.85:0.030 0.90:0.002 0.95:0.000
-- Faster R-CNN: 0.10:0.879 0.15:0.878 0.20:0.877 0.25:0.873 0.30:0.868 0.35:0.862 0.40:0.855 0.45:0.844 0.50:0.825 0.55:0.793 0.60:0.731 0.65:0.631 0.70:0.483 0.75:0.288 0.80:0.111 0.85:0.019 0.90:0.001 0.95:0.000
-- FCOS: 0.10:0.912 0.15:0.912 0.20:0.911 0.25:0.910 0.30:0.907 0.35:0.903 0.40:0.897 0.45:0.889 0.50:0.872 0.55:0.844 0.60:0.774 0.65:0.657 0.70:0.484 0.75:0.286 0.80:0.102 0.85:0.017 0.90:0.001 0.95:0.000
 
 This sits next to the earlier SAR notes, and it is a different set. [SSDD](/posts/2026-09-28_ssdd_sar_ship_finetune/) is 1,160 mixed-sensor chips and a native loader. [HRSID](/posts/2026-10-01_hrsid_sar_ship_benchmark/) is 5,604 higher-resolution chips. OSSDD is Sentinel-1 only, float amplitude, and an official val that is not the test.
 
@@ -86,7 +80,7 @@ odet train --config configs/rotated_faster_rcnn/ossdd_le90_vh_1x.json
 odet train --config configs/rotated_fcos/ossdd_le90_vh_1x.json
 ```
 
-VV is the same export with `--polarization VV` and the paths pointed at that folder. We did not log a VV comparison. In the paper, VV is the weaker band (their Faster R-CNN mAP 0.62 versus 0.70 on VH).
+VV is the same export with `--polarization VV` and the paths pointed at that folder. We did not log a VV comparison. In the paper, VV is the weaker band (their Faster R-CNN mAP 62.28% versus 70.18% on VH).
 
 ---
 
