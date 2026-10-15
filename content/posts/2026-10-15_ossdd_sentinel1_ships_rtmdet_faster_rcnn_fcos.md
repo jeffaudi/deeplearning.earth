@@ -91,9 +91,9 @@ A 36-epoch RTMDet run with the same normalization scored **78.11%** val AP50 and
 
 ---
 
-## Do not rank this against Table 6
+## Table 6 stays their number
 
-[Hammer et al.](https://arxiv.org/abs/2608.01963) Table 6, VH **test**, is a different measurement. Their detectors are axis-aligned ResNet-50 models trained from scratch for 25 epochs. Precision and recall use IoU **0.2** and confidence 0.3. Their mAP is the mean of the precision-recall area from IoU **0.10 to 0.95** in steps of 0.05.
+[Hammer et al.](https://arxiv.org/abs/2608.01963) Table 6, VH **test**, is their baseline. The detectors are axis-aligned ResNet-50 models trained from scratch for 25 epochs. Precision and recall use IoU **0.2** and confidence 0.3. Their mAP is the mean of the precision-recall area from IoU **0.10 to 0.95** in steps of 0.05.
 
 | Paper, VH test | Precision (IoU 0.2) | Recall (IoU 0.2) | mAP (IoU 0.10–0.95) |
 |---|---:|---:|---:|
@@ -101,7 +101,7 @@ A 36-epoch RTMDet run with the same normalization scored **78.11%** val AP50 and
 | FCOS | 0.8424 | 0.8091 | 0.6961 |
 | DETR | 0.7444 | 0.8891 | 0.5999 |
 
-At score 0.3, our Faster R-CNN test precision is higher than theirs and our recall is a little lower, at IoU **0.5** rather than 0.2. Our FCOS test recall is higher than theirs at that stricter IoU. One is a single rotated-IoU point after an optical-DOTA finetune. The other is an average over eighteen IoU thresholds on horizontal boxes trained from scratch.
+We scored rotated AP50 at IoU **0.5** so these three heads share one number with the rest of the series. Matching Table 6 would be a second pass: precision and recall at IoU 0.2, plus that eighteen-threshold average, on these rotated boxes. The configs already use the eighteen-threshold average to pick the checkpoint. The logs quoted here print the AP50 line, so 0.70 stays their result.
 
 ---
 
