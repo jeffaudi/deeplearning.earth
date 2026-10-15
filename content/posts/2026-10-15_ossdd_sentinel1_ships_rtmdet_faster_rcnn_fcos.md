@@ -4,27 +4,46 @@ author: "Jeff Faudi"
 date: 2026-10-15T06:00:00+07:00
 lastmod: 2026-10-15T06:00:00+07:00
 
-description: "OSSDD is Sentinel-1 GRD ship chips with rotated boxes. VH 1× finetunes from the DOTA hubs: RTMDet-S test AP50 88.49%, Rotated Faster R-CNN 60.10%, Rotated FCOS 58.21%. Those are rotated IoU 0.5. Hammer et al. report a different mAP. No OSSDD Hub."
+description: "OSSDD is Sentinel-1 GRD ship chips with rotated boxes. VH 1× finetunes from the DOTA hubs. Held-out test AP50 at IoU 0.5 and score 0.3: RTMDet-S 88.54%, Rotated Faster R-CNN 70.53%, Rotated FCOS 52.70%. The paper mAP on these rotated boxes is 69.09% / 60.10% / 62.65%. No OSSDD Hub."
 
 series: ["oriented-det"]
 tags: ["oriented-det", "ossdd", "sar", "rtmdet", "rotated-fcos", "ship-detection"]
 
-subtitle: "88.49% rotated AP50 on held-out VH test. Their 0.70 is a different mAP."
+subtitle: "88.54% rotated AP50 on held-out VH test. Table 6 mAP is 69.09%."
 ---
 
 We took a detector that had learned ships in daylight, and taught it Sentinel-1 radar.
 
-Twelve epochs of **RTMDet-S** on the VH chips of [OSSDD](https://arxiv.org/abs/2608.01963) reached **88.49%** on the held-out test. It found **94%** of the ships, in 45 minutes.
+Twelve epochs of **RTMDet-S** on the VH chips of [OSSDD](https://arxiv.org/abs/2608.01963) reached **88.54%** AP50 on the held-out test. It found **95.5%** of the ships, in 45 minutes.
 
-The same recipe with the other two heads is the table below.
+The same recipe with the other two heads is below. Every row is the held-out test: 3,036 chips, empty chips kept, 14,145 rotated ships.
 
-Three 12-epoch finetunes, same export, same 512 crop. Held-out test AP50 at score ≥ 0.3:
+| Model | AP50 | Precision | Recall | Wall |
+|---|---:|---:|---:|---:|
+| **RTMDet-S 1×** | **88.54%** | 88.0% (13,508 / 15,345) | 95.5% (13,508 / 14,145) | 45 min |
+| Rotated Faster R-CNN 1× | 70.53% | 91.2% (11,004 / 12,072) | 77.8% (11,004 / 14,145) | 2 h 55 min |
+| Rotated FCOS 1× | 52.70% | 93.0% (7,965 / 8,560) | 56.3% (7,965 / 14,145) | 1 h 29 min |
 
-| | Val AP50 | Test AP50 | Test precision | Test recall | Wall |
-|---|---:|---:|---:|---:|---:|
-| **RTMDet-S 1×** | 77.84% | **88.49%** | 87.0% (13,354 / 15,345) | 94.4% (13,354 / 14,145) | 45 min |
-| Rotated Faster R-CNN 1× | 40.28% | 60.10% | 85.5% (12,185 / 14,245) | 86.1% (12,185 / 14,145) | 2 h 55 min |
-| Rotated FCOS 1× | 27.58% | 58.21% | 82.5% (12,976 / 15,731) | 91.7% (12,976 / 14,145) | 1 h 29 min |
+Rotated boxes, exact polygon IoU. 11-point AP at IoU 0.5. Boxes below score 0.3 are left out of the integral. Precision and recall use that same IoU and score.
+
+[Hammer et al.](https://arxiv.org/abs/2608.01963) Table 6 uses a second score. Precision and recall are at IoU 0.2 and confidence 0.3. mAP is the mean of the area under the precision-recall curve from IoU 0.10 to 0.95. The first column of mAP keeps boxes down to score 0.05. The second drops boxes below 0.3.
+
+| Model | Precision (IoU 0.2) | Recall (IoU 0.2) | mAP 0.10–0.95, score ≥ 0.05 | mAP 0.10–0.95, score ≥ 0.3 |
+|---|---:|---:|---:|---:|
+| **RTMDet-S** | 90.1% (13,831 / 15,345) | 97.8% (13,831 / 14,145) | **69.09%** | 68.08% |
+| Rotated Faster R-CNN | 93.8% (11,320 / 12,072) | 80.0% (11,320 / 14,145) | 60.10% | 54.60% |
+| Rotated FCOS | 94.3% (8,070 / 8,560) | 57.1% (8,070 / 14,145) | 62.65% | 39.24% |
+| Hammer Faster R-CNN | 0.7442 | 0.8942 | 0.7018 | |
+| Hammer FCOS | 0.8424 | 0.8091 | 0.6961 | |
+| Hammer DETR | 0.7444 | 0.8891 | 0.5999 | |
+
+Rotated boxes, exact polygon IoU, for our three rows. The paper rows are axis-aligned ResNet-50 models trained from scratch. The AP50 table is one IoU. This table is the paper’s average over eighteen IoUs.
+
+Area under the curve at each rotated IoU, score ≥ 0.05:
+
+- RTMDet-S: 0.10:0.973 0.15:0.973 0.20:0.973 0.25:0.972 0.30:0.969 0.35:0.966 0.40:0.961 0.45:0.954 0.50:0.942 0.55:0.922 0.60:0.869 0.65:0.772 0.70:0.611 0.75:0.389 0.80:0.161 0.85:0.030 0.90:0.002 0.95:0.000
+- Faster R-CNN: 0.10:0.879 0.15:0.878 0.20:0.877 0.25:0.873 0.30:0.868 0.35:0.862 0.40:0.855 0.45:0.844 0.50:0.825 0.55:0.793 0.60:0.731 0.65:0.631 0.70:0.483 0.75:0.288 0.80:0.111 0.85:0.019 0.90:0.001 0.95:0.000
+- FCOS: 0.10:0.912 0.15:0.912 0.20:0.911 0.25:0.910 0.30:0.907 0.35:0.903 0.40:0.897 0.45:0.889 0.50:0.872 0.55:0.844 0.60:0.774 0.65:0.657 0.70:0.484 0.75:0.286 0.80:0.102 0.85:0.017 0.90:0.001 0.95:0.000
 
 This sits next to the earlier SAR notes, and it is a different set. [SSDD](/posts/2026-09-28_ssdd_sar_ship_finetune/) is 1,160 mixed-sensor chips and a native loader. [HRSID](/posts/2026-10-01_hrsid_sar_ship_benchmark/) is 5,604 higher-resolution chips. OSSDD is Sentinel-1 only, float amplitude, and an official val that is not the test.
 
@@ -75,33 +94,13 @@ VV is the same export with `--polarization VV` and the paths pointed at that fol
 
 Each run starts from a DOTA Hub checkpoint. The 15-way classification layer is skipped and re-initialized for `ship`.
 
-| | Init | Schedule | Batch | Run |
+| | Init | Schedule | Batch | Checkpoint |
 |---|---|---|---:|---|
-| RTMDet-S | `hf://rotated_rtmdet_dota_le90_3x` | 12 ep, AdamW `2.5e-4`, cosine from epoch 6 | 8 | `runs/rotated_rtmdet/20261005-143859` |
-| Rotated Faster R-CNN | `hf://rotated_faster_rcnn_dota_le90_1x` | 12 ep, the 1× schedule | 2 | `runs/rotated_faster_rcnn/20261006-025419` |
-| Rotated FCOS | `hf://rotated_fcos_dota_le90_1x` | 12 ep, the 1× schedule | 2 | `runs/rotated_fcos/20261006-012500` |
+| RTMDet-S | `hf://rotated_rtmdet_dota_le90_3x` | 12 ep, AdamW `2.5e-4`, cosine from epoch 6 | 8 | `runs/rotated_rtmdet/20261005-143859/checkpoints/best_mAP_0.78.pth` |
+| Rotated Faster R-CNN | `hf://rotated_faster_rcnn_dota_le90_1x` | 12 ep, the 1× schedule | 2 | `runs/rotated_faster_rcnn/20261006-025419/checkpoints/best_mAP_0.40.pth` |
+| Rotated FCOS | `hf://rotated_fcos_dota_le90_1x` | 12 ep, the 1× schedule | 2 | `runs/rotated_fcos/20261006-012500/checkpoints/best_mAP_0.28.pth` |
 
-RTMDet’s only DOTA Hub weight is the 3×. The ResNet families still follow the [1× finetune rule](/posts/2026-09-17_lessons_learned_on_dota_oriented_det_and_mmrotate_parity/). `production.score_threshold` **0.3** on these recipes is untuned.
-
-The numbers in the table above are **AP50**: one rotated IoU of **0.5**, boxes below score **0.3** dropped before the precision-recall curve. The configs also list `evaluation.map_iou_thresholds` from 0.10 to 0.95. That average is what `best_metric` is wired to. It is **not** the number printed in these logs. `make eval-test` uses `test_score_threshold` (null means **0.05**). If you re-score, say which floor you used.
-
-On the 923-chip val, the gap is already there and it is mostly recall. RTMDet recall is **81.2%** (1,656 / 2,040). Faster R-CNN is **59.1%** (1,205 / 2,040). FCOS is **43.0%** (878 / 2,040), about 1.1 boxes per image against 2.2 ships. FCOS gained 5.5 AP50 points from epoch 8 to 12. Faster R-CNN gained 3.5. Both were still rising. That is a few points of headroom. It does not close the gap to RTMDet.
-
-A 36-epoch RTMDet run with the same normalization scored **78.11%** val AP50 and **88.23%** test AP50. The 12-epoch checkpoint was kept. Faster R-CNN and FCOS 3× configs are in the tree (36 epochs, milestones 24 and 33, batch 4). Those runs are not the table.
-
----
-
-## Table 6 stays their number
-
-[Hammer et al.](https://arxiv.org/abs/2608.01963) Table 6, VH **test**, is their baseline. The detectors are axis-aligned ResNet-50 models trained from scratch for 25 epochs. Precision and recall use IoU **0.2** and confidence 0.3. Their mAP is the mean of the precision-recall area from IoU **0.10 to 0.95** in steps of 0.05.
-
-| Paper, VH test | Precision (IoU 0.2) | Recall (IoU 0.2) | mAP (IoU 0.10–0.95) |
-|---|---:|---:|---:|
-| Faster R-CNN | 0.7442 | 0.8942 | 0.7018 |
-| FCOS | 0.8424 | 0.8091 | 0.6961 |
-| DETR | 0.7444 | 0.8891 | 0.5999 |
-
-We scored rotated AP50 at IoU **0.5** so these three heads share one number with the rest of the series. Matching Table 6 would be a second pass: precision and recall at IoU 0.2, plus that eighteen-threshold average, on these rotated boxes. The configs already use the eighteen-threshold average to pick the checkpoint. The logs quoted here print the AP50 line, so 0.70 stays their result.
+RTMDet’s only DOTA Hub weight is the 3×. The ResNet families still follow the [1× finetune rule](/posts/2026-09-17_lessons_learned_on_dota_oriented_det_and_mmrotate_parity/). `production.score_threshold` **0.3** on these recipes is untuned. The tables use these best checkpoints. Faster R-CNN and FCOS 3× configs are in the tree (36 epochs, milestones 24 and 33, batch 4). Those runs are not the tables.
 
 ---
 

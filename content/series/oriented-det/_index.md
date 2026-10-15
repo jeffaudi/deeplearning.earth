@@ -30,7 +30,7 @@ For a short overview of [oriented detection in aerial and satellite images](/ori
 19. [Deploy in Docker](/posts/2026-10-05_deploy_oriented_det_in_docker/) — Sanic Tile Geo Process, GeoJSON out, PyTorch in CUDA
 20. [ONNX export without PyTorch](/posts/2026-10-08_onnx_export_without_pytorch/) — pre-NMS ONNX + ORT consumer stack
 21. [Oriented-Det v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) — Rotated RTMDet-S, official Task 1 77.60% (AP75 52.01), training wall on a 3090 Ti
-22. [OSSDD — Sentinel-1 ships](/posts/2026-10-15_ossdd_sentinel1_ships_rtmdet_faster_rcnn_fcos/) — VH finetunes from the DOTA hubs, held-out test AP50 88.49% / 60.10% / 58.21%; not Hammer et al.’s mAP
+22. [OSSDD — Sentinel-1 ships](/posts/2026-10-15_ossdd_sentinel1_ships_rtmdet_faster_rcnn_fcos/) — VH finetunes from the DOTA hubs, held-out test AP50 88.54% / 70.53% / 52.70%; Table 6 mAP 69.09% / 60.10% / 62.65%
 23. [le90: one heading for a rotated box](/posts/2026-10-19_le90_geometry/) — five numbers, long edge as width, angle in [-90°, 90°)
 24. [Oriented mAP: what to report, and how to read it](/posts/2026-10-22_oriented_map/) — rotated IoU, 11-point AP50, AP75, and which pairs of percentages are different protocols
 25. [Does MMRotate Faster R-CNN also mess up the bus lot?](/posts/2026-10-26_mmrotate_faster_rcnn_messy_boxes_on_dota_bus_demo/) — official 1× Rotated Faster R-CNN is messy on the same DOTA bus tile as OrientedDet FRCNN (architecture, rare ~45° clutter); Oriented R-CNN is clean but heavy, which pushes toward FCOS
