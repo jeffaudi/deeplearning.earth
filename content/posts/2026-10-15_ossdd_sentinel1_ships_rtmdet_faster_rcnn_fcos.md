@@ -100,6 +100,8 @@ Each run starts from a DOTA Hub checkpoint. The 15-way classification layer is s
 
 RTMDet’s only DOTA Hub weight is the 3×. The ResNet families still follow the [1× finetune rule](/posts/2026-09-17_lessons_learned_on_dota_oriented_det_and_mmrotate_parity/). `production.score_threshold` **0.3** on these recipes is untuned. The tables use these best checkpoints. Faster R-CNN and FCOS 3× configs are in the tree (36 epochs, milestones 24 and 33, batch 4). Those runs are not the tables.
 
+![Eleven ships on another VH test chip. RTMDet-S at score 0.3 draws 11 boxes and matches all 11.](/posts/img/2026-10-15_ossdd_617a_rtmdet.png#layoutTextWidth)
+
 ---
 
 ## Links
