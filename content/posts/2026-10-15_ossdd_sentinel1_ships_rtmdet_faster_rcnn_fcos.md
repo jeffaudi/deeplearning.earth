@@ -16,6 +16,8 @@ We took a detector that had learned ships in daylight, and taught it Sentinel-1 
 
 Twelve epochs of **RTMDet-S** on the VH chips of [OSSDD](https://arxiv.org/abs/2608.01963) reached **88.54%** AP50 on the held-out test. It found **95.5%** of the ships, in 45 minutes.
 
+![Five ships in a harbor, bright land around the water. RTMDet-S at score 0.3 draws five boxes and matches all five.](/posts/img/2026-10-15_ossdd_crowded_vh.png#layoutTextWidth)
+
 The same recipe with the other two heads is below. Every row is the held-out test: 3,036 chips, empty chips kept, 14,145 rotated ships.
 
 | Model | AP50 | Precision | Recall | Wall |
@@ -54,6 +56,8 @@ Hammer et al. cut **15,197** patches per polarization from 41 Sentinel-1 GRD sce
 | test | 512×512 center crop | 3,036 | 14,145 | **No** |
 
 Rotated boxes that crossed the val or test crop were dropped, so the rotated count is lower than the axis-aligned count (test AABB is 15,573 ships). We train and score the rotated boxes.
+
+![The same harbor chip. Five rotated ground-truth boxes.](/posts/img/2026-10-15_ossdd_harbor_gt.png#layoutTextWidth)
 
 `filter_empty_gt` drops empty chips from train and from the in-train val. That val is **923** non-empty chips and all **2,040** rotated ships. Test scoring keeps the empty chips: all **3,036**.
 
