@@ -87,7 +87,7 @@ The Hub JSON is the accuracy recipe, not the fast one. These three change whethe
 
 ## Faster R-CNN next — except long, dense objects near 45°
 
-This is the ResNet default I actually finetune. Task 1 **74.42%**, HRSC **88.77%**, about **11 h 30 m** for DOTA 1× on the same L4, and about **6.9×** the tiled inference throughput of Oriented R-CNN (6.25 vs 0.91 img/s on the 7,669-tile stitch). FAIR1M, SSDD, and HRSID in v0.3 all start from this Hub slug.
+This is the ResNet default I actually finetune. Task 1 **74.42%**, HRSC **88.77%**, about **11 h 30 m** for DOTA 1× on the same L4, and about **1.15×** the tiled inference throughput of Oriented R-CNN (7.565 vs 6.604 img/s on the 7,669-tile stitch, one RTX 3090 Ti). FAIR1M, SSDD, and HRSID in v0.3 all start from this Hub slug.
 
 **Aircraft is a Faster R-CNN scene.** Plane Task 1 AP50 is **89.40%** (FCOS 88.74). On the [optical demo](/posts/2026-09-06_oriented_det_optical_satellite_demo/), Faster R-CNN 3× keeps the full Pleiades apron (**27** aircraft) and the dense Tucson storage field (**125** planes). Headings follow the fuselage. A plane is long, and it can sit at 45°, but it is not packed the way a bus row is.
 

@@ -56,26 +56,20 @@ Official Task 1 is now on the Hub for **all four** DOTA families at both schedul
 
 **Finetune from 1×** for Oriented R-CNN, Faster R-CNN, and FCOS (3× AP50 drops or washes; AP75 is the tightness gain). **RetinaNet 3×** is the AP50 exception (+2.17). Circum-HBB is `*_hbb`. FCOS 1×/3× lives in the [v0.2.0 zoo note](/posts/2026-08-28_oriented-det_v0_2_0_rotated_fcos_decoded_riou_and_the_updated_zoo/).
 
-In [June we recommended Oriented R-CNN](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/) for quick macOS demos because it behaved well without CUDA rotated-IoU kernels. At this release it is the **accuracy** default among the ResNet families. Use Faster R-CNN 1× when you want the throughput story from July without giving up a competitive Task 1 score. [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) later put Rotated RTMDet-S at **77.60%** Task 1.
+In [June we recommended Oriented R-CNN](/posts/2026-06-25_oriented_object_detection_on_macos_in_pure_python/) for quick macOS demos because it behaved well without CUDA rotated-IoU kernels. At this release it is the **accuracy** default among the ResNet families. Use Faster R-CNN 1× when you want the training-throughput story from July without giving up a competitive Task 1 score. [v0.4.0](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/) later put Rotated RTMDet-S at **77.60%** Task 1.
 
 ## Accuracy and speed vs Oriented R-CNN
 
-Oriented R-CNN leads Task 1. Rotated Faster R-CNN is **much faster** at inference and training. Timings below use one 1024×1024 forward per DOTA val tile, `production.*` decode, exact CPU polygon NMS when configured. Figures come from `predictions.json` metadata on **7,669** tiles (CUDA); see the [ProbIoU deep dive](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/) for methodology.
+Oriented R-CNN leads Task 1 among the ResNet families. On the tiled-inference stitch, Rotated FCOS 1× is the fastest forward, and Rotated Faster R-CNN is **1.15×** Oriented R-CNN. The full table is the [July note](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/): one RTX 3090 Ti, **7,669** val tiles, CPU polygon NMS.
 
-| Model | Task 1 AP50 | Throughput | ms / tile |
-|---|---:|---:|---:|
-| Rotated Faster R-CNN 1× (ProbIoU) | 74.42% | **6.25 img/s** | **160** |
-| Oriented R-CNN 1× | **76.73%** | 0.91 img/s | 1,100 |
+| Model | Task 1 AP50 | Wall | img/s | ms/tile |
+|---|---:|---:|---:|---:|
+| **Rotated FCOS 1×** | 73.07% | **11.7 min** | **10.919** | **91.6** |
+| Rotated RTMDet-S 3× | **77.60%** | 14.2 min | 9.017 | 110.9 |
+| Rotated Faster R-CNN 1× (ProbIoU) | 74.42% | 16.9 min | 7.565 | 132.2 |
+| Oriented R-CNN 1× | 76.73% | 19.4 min | 6.604 | 151.4 |
 
-**Rotated Faster R-CNN is ~6.9× faster** on tiled inference than Oriented R-CNN — and emits fewer raw detections (≈14 vs ≈25 boxes per image at score ≥ 0.05), which also keeps CPU NMS cheaper.
-
-Why the gap?
-
-1. **RoIAlign geometry** — Rotated Faster R-CNN uses horizontal RoIAlign on horizontal RPN proposals; Oriented R-CNN uses rotated RoIAlign on oriented proposals (heavier per-RoI sampling).
-2. **Proposal volume** — Oriented R-CNN's midpoint-offset RPN tends to produce more candidates before NMS, increasing head and NMS work.
-3. **Same honest NMS** — both runs use CPU polygon final NMS when configured; the speedup is architectural, not a metric shortcut.
-
-Training shows the same pattern on the same tile recipe: **~58 min/epoch** (Rotated Faster R-CNN 1×, **11h 30m** wall) vs **~3 h 1 min/epoch** (Oriented R-CNN 1×, **1d 12h 22m** wall).
+Training on the L4 recipe is where Faster R-CNN pulls away: **~58 min/epoch** (**11h 30m** wall) vs **~3 h 1 min/epoch** for Oriented R-CNN (**1d 12h 22m** wall).
 
 ## Try it: inference on a complex harbor scene
 

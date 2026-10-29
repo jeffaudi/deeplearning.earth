@@ -4,7 +4,7 @@ author: "Jeff Faudi"
 date: 2026-10-10T06:00:00+07:00
 lastmod: 2026-10-10T08:00:00+07:00
 
-description: "Oriented-det v0.4.0 is on PyPI — Rotated RTMDet-S at 77.60% official DOTA Task 1 (AP75 52.01), ahead of Oriented R-CNN, with the 3090 Ti training wall and the MMRotate latency next to it."
+description: "Oriented-det v0.4.0 is on PyPI — Rotated RTMDet-S at 77.60% official DOTA Task 1 (AP75 52.01), ahead of Oriented R-CNN, with the 3090 Ti training wall and the tiled-inference stitch on that card."
 
 series: ["oriented-det"]
 tags: ["oriented-det", "release", "rtmdet", "dota", "pretrained-models"]
@@ -76,16 +76,7 @@ The ResNet 1× walls already in this series are a **different card** (one NVIDIA
 
 ### Inference
 
-The tiled-inference stitch already published is PyTorch, one 1024 forward per DOTA val tile, CPU polygon NMS, **7,669** tiles:
-
-| Model | Task 1 AP50 | Throughput | ms / tile |
-|---|---:|---:|---:|
-| Rotated Faster R-CNN 1× | 74.42% | **6.25 img/s** | **160** |
-| Oriented R-CNN 1× | 76.73% | 0.91 img/s | 1,100 |
-
-That is the [July throughput note](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/). **RTMDet is not in it.** `tools/bench_latency.py` times a single-tile forward (backbone + head + decode + NMS) for several detectors on one canvas. This post does not invent a third row from a different protocol.
-
-MMRotate’s published RTMDet-s latency is a third protocol again: **4.86 ms**, TensorRT FP16, batch 1, with NMS, on an RTX 2080 Ti ([their README](https://github.com/open-mmlab/mmrotate/blob/1.x/configs/rotated_rtmdet/README.md)). That is their checkpoint, not our PyTorch forward, and it is not a ratio against the 160 ms row.
+The tiled-inference stitch, remeasured on this same RTX 3090 Ti, is in the [July note](/posts/2026-07-10_rotated_faster_rcnn_probiou_dota/). One 1024 forward per DOTA val tile, CPU polygon NMS, **7,669** tiles. FCOS 1× is **11.7 min**, **10.919 img/s**, **91.6 ms/tile**. RTMDet-S is **14.2 min**, **9.017 img/s**, **110.9 ms/tile**. Faster R-CNN 1× is 16.9 min and 132.2 ms. Oriented R-CNN 1× is 19.4 min and 151.4 ms.
 
 ## What the head is
 

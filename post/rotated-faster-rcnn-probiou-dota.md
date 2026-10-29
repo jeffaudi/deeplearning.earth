@@ -161,24 +161,24 @@ A 36-epoch ProbIoU run exists. Official Task 1 **AP50 is a wash** (74.48% vs 74.
 
 ---
 
-## Inference speed vs Oriented R-CNN
+## Inference speed
 
-Throughput is architectural. Timings below are one 1024×1024 forward per DOTA val tile, `production.*` decode, exact CPU polygon NMS (`inference_loop_seconds` on **7,669** tiles, CUDA). They are not a substitute for Task 1.
+One RTX 3090 Ti, PyTorch 2.3.0+cu121, oriented-det 0.4.0. One 1024×1024 forward per DOTA val tile, exact CPU polygon NMS (`final_nms_use_cpu`, IoU 0.1), score floor 0.05 before and after NMS. The clock is `inference_loop_seconds` on **7,669** tiles: image read, forward, decode, and NMS. FCOS 1× used that same CPU NMS, with `nms_pre` 2000. RTMDet-S used it with `rtmdet_nms_pre` 30000. These timings are not a substitute for Task 1.
 
-| Model | Task 1 AP50 | Total inference | Throughput | ms / image |
-|-------|------------:|----------------:|-----------:|-----------:|
-| Rotated Faster R-CNN **1×** | 74.42% | 20.5 min | **6.25 img/s** | **160** |
-| Oriented R-CNN **1×** | 76.73% | 140.5 min | 0.91 img/s | 1,100 |
+This table replaces the earlier tiled-inference table. That run was a different machine. Faster R-CNN’s wall on this GPU is **16.9 minutes**.
 
-**Rotated Faster R-CNN is ~6.9× faster** on tiled inference — and emits **fewer raw detections** (≈14 vs ≈25 boxes per image at score ≥ 0.05), which also keeps CPU NMS cheaper.
+| Model | Hub slug | Task 1 AP50 | Wall | img/s | ms/tile | mean preds |
+|---|---|---:|---:|---:|---:|---:|
+| **Rotated FCOS 1×** | `rotated_fcos_dota_le90_1x` | 73.07% | **11.7 min** | **10.919** | **91.6** | 17.32 |
+| Rotated RTMDet-S 3× | `rotated_rtmdet_dota_le90_3x` | **77.60%** | 14.2 min | 9.017 | 110.9 | 32.89 |
+| Rotated Faster R-CNN 1× | `rotated_faster_rcnn_dota_le90_1x` | 74.42% | 16.9 min | 7.565 | 132.2 | 13.77 |
+| Oriented R-CNN 1× | `oriented_rcnn_dota_le90_1x` | 76.73% | 19.4 min | 6.604 | 151.4 | 14.24 |
 
-Why the gap?
+FCOS is the fastest of the four, at **91.6 ms/tile**, and it keeps **17.32** boxes per tile. RTMDet-S keeps **32.89**. The two R-CNNs keep **13.77** and **14.24**. Faster R-CNN’s throughput is **1.15×** Oriented R-CNN (7.565 vs 6.604 img/s).
 
-1. **RoIAlign geometry** — Rotated Faster R-CNN uses **horizontal** RoIAlign on horizontal RPN proposals; Oriented R-CNN uses **rotated** RoIAlign on oriented proposals (heavier per-RoI sampling).  
-2. **Proposal volume** — Oriented R-CNN's midpoint-offset RPN tends to produce more candidates before NMS, increasing head and NMS work.  
-3. **Same honest NMS** — both runs use CPU polygon final NMS when `final_nms_use_cpu: true`; the speedup is architectural, not a metric cheat.
+Both R-CNNs use the same CPU polygon NMS. Oriented R-CNN’s second stage is rotated RoIAlign on oriented proposals. On this card that is 151.4 ms against 132.2 ms.
 
-Training epochs show the same pattern: **~58 min/epoch** (Rotated Faster R-CNN 1×, **11h 30m** wall) vs **~3h 1m/epoch** (Oriented R-CNN 1×, **1d 12h 22m** wall) on the same tile recipe.
+Training on the L4 recipe is a separate clock: **~58 min/epoch** (Rotated Faster R-CNN 1×, **11h 30m** wall) vs **~3h 1m/epoch** (Oriented R-CNN 1×, **1d 12h 22m** wall) on the same tile recipe.
 
 ---
 
@@ -218,7 +218,7 @@ odet pretrained download rotated_faster_rcnn_dota_le90_1x
 1. **Sampled rIoU is a matching tool, not a loss.** It lets OrientedDet run fast GPU assignment without CUDA kernels, but it diverges from polygon IoU — especially at high overlap and on small or elongated boxes.  
 2. **Exact metrics and surrogate losses compose well.** Official Task 1 + ProbIoU training gives Hub-grade numbers while keeping the training loop in portable PyTorch.  
 3. **Box regression is the headroom versus MMRotate’s Rotated Faster R-CNN.** 1× ProbIoU reaches **74.42%** Task 1 versus MMRotate **73.40%** — larger than stretching the same Smooth L1 recipe to 3×.  
-4. **Throughput is not the accuracy ranking.** Rotated Faster R-CNN is **~7× faster** tiled inference than Oriented R-CNN; Oriented R-CNN still leads Task 1 (**76.73%** vs **74.42%**).  
+4. **Throughput is not the accuracy ranking.** On the 3090 Ti stitch, Rotated FCOS 1× is the fastest, at **91.6 ms/tile**. Rotated Faster R-CNN is **1.15×** Oriented R-CNN (132.2 vs 151.4 ms). Oriented R-CNN still leads the ResNet Task 1 pair (**76.73%** vs **74.42%**).  
 5. **Training-time val mAP is a DOTA monitor.** Recipes train on trainval, so val is not held out. Publish **official Task 1**.  
 6. **1× is the default.** Reach for 3× only when **AP75** (tight boxes) matters: 45.39 vs 41.90 on this architecture.
 
