@@ -40,13 +40,9 @@ Recipes train on train+val tiles, so in-train mAP scores tiles the model already
 | **YOLO-OBB S** | 12× from COCO | **77.80%** | **52.13** | **0.2** |
 | Rotated RTMDet-S | 3× | 77.60% | 52.01 | 0.45 |
 | Oriented R-CNN | 1× | 76.73% | 50.24 | 0.55 |
-| Oriented R-CNN | 3× | 74.88% | 51.23 | 0.55 |
-| Rotated Faster R-CNN | 1× | 74.42% | 41.90 | 0.60 |
 | Rotated Faster R-CNN | 3× | 74.48% | 45.39 | 0.60 |
 | Rotated RetinaNet (OBB) | 3× | 73.89% | 47.11 | 0.25 |
 | Rotated FCOS | 1× | 73.07% | 40.40 | 0.20 |
-| Rotated FCOS | 3× | 72.91% | 45.39 | 0.20 |
-| Rotated RetinaNet (OBB) | 1× | 71.72% | 43.46 | 0.25 |
 
 YOLO-OBB leads **AP50** and **AP75**. The previous peaks were RTMDet-S at 77.60 / 52.01. The ResNet families still finetune from **1×**. RTMDet finetunes from its **3×**. YOLO-OBB has one Hub DOTA weight, and it is this **12×** from the COCO trunk.
 
