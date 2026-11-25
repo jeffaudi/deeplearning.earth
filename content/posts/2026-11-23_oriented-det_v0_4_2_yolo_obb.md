@@ -14,7 +14,7 @@ subtitle: "pip install oriented-det==0.4.2"
 
 [**Oriented-Det v0.4.2**](https://github.com/DL4EO/oriented-det/releases/tag/v0.4.2) ships the detector that sits at the top of the DOTA zoo: **YOLO-OBB**.
 
-One stage, a C2f CSP backbone, and **77.80%** on official DOTA Task 1. The boxes are tight: AP75 **52.13**. The slug is `yolo_obb_dota_le90_12x`. Deploy it at **0.2**.
+One stage, a C2f CSP backbone, and **77.80%** on official DOTA Task 1. The boxes are tight: AP75 **52.13**. The slug is `yolo_obb_dota_le90_12x`. Deploy it at **0.45**.
 
 How to install it, and how the COCO trunk feeds the DOTA run, are below.
 
@@ -26,18 +26,18 @@ pip install -U oriented-det
 pip install oriented-det==0.4.2
 
 odet pretrained download yolo_obb_dota_le90_12x
-odet image-demo demo.jpg hf://yolo_obb_dota_le90_12x --score-thr 0.2
+odet image-demo demo.jpg hf://yolo_obb_dota_le90_12x --score-thr 0.45
 ```
 
-PyTorch is still installed separately ([pytorch.org](https://pytorch.org/get-started/locally/)). Weights stay on Hugging Face at `dl4eo/oriented-det-pretrained`. Deploy score is **0.2** (eval-val F1 minus 0.05). NMS stays **0.1**.
+PyTorch is still installed separately ([pytorch.org](https://pytorch.org/get-started/locally/)). Weights stay on Hugging Face at `dl4eo/oriented-det-pretrained`. Deploy score is **0.45** (eval-val F1 0.50 minus 0.05). NMS stays **0.1**.
 
 ## Quote Task 1
 
-Recipes train on train+val tiles, so in-train mAP scores tiles the model already saw. For this run that leaky figure is **84.42%** (score ≥ 0.3 at epoch 144). The gap to the hidden test is **6.62** points. Quote **77.80%**.
+Recipes train on train+val tiles, so every local val score is leaky. Frozen `make eval-val` on all 7,669 val tiles (score ≥ 0.05) is **80.13%**. That is **2.33** points above the hidden test. The in-train monitor at epoch 144 was **84.42%** (score ≥ 0.3, non-empty tiles only). Quote **77.80%**.
 
 | Model | Schedule | Task 1 AP50 | Task 1 AP75 | Deploy score |
 |---|---|---:|---:|---:|
-| **YOLO-OBB S** | 12× from COCO | **77.80%** | **52.13** | **0.2** |
+| **YOLO-OBB S** | 12× from COCO | **77.80%** | **52.13** | **0.45** |
 | Rotated RTMDet-S | 3× | 77.60% | 52.01 | 0.45 |
 | Oriented R-CNN | 1× | 76.73% | 50.24 | 0.55 |
 | Rotated Faster R-CNN | 3× | 74.48% | 45.39 | 0.60 |

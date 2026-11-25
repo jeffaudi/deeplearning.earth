@@ -16,7 +16,7 @@ subtitle: "Start with RTMDet or YOLO-OBB. Switch when the scene asks for it."
 
 If I were starting a train tomorrow, I would start with the speed tier: **Rotated RTMDet-S** or **YOLO-OBB**.
 
-They sit side by side on official DOTA Task 1. YOLO-OBB scores **77.80%**. RTMDet scores **77.60%**. A box counts when it covers at least half the real object; that score is AP50. The tighter score, AP75, asks for three quarters of the object: YOLO **52.13**, RTMDet **52.01**. RTMDet’s published recipe finishes in **8h 58m** on a 3090 Ti. YOLO-OBB’s Hub run takes **1d 6h 11m** on an L4. Same speed class; RTMDet is the shorter clock. The checkpoints are `rotated_rtmdet_dota_le90_3x` (score **0.45**) and `yolo_obb_dota_le90_12x` (score **0.2**).
+They sit side by side on official DOTA Task 1. YOLO-OBB scores **77.80%**. RTMDet scores **77.60%**. A box counts when it covers at least half the real object; that score is AP50. The tighter score, AP75, asks for three quarters of the object: YOLO **52.13**, RTMDet **52.01**. RTMDet’s published recipe finishes in **8h 58m** on a 3090 Ti. YOLO-OBB’s Hub run takes **1d 6h 11m** on an L4. Same speed class; RTMDet is the shorter clock. The checkpoints are `rotated_rtmdet_dota_le90_3x` (score **0.45**) and `yolo_obb_dota_le90_12x` (score **0.45**).
 
 I switch only when the picture asks for it.
 
@@ -36,7 +36,7 @@ The number behind each pick is below.
 | Machine in the log | NVIDIA L4, batch 4 | RTX 3090 Ti, batch 8 |
 | Train time | 1d 6h 11m, 144 epochs | **8h 58m**, 36 epochs |
 | Checkpoint | `yolo_obb_dota_le90_12x` | `rotated_rtmdet_dota_le90_3x` |
-| Score cutoff | **0.2** | **0.45** |
+| Score cutoff | **0.45** | **0.45** |
 
 Those two times are different machines and different lengths. YOLO-OBB loads a COCO trunk first (`yolo_obb_coco_300e`), then finetunes DOTA for 144 epochs. RTMDet trains DOTA for 36 epochs from ImageNet. The fair pair for wall clock on one card is still in the [v0.4.0 note](/posts/2026-10-10_oriented-det_v0_4_0_rotated_rtmdet/): on one RTX 3090 Ti, RTMDet-S 3× finishes in **8h 58m** (15.3 tiles/s) and RetinaNet OBB 3× in **23h 23m** (5.9 tiles/s). YOLO’s L4 wall is in the [v0.4.2 note](/posts/2026-11-23_oriented-det_v0_4_2_yolo_obb/).
 
