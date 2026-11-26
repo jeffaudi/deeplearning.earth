@@ -18,6 +18,8 @@ One stage, a C2f CSP backbone, and **77.80%** on official DOTA Task 1. The boxes
 
 How to install it, and how the COCO trunk feeds the DOTA run, are below.
 
+![Official DOTA Task 1: YOLO-OBB 77.80%, RTMDet 77.60%, Oriented R-CNN 76.73%.](/posts/img/2026-11-23_sketch_yolo_obb_podium.jpg#layoutTextWidth)
+
 ## Upgrade
 
 ```bash

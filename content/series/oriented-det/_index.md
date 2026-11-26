@@ -36,6 +36,7 @@ For a short overview of [oriented detection in aerial and satellite images](/ori
 25. [Does MMRotate Faster R-CNN also mess up the bus lot?](/posts/2026-10-26_mmrotate_faster_rcnn_messy_boxes_on_dota_bus_demo/) — official 1× Rotated Faster R-CNN is messy on the same DOTA bus tile as OrientedDet FRCNN (architecture, rare ~45° clutter); Oriented R-CNN is clean but heavy, which pushes toward FCOS
 26. [Which oriented detector should you train?](/posts/2026-10-29_which_oriented_detector_to_train/) — RTMDet-S or YOLO-OBB for the speed tier (77.60% / 77.80%); Oriented R-CNN when a diagonal pack needs oriented RoIAlign; Faster R-CNN or FCOS when recall and a cheaper schedule matter more
 27. [Oriented-Det v0.4.2](/posts/2026-11-23_oriented-det_v0_4_2_yolo_obb/) — native YOLO-OBB S, official Task 1 77.80% (AP75 52.13), 12× from COCO trunk
+28. [OrientedDet tutorial](/posts/2026-11-30_oriented_det_tutorial/) — eleven lessons (101–111) on GitHub and Kaggle, first Hub detection through ONNX
 
 **Links**
 
